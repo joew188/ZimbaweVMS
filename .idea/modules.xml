@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VMSWeb/VMSWeb.iml" filepath="$PROJECT_DIR$/VMSWeb/VMSWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZimbaVMS.iml" filepath="$PROJECT_DIR$/.idea/modules/ZimbaVMS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZimbaVMS_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_main.iml" group="ZimbaVMS" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZimbaVMS_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_test.iml" group="ZimbaVMS" />
+    </modules>
+  </component>
+</project>
