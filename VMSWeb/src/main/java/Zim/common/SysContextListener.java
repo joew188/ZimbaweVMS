@@ -13,7 +13,6 @@ public class SysContextListener implements ServletContextListener {
         System.out.println("destroy ContextListener");
     }
     public void contextInitialized(ServletContextEvent event) {
-
         ServletContext servletContext = event.getServletContext();
         Enumeration en = servletContext.getInitParameterNames();
         while (en.hasMoreElements()) {
