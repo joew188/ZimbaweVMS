@@ -1,7 +1,7 @@
 package Zim.linstener;
 
 import Zim.common.SysConfigUtil;
-import Zim.task.MatchRunnable;
+
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,13 +27,15 @@ public class MatchService {
 
 
 
-       matchThreadPool.execute(new MatchRunnable());
+      // matchThreadPool.execute(new MatchRunnable());
 //        Thread t = new Thread(new MatchRunnable());
 //        t.setDaemon(true);  //后台线程
 //        t.start();
 //        MatchThread matchThread=new MatchThread();
 //        matchThread.setDaemon(true);
 //        matchThread.start();
+
+
     }
 
     @PreDestroy

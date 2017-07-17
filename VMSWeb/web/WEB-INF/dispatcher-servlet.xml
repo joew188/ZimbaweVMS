@@ -14,8 +14,9 @@
 
     <!--<context:annotation-config />-->
     <mvc:annotation-driven />
-    <!--<bean id="fileListener" class="Zim.linstener.FileListenerService"/>-->
+    <bean id="fileListener" class="Zim.linstener.FileListenerService"/>
     <!--<bean id="matchQueueService" class="Zim.linstener.MatchService"/>-->
+    <!--<bean id="threadWorkService" class="Zim.linstener.ThreadWorkService"/>-->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/view/"/>

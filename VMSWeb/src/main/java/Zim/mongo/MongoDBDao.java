@@ -1,5 +1,4 @@
 package Zim.mongo;
-
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -38,11 +37,13 @@ public interface MongoDBDao {
      * 描述：向指定的数据库中添加给定的keys和相应的values
      * @param dbName
      * @param collectionName
-     * @param keys
      * @param values
      * @return
      */
-    public boolean insert(String dbName, String collectionName, String keys, Object values);
+//    public boolean insert(String dbName, String collectionName, String keys, Object values);
+
+   public DBObject insert(String dbName, String collectionName, DBObject values);
+   // public boolean insert2(String dbName, String collectionName, Test values);
     /**
      *
      * 方法名：delete
@@ -94,4 +95,6 @@ public interface MongoDBDao {
     public DBObject findById(String collectionName,String id);
 
     public WriteResult addObject(Map<String, Object> map, String collectionName);
+
+    WriteResult insertObject(Map<String, Object> map, String collectionName);
 }

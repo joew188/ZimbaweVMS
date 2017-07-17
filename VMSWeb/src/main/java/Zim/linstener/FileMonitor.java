@@ -1,5 +1,6 @@
 package Zim.linstener;
 
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -17,7 +18,10 @@ public class FileMonitor {
     }
 
     public void monitor(String path, FileAlterationListener listener) {
-        FileAlterationObserver observer = new FileAlterationObserver(new File(path));
+        FileAlterationObserver observer = new FileAlterationObserver(new File(path),
+                FileFilterUtils.and(
+                        FileFilterUtils.suffixFileFilter(".exportlog")
+                ));
         observer.addListener(listener);
         monitor.addObserver(observer);
 

@@ -1,19 +1,9 @@
 package Zim.mongo;
 
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Map;
-
+import java.util.*;
 import Zim.common.SystemHelper;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.ServerAddress;
-import com.mongodb.WriteResult;
+import com.mongodb.*;
+
 
 /**
  * Created by Laxton-Joe on 2017/2/17.
@@ -22,7 +12,7 @@ public class MongoDBDaoImpl implements MongoDBDao {
     private MongoClient mongoClient = null;
     private DB vmsDb = null;
     private static final MongoDBDaoImpl mongoDBDaoImpl = new MongoDBDaoImpl();// 饿汉式单例模式
-    private static final MongoDBDaoImpl mongoDBDaoImpl2 = new MongoDBDaoImpl();// 饿汉式单例模式
+
     private MongoDBDaoImpl() {
         if (mongoClient == null) {
             MongoClientOptions.Builder buide = new MongoClientOptions.Builder();
@@ -43,10 +33,6 @@ public class MongoDBDaoImpl implements MongoDBDao {
     public static MongoDBDaoImpl getMongoDBDaoImpl() {
         return mongoDBDaoImpl;
     }
-    public static MongoDBDaoImpl mongoDBDaoImpl2() {
-        return mongoDBDaoImpl2;
-    }
-
 
     @Override
     public DB getDb(String dbName) {
@@ -59,19 +45,30 @@ public class MongoDBDaoImpl implements MongoDBDao {
         return db.getCollection(collectionName);
     }
 
+    //    @Override
+//    public boolean insert(String dbName, String collectionName, String keys, Object values) {
+//        DB db = mongoClient.getDB(dbName);
+//        DBCollection dbCollection = db.getCollection(collectionName);
+//        long num = dbCollection.count();
+//        BasicDBObject doc = new BasicDBObject();
+//        doc.put(keys, values);
+//        dbCollection.insert(doc);
+//        if (dbCollection.count() - num > 0) {
+//            System.out.println("添加数据成功！！！");
+//            return true;
+//        }
+//        return false;
+//    }
     @Override
-    public boolean insert(String dbName, String collectionName, String keys, Object values) {
+    public DBObject insert(String dbName, String collectionName, DBObject values) {
+        DBObject result = null;
         DB db = mongoClient.getDB(dbName);
         DBCollection dbCollection = db.getCollection(collectionName);
-        long num = dbCollection.count();
-        BasicDBObject doc = new BasicDBObject();
-        doc.put(keys, values);
-        dbCollection.insert(doc);
-        if (dbCollection.count() - num > 0) {
-            System.out.println("添加数据成功！！！");
-            return true;
+        WriteResult wr = dbCollection.insert(values);
+        if (wr != null) {
+            result = values;
         }
-        return false;
+        return result;
     }
 
     @Override
@@ -145,6 +142,10 @@ public class MongoDBDaoImpl implements MongoDBDao {
         return vmsDb.getCollection(collectionName).save(new BasicDBObject(map));
     }
 
+    @Override
+    public WriteResult insertObject(Map<String, Object> map, String collectionName) {
+        return vmsDb.getCollection(collectionName).insert(new BasicDBObject(map));
+    }
 
     public void close() {
         if (this.mongoClient != null) {
@@ -161,16 +162,18 @@ public class MongoDBDaoImpl implements MongoDBDao {
 
         return vmsDb.getCollection("MatchQueue").findOne();
     }
+
     public void removeQueue(String _id) {
         vmsDb.getCollection("MatchQueue").remove(new BasicDBObject("_id", _id));
 
     }
+
     public void updateStatus(String _id, String collectionName, String fieldName, Object status) {
 
-        BasicDBObject idQuery = new BasicDBObject();
+        DBObject idQuery = new BasicDBObject();
+//        idQuery.put("_id", new ObjectId(_id));
         idQuery.put("_id", _id);
-
-        BasicDBObject upQuery = new BasicDBObject(fieldName, status);
+        DBObject upQuery = new BasicDBObject(fieldName, status);
         Object updateResult = vmsDb.getCollection(collectionName).findAndModify(idQuery, new BasicDBObject("$set", upQuery));
 
 

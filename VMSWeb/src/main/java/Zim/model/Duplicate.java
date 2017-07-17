@@ -22,12 +22,12 @@ public class Duplicate implements Serializable {
     @JsonSerialize(using = CustomDateSerializer.class)
     private Date createdTime;
 
-    public Duplicate(String proId, String refId, int levenValue) {
-        probeId = proId;
-        referenceId = refId;
-        leven = levenValue;
-        status = "Pending";
-        createdTime = new Date();
+    public Duplicate(String probeId, String referenceId, int leven) {
+       this.probeId= probeId;
+        this.referenceId = referenceId;
+        this.leven = leven;
+        this.status = "Pending";
+        this.createdTime = new Date();
     }
 
     public String get_id() {

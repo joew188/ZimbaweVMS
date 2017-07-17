@@ -27,10 +27,10 @@
                 socket-timeout="${mongo.socketTimeout}"
         />
     </mongo:mongo-client>
-    <mongo:db-factory dbname="vms" mongo-ref="mongo"/>
+    <mongo:db-factory dbname="${mongo.db}" mongo-ref="mongo"/>
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="mongo"/>
-        <constructor-arg name="databaseName" value="vms"/>
+        <constructor-arg name="databaseName" value="${mongo.db}"/>
     </bean>
 
     <!-- mongodb bean的仓库目录，会自动扫描扩展了MongoRepository接口的接口进行注入 -->

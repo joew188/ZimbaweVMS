@@ -1,8 +1,6 @@
 package Zim.common;
 
 import Zim.map.Record;
-import Zim.model.Applicant;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;

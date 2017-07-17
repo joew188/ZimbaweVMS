@@ -1,18 +1,20 @@
 package Zim.controller;
 
 import Zim.model.Applicant;
+import Zim.model.modelview.ApplicantMatchResult;
+import Zim.model.modelview.SysResult;
 import Zim.service.ApplicantService;
-import Zim.service.DuplicateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.*;
 
 /**
  * Created by Laxton-Joe on 2017/2/20.
@@ -27,17 +29,17 @@ public class ApplicantWebAsyncController {
     public WebAsyncTask<List<String>> addApplicant(@RequestBody Applicant applicant) {
         Callable<List<String>> callable = new Callable<List<String>>() {
             public List<String> call() throws Exception {
-             //   System.out.println("执行成功 thread id is : " + Thread.currentThread().getId());
-                 List<String> result=applicantService.addApplicant(applicant);
-               // List<String> result = new ArrayList<>();
-              //  result.add("test");
+                //   System.out.println("执行成功 thread id is : " + Thread.currentThread().getId());
+                List<String> result = applicantService.addApplicant(applicant);
+                // List<String> result = new ArrayList<>();
+                //  result.add("test");
                 return result;
             }
         };
         return new WebAsyncTask(callable);
     }
 
-    @RequestMapping(value = "/longtimetask", method = RequestMethod.GET)
+    @RequestMapping(value = "/longtimetask", method = RequestMethod.POST)
     public WebAsyncTask longTimeTask() {
         System.out.println("/longtimetask被调用 thread id is : " + Thread.currentThread().getId());
         Callable<ModelAndView> callable = new Callable<ModelAndView>() {
@@ -65,6 +67,142 @@ public class ApplicantWebAsyncController {
             }
         };
         return new WebAsyncTask<String>(callable);
+    }
+
+
+    @RequestMapping(value = "/WebAsyncApplicant/Add", method = RequestMethod.POST)
+    @ResponseBody
+
+    public WebAsyncTask<SysResult<ApplicantMatchResult>> addSimplyApplicant(HttpServletRequest request) {
+        System.out.println(request.getParameter("id"));
+        Callable<SysResult<ApplicantMatchResult>> callable = new Callable<SysResult<ApplicantMatchResult>>() {
+            public SysResult<ApplicantMatchResult> call() throws Exception {
+                Set<String> setKeys = request.getParameterMap().keySet();
+                SysResult<ApplicantMatchResult> result = new SysResult<ApplicantMatchResult>();
+                try {
+                    if (setKeys.contains("id") && setKeys.contains("name") && setKeys.contains("birth")) {
+                        ApplicantMatchResult content = new ApplicantMatchResult();
+
+                        Applicant applicant = new Applicant();
+                        String name = request.getParameter("name");
+                        String id = request.getParameter("id");
+                        String birth = request.getParameter("birth");
+                        String gender = request.getParameter("gender");
+                        applicant.setSurname(name);
+                        applicant.set_id(id);
+                        applicant.setDateOfBirth(Integer.parseInt(birth));
+                     //   applicant.setGender(Integer.parseInt(gender));
+                        List<String> listMatched = applicantService.addApplicant(applicant);
+
+                        content.set_id(id);
+                        if (listMatched.size() > 0) {
+                            content.setValue(listMatched);
+                        }
+                        result.setContent(content);
+                        result.setResult(true);
+                    } else {
+                        result.setResult(false);
+                        result.setMessage("Invalid parameter!");
+                    }
+
+                } catch (Exception e) {
+                    result.setResult(false);
+                    result.setMessage(e.getMessage());
+                }
+
+                return result;
+            }
+        };
+        //  return new WebAsyncTask(callable);
+        WebAsyncTask asyncTask = new WebAsyncTask(10000, callable);
+        asyncTask.onTimeout(
+                new Callable<SysResult<ApplicantMatchResult>>() {
+                    public SysResult<ApplicantMatchResult> call() throws Exception {
+                        SysResult<ApplicantMatchResult> result = new SysResult<ApplicantMatchResult>();
+                        result.setMessage("time out");
+                        result.setResult(false);
+                        return result;
+                    }
+                }
+        );
+        return asyncTask;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/WebAsyncApplicant/New", method = RequestMethod.POST)
+    public DeferredResult<SysResult<ApplicantMatchResult>> deferredAddSimplyApplicant(HttpServletRequest request) {
+
+        Applicant applicant = new Applicant();
+        String name = request.getParameter("name");
+        String id = request.getParameter("id");
+        String birth = request.getParameter("birth");
+        String gender = request.getParameter("gender");
+        applicant.setSurname(name);
+        applicant.set_id(id);
+        applicant.setDateOfBirth(Integer.parseInt(birth));
+      //  applicant.setGender(Integer.parseInt(gender));
+
+
+        DeferredResult<SysResult<ApplicantMatchResult>> deferredResult = new DeferredResult<SysResult<ApplicantMatchResult>>(10000L);
+
+
+        LongTimeAsyncCallService longTimeAsyncCallService = new LongTimeAsyncCallService(applicant);
+        longTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTermTaskCallback() {
+            @Override
+            public void callback(List<String> result) {
+                SysResult<ApplicantMatchResult> matchResult = new SysResult<ApplicantMatchResult>();
+                ApplicantMatchResult content = new ApplicantMatchResult();
+                content.set_id(id);
+                if (result.size() > 0) {
+                    content.setValue(result);
+                }
+                matchResult.setContent(content);
+                matchResult.setResult(true);
+                deferredResult.setResult(matchResult);
+            }
+
+        });
+
+        deferredResult.onTimeout(new Runnable() {
+            @Override
+            public void run() {
+                SysResult<ApplicantMatchResult> timeoutResult = new SysResult<ApplicantMatchResult>();
+                timeoutResult.setMessage("time out");
+                timeoutResult.setResult(false);
+
+                deferredResult.setResult(timeoutResult);
+            }
+        });
+
+        return deferredResult;
+    }
+
+    public interface LongTermTaskCallback {
+        void callback(List<String> result);
+    }
+
+    public class LongTimeAsyncCallService {
+        private final int CorePoolSize = 4;
+        private final int NeedSeconds = 3;
+        private final Applicant applicant;
+
+        private Random random = new Random();
+        private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(CorePoolSize);
+
+        public LongTimeAsyncCallService(Applicant applicant) {
+            this.applicant = applicant;
+        }
+
+        public void makeRemoteCallAndUnknownWhenFinish(LongTermTaskCallback task) {
+
+            scheduler.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    List<String> listMatched = applicantService.addApplicant(applicant);
+                    task.callback(listMatched);
+                }
+            }, 0, TimeUnit.SECONDS);
+        }
     }
 
 }

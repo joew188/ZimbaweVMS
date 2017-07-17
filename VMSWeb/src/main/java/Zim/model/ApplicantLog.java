@@ -15,10 +15,10 @@ import java.util.Map;
 @Document(collection = "ApplicantLog")
 public class ApplicantLog implements Serializable {
 
-    public  ApplicantLog(String appId, String event)
+    public  ApplicantLog(String applicantId, String LogEvent)
     {
-        this.applicantId=appId;
-        this.LogEvent=event;
+        this.applicantId=applicantId;
+        this.LogEvent=LogEvent;
         this.LogTime=new Date();
     }
 

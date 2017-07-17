@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class DuplicateService {
                                     Date endDate = SystemHelper.getPlusDate(parmQuery.getFilters().get(key));
                                     criteria = criteria.where(key).gte(startDate).lt(endDate);
                                 } else {
-                                    criteria = Criteria.where(key).regex(parmQuery.getFilters().get(key),"i");
+                                    criteria = Criteria.where(key).regex(parmQuery.getFilters().get(key), "i");
                                 }
                                 isFirst = false;
                             } else {
@@ -69,7 +70,7 @@ public class DuplicateService {
                                         criteria = criteria.and(key).gte(startDate).lt(endDate);
                                     }
                                 } else {
-                                    criteria = criteria.and(key).regex(parmQuery.getFilters().get(key),"i");
+                                    criteria = criteria.and(key).regex(parmQuery.getFilters().get(key), "i");
                                 }
                             }
                         }
@@ -133,8 +134,8 @@ public class DuplicateService {
                         StringBuilder sb = new StringBuilder();
                         sb.append(String.format("Trigger Duplicate:%s,Action:Positive;", duplicate.get_id()));
                         sb.append(String.format("Duplicate: %s Close;", duplicate.get_id()));
-                        sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), probe.getStatus()));
-                        sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), reference.getStatus()));
+                        sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), SystemHelper.getApplicantStatusString(probe.getStatus())));
+                        sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), SystemHelper.getApplicantStatusString(reference.getStatus())));
                         appLog.setLogEvent(sb.toString());
 //                        appLog.setLogEvent(String.format("action:Positive, Duplicate: %s Close.%s->%s,%s->%s", duplicate.get_id(),
 //                                probe.getId(), probe.getStatus(), reference.getId(), reference.getStatus()
@@ -143,23 +144,22 @@ public class DuplicateService {
                         mongoTemplate.insert(appLog, "ApplicantLog");
                         break;
                     case "matched":
-                        probe.setStatus(2);
-                        probe.setIndividualsId(reference.getIndividualsId());
+                        probe.setStatus(Short.parseShort("2"));
+
                         mongoTemplate.save(probe);
                         //查找 IndividualsId==probe.IndividualsId的数据，更改IndividualsId=reference。IndividualsId的数据
                         //   setApplicantIndividualsId(probe.getIndividualsId(), reference.getIndividualsId());
                         setApplicantAutoClose("Matched", dupId, probe.get_id(), "Suspect");
                         break;
                     case "update": // probe to master,reference to archive
-                        reference.setStatus(3);
-                        reference.setIndividualsId(reference.getIndividualsId());
+                        reference.setStatus(Short.parseShort("3"));
+
                         mongoTemplate.save(reference);
                         //setApplicantIndividualsId(reference.getIndividualsId(), probe.getIndividualsId());
                         setApplicantAutoClose("Update", dupId, reference.get_id(), "Archive");
                         break;
                     case "archive":// probe to archive,reference to master
-                        probe.setStatus(3);
-                        probe.setIndividualsId(reference.getIndividualsId());
+                        probe.setStatus(Short.parseShort("3"));
                         mongoTemplate.save(probe);
                         setApplicantAutoClose("Archive", dupId, probe.get_id(), "Archive");
                         //  setApplicantIndividualsId(probe.getIndividualsId(), reference.getIndividualsId());
@@ -187,17 +187,18 @@ public class DuplicateService {
         return msg;
     }
 
-    private void setApplicantIndividualsId(String oldId, String newId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("individualsId").is(oldId));
-        if (mongoTemplate.find(query, Applicant.class).size() > 0) {
-            List<Applicant> listData = mongoTemplate.find(query, Applicant.class);
-            for (Applicant app : listData) {
-                app.setIndividualsId(newId);
-                mongoTemplate.save(app);
-            }
-        }
-    }
+//    private void setApplicantIndividualsId(String oldId, String newId) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("individualsId").is(oldId));
+//        if (mongoTemplate.find(query, Applicant.class).size() > 0) {
+//            List<Applicant> listData = mongoTemplate.find(query, Applicant.class);
+//            for (Applicant app : listData) {
+//                mongoTemplate.save(app);
+//            }
+//        }
+//    }
+
+
 
     private void setApplicantAutoClose(String action, String triggerDupId, String appId, String newStatus) {
         Query query = new Query();
@@ -210,7 +211,7 @@ public class DuplicateService {
             for (Duplicate dup : listData) {
                 Applicant probe = mongoTemplate.findById(dup.getProbeId(), Applicant.class);
                 Applicant reference = mongoTemplate.findById(dup.getReferenceId(), Applicant.class);
-                if ((probe.getStatus()==1 && reference.getStatus()==1) == false) {
+                if ((probe.getStatus() == 1 && reference.getStatus() == 1) == false) {
                     dup.setStatus("Close");
                     mongoTemplate.save(dup);
                     ApplicantLog appLog = new ApplicantLog();
@@ -220,18 +221,16 @@ public class DuplicateService {
                     sb.append(String.format("Trigger Duplicate:%s,Action:%s;", triggerDupId, action));
                     sb.append(String.format("Duplicate: %s Close;", dup.get_id()));
 
-                    if (probe.getStatus()==1) {
-                        sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), probe.getStatus()));
+                    if (probe.getStatus() == 1) {
+                        sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), SystemHelper.getApplicantStatusString(probe.getStatus())));
                         sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), newStatus));
                     } else {
                         sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), newStatus));
-                        sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), reference.getStatus()));
+                        sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), SystemHelper.getApplicantStatusString(reference.getStatus())));
                     }
                     appLog.setLogEvent(sb.toString());
                     appLog.setLogTime(new Date());
                     mongoTemplate.insert(appLog, "ApplicantLog");
-
-
                 }
             }
         }
@@ -242,9 +241,11 @@ public class DuplicateService {
         result = mongoTemplate.findById(duplicateId, Duplicate.class);
         if (result != null) {
             Applicant app = mongoTemplate.findById(result.getProbeId(), Applicant.class);
+
             result.setProbe(app);
 
             Applicant ref = mongoTemplate.findById(result.getReferenceId(), Applicant.class);
+
             result.setReference(ref);
         }
         return result;
@@ -270,4 +271,6 @@ public class DuplicateService {
         query.addCriteria(criteria);
         return mongoTemplate.find(query, Duplicate.class);
     }
+
+
 }

@@ -1,6 +1,5 @@
 package Zim.service;
 
-import Zim.model.Applicant;
 import Zim.model.ApplicantLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

@@ -29,19 +29,20 @@ public class ApplicantController {
     ApplicantLogService applicantLogService;
 
     @CrossOrigin
-    @RequestMapping(value = "/Applicant", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/applicant", method = RequestMethod.POST)
     @ResponseBody
     public SysPagination<Applicant> ApplicantQuery(@RequestBody ApplicantQuery request) {
         return applicantService.pageList(request);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/Applicant/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/applicant/{id}", method = RequestMethod.GET)
     @ResponseBody
     public SysResult<ApplicantDetails> ApplicantQuery(@PathVariable("id") String applicantId) {
         SysResult<ApplicantDetails> result = new SysResult<>();
         try {
             Applicant applicant = applicantService.find(applicantId);
+
             if (applicant != null) {
                 ApplicantDetails details = new ApplicantDetails();
                 List<Duplicate> duplicateList = duplicateService.getApplicantDuplicates(applicantId);

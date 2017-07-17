@@ -19,14 +19,14 @@ public class DuplicateController {
     DuplicateService duplicateService;
 
     @CrossOrigin
-    @RequestMapping(value = "/Duplicate", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/duplicate", method = RequestMethod.POST)
     @ResponseBody
     public SysPagination<Duplicate> ApplicantQuery(@RequestBody SysQuery query) {
         return duplicateService.pageList(query);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/DuplicateAction", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/duplicate/action", method = RequestMethod.POST)
     @ResponseBody
     public SysResult<String> DuplicateAction(@RequestBody DuplicateAction action) {
         SysResult<String> result = new SysResult<String>();
@@ -46,7 +46,7 @@ public class DuplicateController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/Duplicate/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/duplicate/{id}", method = RequestMethod.GET)
     @ResponseBody
     public SysResult<Duplicate> DuplicateById(@PathVariable("id") String duplicateId) {
         SysResult<Duplicate> result = new SysResult<>();
