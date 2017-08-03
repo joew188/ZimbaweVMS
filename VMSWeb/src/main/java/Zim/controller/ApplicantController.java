@@ -4,7 +4,7 @@ import Zim.model.Applicant;
 import Zim.model.ApplicantLog;
 import Zim.model.Duplicate;
 import Zim.model.modelview.ApplicantDetails;
-import Zim.model.modelview.ApplicantQuery;
+import Zim.model.modelview.PagingQuery;
 import Zim.model.modelview.SysPagination;
 import Zim.model.modelview.SysResult;
 import Zim.service.ApplicantLogService;
@@ -31,7 +31,7 @@ public class ApplicantController {
     @CrossOrigin
     @RequestMapping(value = "/api/applicant", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<Applicant> ApplicantQuery(@RequestBody ApplicantQuery request) {
+    public SysPagination<Applicant> ApplicantQuery(@RequestBody PagingQuery request) {
         return applicantService.pageList(request);
     }
 
@@ -42,7 +42,6 @@ public class ApplicantController {
         SysResult<ApplicantDetails> result = new SysResult<>();
         try {
             Applicant applicant = applicantService.find(applicantId);
-
             if (applicant != null) {
                 ApplicantDetails details = new ApplicantDetails();
                 List<Duplicate> duplicateList = duplicateService.getApplicantDuplicates(applicantId);

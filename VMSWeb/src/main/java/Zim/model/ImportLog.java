@@ -1,5 +1,9 @@
 package Zim.model;
 
+import Zim.common.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -12,19 +16,19 @@ import java.util.List;
 @Document(collection = "ImportLog")
 public class ImportLog {
 
-    public final static String ID = "_id";
-    public final static String NAME = "name";
-    public final static String DEVICENAME = "deviceName";
-    public final static String EXPORTDATETIME = "exportDateTime";
-    public final static String TOTAL = "total";
-    public final static String MALE = "male";
-    public final static String FEMALE = "female";
-    public final static String BEGINTIME = "beginTime";
-    public final static String FINISHTIME = "finishTime";
-    public final static String SUCCESS = "success";
-    public final static String FAIL = "fail";
-    public final static String GAP = "gap";
-    public final static String STATUS = "status";
+    private final static String ID = "_id";
+    private final static String NAME = "name";
+    private final static String DEVICENAME = "deviceName";
+    private final static String EXPORTDATETIME = "exportDateTime";
+    private final static String EXPORTTOTAL = "exportTotal";
+    private final static String EXPORTMALE = "exportMale";
+    private final static String EXPORTFEMALE = "exportFemale";
+    private final static String IMPORTBEGINTIME = "importBeginTime";
+    private final static String IMPORTFINISHTIME = "importFinishTime";
+    private final static String IMPORTTOTAL = "importTotal";
+    private final static String IMPORTMALE = "importMale";
+    private final static String IMPORTFEMALE = "importFemale";
+    private final static String STATUS = "status";
 
     public static List<String> getColumns() {
         List<String> result = new ArrayList<>();
@@ -47,16 +51,79 @@ public class ImportLog {
     private String _id;
     private String name;
     private String deviceName;
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date exportDateTime;
-    private int total;
-    private int male;
-    private int female;
-    private Date beginTime;
-    private Date finishTime;
-    private int success;
-    private int fail;
-    private List<gap> gaps;
+    private int exportTotal;
+    private int exportMale;
+    private int exportFemale;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date importBeginTime;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date importFinishTime;
+    private int importTotal;
+    private int importMale;
+    private int importFemale;
     private int status;
+
+    public static String getID() {
+        return ID;
+    }
+
+    public static String getNAME() {
+        return NAME;
+    }
+
+    public static String getDEVICENAME() {
+        return DEVICENAME;
+    }
+
+    public static String getEXPORTDATETIME() {
+        return EXPORTDATETIME;
+    }
+
+    public static String getEXPORTTOTAL() {
+        return EXPORTTOTAL;
+    }
+
+    public static String getEXPORTMALE() {
+        return EXPORTMALE;
+    }
+
+    public static String getEXPORTFEMALE() {
+        return EXPORTFEMALE;
+    }
+
+    public static String getIMPORTBEGINTIME() {
+        return IMPORTBEGINTIME;
+    }
+
+    public static String getIMPORTFINISHTIME() {
+        return IMPORTFINISHTIME;
+    }
+
+    public static String getIMPORTTOTAL() {
+        return IMPORTTOTAL;
+    }
+
+    public static String getIMPORTMALE() {
+        return IMPORTMALE;
+    }
+
+    public static String getIMPORTFEMALE() {
+        return IMPORTFEMALE;
+    }
+
+    public static String getSTATUS() {
+        return STATUS;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getName() {
         return name;
@@ -82,69 +149,68 @@ public class ImportLog {
         this.exportDateTime = exportDateTime;
     }
 
-    public int getTotal() {
-        return total;
+    public int getExportTotal() {
+        return exportTotal;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setExportTotal(int exportTotal) {
+        this.exportTotal = exportTotal;
     }
 
-    public int getMale() {
-        return male;
+    public int getExportMale() {
+        return exportMale;
     }
 
-    public void setMale(int male) {
-        this.male = male;
+    public void setExportMale(int exportMale) {
+        this.exportMale = exportMale;
     }
 
-    public int getFemale() {
-        return female;
+    public int getExportFemale() {
+        return exportFemale;
     }
 
-    public void setFemale(int female) {
-        this.female = female;
+    public void setExportFemale(int exportFemale) {
+        this.exportFemale = exportFemale;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
+    public Date getImportBeginTime() {
+        return importBeginTime;
     }
 
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
+    public void setImportBeginTime(Date importBeginTime) {
+        this.importBeginTime = importBeginTime;
     }
 
-    public Date getFinishTime() {
-        return finishTime;
+    public Date getImportFinishTime() {
+        return importFinishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
-        this.finishTime = finishTime;
+    public void setImportFinishTime(Date importFinishTime) {
+        this.importFinishTime = importFinishTime;
     }
 
-    public int getSuccess() {
-        return success;
+    public int getImportTotal() {
+        return importTotal;
     }
 
-    public void setSuccess(int success) {
-        this.success = success;
+    public void setImportTotal(int importTotal) {
+        this.importTotal = importTotal;
     }
 
-    public int getFail() {
-        return fail;
+    public int getImportMale() {
+        return importMale;
     }
 
-    public void setFail(int fail) {
-        this.fail = fail;
+    public void setImportMale(int importMale) {
+        this.importMale = importMale;
     }
 
-
-    public String get_id() {
-        return _id;
+    public int getImportFemale() {
+        return importFemale;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setImportFemale(int importFemale) {
+        this.importFemale = importFemale;
     }
 
     public int getStatus() {
@@ -155,42 +221,24 @@ public class ImportLog {
         this.status = status;
     }
 
-    public List<gap> getGaps() {
-        return gaps;
-    }
+    public DBObject toDBObject() {
+        DBObject dbObject = new BasicDBObject();
 
-    public void setGaps(List<gap> gaps) {
-        this.gaps = gaps;
-    }
+        dbObject.put("_id", this.get_id());
+        dbObject.put("name", this.getName());
+        dbObject.put("deviceName", this.getDeviceName());
+        dbObject.put("exportDateTime", this.getExportDateTime());
+        dbObject.put("exportTotal", this.getExportTotal());
 
+        dbObject.put("exportMale", this.getExportMale());
+        dbObject.put("exportFemale", this.getExportFemale());
+        dbObject.put("importBeginTime", this.getImportBeginTime());
+        dbObject.put("importFinishTime", this.getImportFinishTime());
+        dbObject.put("importTotal", this.getImportTotal());
+        dbObject.put("importMale", this.getImportMale());
+        dbObject.put("importFemale", this.getImportFemale());
+        dbObject.put("status", this.getStatus());
 
-    public class  gap{
-        private int start;
-        private int end;
-        private int gap;
-
-        public int getStart() {
-            return start;
-        }
-
-        public void setStart(int start) {
-            this.start = start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        public void setEnd(int end) {
-            this.end = end;
-        }
-
-        public int getGap() {
-            return gap;
-        }
-
-        public void setGap(int gap) {
-            this.gap = gap;
-        }
+        return dbObject;
     }
 }

@@ -2,8 +2,8 @@ package Zim.controller;
 
 import Zim.model.Duplicate;
 import Zim.model.modelview.DuplicateAction;
+import Zim.model.modelview.PagingQuery;
 import Zim.model.modelview.SysPagination;
-import Zim.model.modelview.SysQuery;
 import Zim.model.modelview.SysResult;
 import Zim.service.DuplicateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class DuplicateController {
     @CrossOrigin
     @RequestMapping(value = "/api/duplicate", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<Duplicate> ApplicantQuery(@RequestBody SysQuery query) {
+    public SysPagination<Duplicate> ApplicantQuery(@RequestBody PagingQuery query) {
         return duplicateService.pageList(query);
     }
 
@@ -36,7 +36,7 @@ public class DuplicateController {
                 result.setMessage(actionResult);
             } else {
                 result.setResult(true);
-                String nextId=duplicateService.getNextDuplicate();
+                String nextId = duplicateService.getNextDuplicate();
                 result.setMessage(nextId);
             }
         } catch (Exception e) {
@@ -55,8 +55,6 @@ public class DuplicateController {
             if (content != null) {
                 result.setResult(true);
                 result.setContent(content);
-//                String nextId=duplicateService.getNextDuplicate();
-//                result.setMessage(nextId);
             } else {
                 result.setMessage("not found record!");
             }

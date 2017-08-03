@@ -1,6 +1,7 @@
 package Zim.mongo;
 
 import java.util.*;
+
 import Zim.common.SystemHelper;
 import com.mongodb.*;
 
@@ -121,7 +122,7 @@ public class MongoDBDaoImpl implements MongoDBDao {
     }
 
     @Override
-    public boolean isExit(String dbName, String collectionName, String key, Object value) {
+    public boolean isExist(String dbName, String collectionName, String key, Object value) {
         DB db = mongoClient.getDB(dbName);
         DBCollection dbCollection = db.getCollection(collectionName);
         BasicDBObject doc = new BasicDBObject();
@@ -175,6 +176,17 @@ public class MongoDBDaoImpl implements MongoDBDao {
         idQuery.put("_id", _id);
         DBObject upQuery = new BasicDBObject(fieldName, status);
         Object updateResult = vmsDb.getCollection(collectionName).findAndModify(idQuery, new BasicDBObject("$set", upQuery));
+
+
+    }
+
+    @Override
+    public void updateObject( DBObject idQuery, String collectionName, DBObject updateObj) {
+
+
+
+
+        Object updateResult = vmsDb.getCollection(collectionName).findAndModify(idQuery, new BasicDBObject("$set", updateObj));
 
 
     }

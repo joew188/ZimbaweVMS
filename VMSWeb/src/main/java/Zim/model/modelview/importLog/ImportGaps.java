@@ -9,7 +9,9 @@ import java.util.List;
  */
 public class ImportGaps {
     private String deviceName;
-    private List<ImportLog.gap> gaps;
+    private List<gap> gaps;
+    private int beginIndex;
+    private int endIndex;
 
     public String getDeviceName() {
         return deviceName;
@@ -19,11 +21,35 @@ public class ImportGaps {
         this.deviceName = deviceName;
     }
 
-    public List<ImportLog.gap> getGaps() {
+    public List<gap> getGaps() {
         return gaps;
     }
 
-    public void setGaps(List<ImportLog.gap> gaps) {
+    public void setGaps(List<gap> gaps) {
         this.gaps = gaps;
     }
+
+    public int getBeginIndex() {
+        return beginIndex;
+    }
+
+    public void setBeginIndex(int beginIndex) {
+        this.beginIndex = beginIndex;
+    }
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
+    }
+
+//    public List<ImportLog.gap> getGaps() {
+//        return gaps;
+//    }
+//
+//    public void setGaps(List<ImportLog.gap> gaps) {
+//        this.gaps = gaps;
+//    }
 }

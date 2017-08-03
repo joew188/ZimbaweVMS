@@ -7,6 +7,9 @@
 
 package Zim.map;
 
+import Zim.common.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -32,18 +36,19 @@ public class ExportLog {
     protected String name;
     @XmlElement(name = "DeviceName", required = true)
     protected String deviceName;
+    @JsonSerialize(using = CustomDateSerializer.class)
     @XmlElement(name = "ExportDateTime", required = true)
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar exportDateTime;
+    private Date exportDateTime;
     @XmlElement(name = "Total")
     @XmlSchemaType(name = "unsignedInt")
-    protected long total;
+    private int total;
     @XmlElement(name = "Male")
     @XmlSchemaType(name = "unsignedInt")
-    protected long male;
+    private int male;
     @XmlElement(name = "Female")
     @XmlSchemaType(name = "unsignedInt")
-    protected long female;
+    private int female;
 
     /**
      * 获取name属性的值。
@@ -85,67 +90,43 @@ public class ExportLog {
         this.deviceName = value;
     }
 
-    /**
-     * 获取exportDateTime属性的值。
-     *
-     * @return possible object is
-     * {@link XMLGregorianCalendar }
-     */
-    public XMLGregorianCalendar getExportDateTime() {
+
+
+
+
+
+
+
+    public Date getExportDateTime() {
         return exportDateTime;
     }
 
-    /**
-     * 设置exportDateTime属性的值。
-     *
-     * @param value allowed object is
-     *              {@link XMLGregorianCalendar }
-     */
-    public void setExportDateTime(XMLGregorianCalendar value) {
-        this.exportDateTime = value;
+    public void setExportDateTime(Date exportDateTime) {
+        this.exportDateTime = exportDateTime;
     }
 
-    /**
-     * 获取total属性的值。
-     */
-    public long getTotal() {
-        return total;
-    }
-
-    /**
-     * 设置total属性的值。
-     */
-    public void setTotal(long value) {
-        this.total = value;
-    }
-
-    /**
-     * 获取male属性的值。
-     */
-    public long getMale() {
-        return male;
-    }
-
-    /**
-     * 设置male属性的值。
-     */
-    public void setMale(long value) {
-        this.male = value;
-    }
-
-    /**
-     * 获取female属性的值。
-     */
-    public long getFemale() {
+    public int getFemale() {
         return female;
     }
 
-    /**
-     * 设置female属性的值。
-     */
-    public void setFemale(long value) {
-        this.female = value;
+    public void setFemale(int female) {
+        this.female = female;
     }
 
+    public int getMale() {
+        return male;
+    }
+
+    public void setMale(int male) {
+        this.male = male;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 }
 

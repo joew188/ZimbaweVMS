@@ -1,5 +1,7 @@
 package Zim.common;
+
 import Zim.map.ExportLog;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -21,6 +23,9 @@ import java.util.*;
 public class SystemHelper {
     public static final String SHORTDATEFORMATSTRING = "dd/MM/yyyy";
     public static final String LONGTDATEFORMATSTRING = "dd/MM/yyyy hh:mm:ss";
+    public static final String LONGTDATEFORMATSTRING2 ="yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String LONGTDATEFORMATSTRING3 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
 
     public static String getBirthDateString(XMLGregorianCalendar xgcal) {
         Date date = xgcal.toGregorianCalendar().getTime();
@@ -70,6 +75,13 @@ public class SystemHelper {
         return dateTimeString;
     }
 
+    public static String getDateString(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(LONGTDATEFORMATSTRING2);
+      //  simpleDateFormat.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
+        String dateTimeString = simpleDateFormat.format(date);
+        return dateTimeString;
+    }
+
     public static String getApplicantStatusString(int status) {
         String result = "";
         switch (status) {
@@ -94,7 +106,7 @@ public class SystemHelper {
         int result = 0;
         String dateStr = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        sdf.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
+//        sdf.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
         dateStr = sdf.format(date);
         if (dateStr.length() > 0)
             result = Integer.parseInt(dateStr);
@@ -337,46 +349,26 @@ public class SystemHelper {
 
     public static List<String> getApplicantColumns() {
         List<String> result = new ArrayList<>();
+        result.add("personName");
         result.add("_id");
-        result.add("applicantDemographic.gender");
-        result.add("localAuthority");
-        result.add("houseNumber");
-        result.add("title");
-        result.add("disablity");
-        result.add("nationalIDCardNumber");
-        result.add("streetName");
-        result.add("province");
+        result.add("surname");
+        result.add("gender");
         result.add("provinceName");
-        result.add("district");
         result.add("districtName");
-        result.add("constituency");
-        result.add("constituencyName");
-        result.add("ward");
-        result.add("wardName");
-        result.add("claimReference");
-        result.add("applicantDemographic.surname");
-        result.add("identificationCardType");
-        result.add("identificationCardType");
-        result.add("fourthName");
-        result.add("applicantDemographic.dateOfBirth");
-        result.add("dateOfRegistration");
-        result.add("applicantDemographic.personName");
-        result.add("registrationNumber");
-        result.add("district");
-        result.add("gisLongitude");
-        result.add("suburb");
-        result.add("middleName");
-        result.add("gisLatitude");
-        result.add("individualsId");
+        result.add("dateOfBirth");
         result.add("status");
-        result.add("operatorGuid");
-        result.add("operatorName");
-        result.add("deviceName");
-        result.add("beginCreateDatetime");
-        result.add("endCreateDatetime");
-        result.add("beginEditDatetime");
-        result.add("endEditDatetime");
         return result;
+    }
+
+    public static Date getDateFromInt(int dateOfBirth) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Date date = null;
+        try {
+            date = sdf.parse(String.valueOf(dateOfBirth));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
 //    public static Map<String, Object> objectToMap(Object obj) throws Exception {

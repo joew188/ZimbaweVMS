@@ -238,6 +238,7 @@ import java.util.Date;
         "surname",
         "gender",
         "dateOfBirth",
+        "dateOfRegistration",
         "status",
         "guid",
         "registrationNumber",
@@ -257,6 +258,7 @@ import java.util.Date;
         "wardId",
         "wardName",
         "pollingStationId",
+        "pollingStationCode",
         "pollingStationName",
         "saveDatetime",
         "editSaveDatetime",
@@ -272,13 +274,15 @@ import java.util.Date;
 @Document(collection = "Applicant")
 @XmlRootElement(name = "Applicant")
 public class Applicant {
-    public  DBObject toDBObject() {
+    public DBObject toDBObject() {
         DBObject dbObject = new BasicDBObject();
 
         dbObject.put("_id", this.get_id());
         dbObject.put("surname", this.getSurname());
         dbObject.put("gender", this.getGender());
         dbObject.put("dateOfBirth", this.getDateOfBirth());
+        dbObject.put("dateOfRegistration", this.getDateOfRegistration());
+
         dbObject.put("status", this.getStatus());
         dbObject.put("guid", this.getGuid());
         dbObject.put("registrationNumber", this.getRegistrationNumber());
@@ -298,6 +302,7 @@ public class Applicant {
         dbObject.put("wardId", this.getWardId());
         dbObject.put("wardName", this.getWardName());
         dbObject.put("pollingStationId", this.getPollingStationId());
+        dbObject.put("pollingStationCode", this.getPollingStationCode());
         dbObject.put("pollingStationName", this.getPollingStationName());
         dbObject.put("saveDatetime", this.getSaveDatetime());
         dbObject.put("editSaveDatetime", this.getEditSaveDatetime());
@@ -469,12 +474,16 @@ public class Applicant {
     private String surname;
 
     @XmlElement(name = "Gender", required = false)
-    @XmlSchemaType(name = "boolean")
-    private Boolean gender;
+    @XmlSchemaType(name = "int")
+    private int gender;
 
     @XmlElement(name = "DateOfBirth", required = false)
     @XmlSchemaType(name = "int")
     private int dateOfBirth;
+
+    @XmlElement(name = "DateOfRegistration", required = false)
+    @XmlSchemaType(name = "int")
+    private int dateOfRegistration;
     @XmlElement(name = "Status", required = false)
     @XmlSchemaType(name = "unsignedShort")
     private short status;
@@ -523,6 +532,8 @@ public class Applicant {
     @XmlElement(name = "PollingStationId")
     @XmlSchemaType(name = "unsignedInt")
     protected long pollingStationId;
+    @XmlElement(name = "PollingStationCode", required = true, nillable = true)
+    protected String pollingStationCode;
     @XmlElement(name = "PollingStationName", required = true, nillable = true)
     protected String pollingStationName;
 
@@ -900,6 +911,26 @@ public class Applicant {
     }
 
     /**
+     * 获取pollingStationCode属性的值。
+     *
+     * @return possible object is
+     * {@link String }
+     */
+    public String getPollingStationCode() {
+        return pollingStationCode;
+    }
+
+    /**
+     * 设置pollingStationCode属性的值。
+     *
+     * @param value allowed object is
+     *              {@link String }
+     */
+    public void setPollingStationCode(String value) {
+        this.pollingStationCode = value;
+    }
+
+    /**
      * 获取saveDatetime属性的值。
      *
      * @return possible object is
@@ -1109,11 +1140,11 @@ public class Applicant {
         this.surname = surname;
     }
 
-    public Boolean getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -1131,6 +1162,14 @@ public class Applicant {
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public int getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(int dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 
 

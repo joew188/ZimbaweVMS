@@ -1,8 +1,9 @@
 package Zim.service;
 
 import Zim.model.User;
-import Zim.model.modelview.ApplicantQuery;
+import Zim.model.modelview.PagingQuery;
 import Zim.model.modelview.SysPagination;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,8 +17,7 @@ import java.util.List;
  * Created by Laxton-Joe on 2017/7/7.
  */
 @Service
-public class UserService {
-    private static String USER_COLLECTION = "User";
+public class UserService extends BaseService<User> {
     @Autowired
     MongoTemplate mongoTemplate;
 
@@ -44,76 +44,45 @@ public class UserService {
         return mongoTemplate.find(query, User.class);
     }
 
-    public SysPagination<User> pageList(ApplicantQuery appQuery) {
-
+    public SysPagination<User> pageList(PagingQuery appQuery) {
         SysPagination<User> result = new SysPagination<>();
         try {
             Query query = new Query();
-            if (appQuery.getOrderBy() != null && appQuery.getOrderBy().length() > 0) {
-                if (appQuery.getOrderBy().toUpperCase().equals("DESC")) {
-                    if (appQuery.getOrderByName() != null && appQuery.getOrderByName().length() > 0)
-                        query.with(new Sort(new Sort.Order(Sort.Direction.DESC, appQuery.getOrderByName())));
-                } else {
-                    if (appQuery.getOrderByName() != null && appQuery.getOrderByName().length() > 0)
-                        query.with(new Sort(new Sort.Order(Sort.Direction.ASC, appQuery.getOrderByName())));
-                }
-            }
-            int skip = (appQuery.getCurrentPage() - 1) * appQuery.getPageSize();
-            Criteria criteria = null;
+            sortQuery(appQuery, query);
             if (appQuery.getFilters() != null) {
-                boolean isFirst = true;
-                for (String key : appQuery.getFilters().keySet()) {
-                    if (User.getColumns().contains(key)) {
-                        if (appQuery.getFilters().get(key).length() > 0) {
-                            if (isFirst) {
-                                if (key.equals("group")) {
-                                    criteria = Criteria.where(key).is(appQuery.getFilters().get(key));
-                                } else {
-                                    criteria = Criteria.where(key).regex(appQuery.getFilters().get(key), "i");
-                                }
-                                isFirst = false;
-                            } else {
-                                if (key.equals("group")) {
-                                    criteria = criteria.and(key).is(appQuery.getFilters().get(key));
-                                } else {
-                                    criteria = criteria.and(key).regex(appQuery.getFilters().get(key), "i");
-                                }
-                            }
-                        }
-                    }
-                }
-                if (criteria != null) {
-                    query.addCriteria(criteria);
-                }
-
+//                appQuery.getFilters().keySet().stream().filter(key -> !User.getColumns().contains(key)).forEach(key -> {
+//                    appQuery.getFilters().remove(key);
+//                });
+                setCriteria(appQuery, query);
             }
-            int count = mongoTemplate.find(query, User.class).size();
-            if (count > 0) {
-                int totalPage = 0;//(int) (count / appQuery.getPageSize());
-                if (count % appQuery.getPageSize() == 0) {
-                    totalPage = (int) (count / appQuery.getPageSize());
-                } else {
-                    totalPage = ((int) (count / appQuery.getPageSize()) + 1);
-                }
-                result.setTotalRecord(count);//总共记录
-                result.setTotalPage(totalPage);//总共页数
-                result.setPageSize(appQuery.getPageSize());//每页记录
-                result.setFilters(appQuery.getFilters());
-
-                query.skip(skip);// 从那条记录开始
-                query.limit(appQuery.getPageSize());// 取多少条记录
+            int total = mongoTemplate.find(query, User.class).size();
+            if (total > 0) {
+                setPaging(result, appQuery, query, total);
                 List<User> listData = mongoTemplate.find(query, User.class);
-                if (listData.size() > 0) {
-                    result.setCurrentPage(appQuery.getCurrentPage());//当前页
-
-                    result.setItems(listData);//查询内容
-                }
+                result.setCurrentPage(appQuery.getCurrentPage());//当前页
+                result.setItems(listData);//查询内容
             }
             result.setResult(true);
         } catch (Exception e) {
             result.setResult(false);
         }
+        return result;
+    }
+//
+//    public int findSize(String name) {
+//        int result = 0;
+//        Query query = new Query(Criteria.where("name").is(name));
+//        result = mongoTemplate.find(query, User.class).size();
+//        return result;
+//    }
 
+    public User findById(String id) {
+        User result = null;
+        try {
+            result = mongoTemplate.findById(new ObjectId(id), User.class);
+        } catch (Exception ex) {
+            result = null;
+        }
         return result;
     }
 }

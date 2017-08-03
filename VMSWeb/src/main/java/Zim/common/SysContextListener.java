@@ -10,7 +10,7 @@ import java.util.Enumeration;
  */
 public class SysContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent event) {
-        System.out.println("destroy ContextListener");
+
     }
     public void contextInitialized(ServletContextEvent event) {
         ServletContext servletContext = event.getServletContext();

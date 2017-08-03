@@ -5,8 +5,11 @@ import Zim.model.User;
 import Zim.model.modelview.*;
 import Zim.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -21,7 +24,7 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/list", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<User> ApplicantQuery(@RequestBody ApplicantQuery request) {
+    public SysPagination<User> ApplicantQuery(@RequestBody PagingQuery request) {
         return userService.pageList(request);
     }
 
@@ -31,6 +34,13 @@ public class UserController {
     @ResponseBody
     public SysResult<Boolean> add(@RequestBody User user) {
         SysResult<Boolean> result = new SysResult<Boolean>();
+        Query query = new Query(Criteria.where("name").is(user.getName()));
+        if (userService.getCollectionSize(query, User.class) > 0) {
+            result.setResult(false);
+            result.setContent(false);
+            result.setMessage("Same user name " + user.getName() + " exists ");
+            return result;
+        }
         try {
             user.setPassword(SystemHelper.AES(user.getPassword()));
             userService.add(user);
@@ -38,6 +48,7 @@ public class UserController {
             result.setResult(true);
         } catch (Exception ex) {
             result.setResult(false);
+            result.setContent(false);
             result.setMessage(ex.getMessage());
         }
         return result;
@@ -48,17 +59,60 @@ public class UserController {
     @ResponseBody
     public SysResult<Boolean> edit(@RequestBody User user) {
         SysResult<Boolean> result = new SysResult<>();
-        result.setContent(false);
-        return null;
+        if (userService.findById(user.get_id()) != null) {
+
+            Query query = new Query(Criteria.where("name").is(user.getName()));
+            List<User> nameUsers = userService.getCollection(query, User.class);
+            if (nameUsers.size() > 0) {
+                for (User findUser : nameUsers) {
+                    if (!findUser.get_id().equals(user.get_id())) {
+                        result.setResult(false);
+                        result.setContent(false);
+                        result.setMessage("Same user name " + user.getName() + " exists ");
+                        return result;
+                    }
+                }
+            }
+
+
+            try {
+                user.setPassword(SystemHelper.AES(user.getPassword()));
+                userService.edit(user);
+                result.setContent(true);
+                result.setResult(true);
+            } catch (NoSuchAlgorithmException e) {
+                result.setContent(false);
+                result.setResult(false);
+            }
+        } else {
+            result.setContent(false);
+            result.setResult(false);
+            result.setMessage("user id " + user.get_id() + " not found");
+        }
+        return result;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
     @ResponseBody
-    public SysResult<Boolean> delete(@RequestBody SysQuery query) {
+    public SysResult<Boolean> delete(@RequestParam("userId") String userId) {
         SysResult<Boolean> result = new SysResult<>();
-        result.setContent(false);
-        return null;
+        User user = userService.findById(userId);
+        if (user != null) {
+            try {
+                userService.delete(user);
+                result.setContent(true);
+                result.setResult(true);
+            } catch (Exception e) {
+                result.setContent(false);
+                result.setResult(false);
+            }
+        } else {
+            result.setContent(false);
+            result.setResult(false);
+            result.setMessage("user id " + userId + " not found");
+        }
+        return result;
     }
 
     @CrossOrigin

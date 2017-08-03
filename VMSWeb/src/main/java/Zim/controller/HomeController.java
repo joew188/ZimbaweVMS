@@ -1,7 +1,9 @@
 package Zim.controller;
 
+import Zim.service.ApplicantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-    //    @Autowired
-//    ApplicantService service;
+    @Autowired
+    ApplicantService service;
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
 //    logger.info("I am programming.");
 
-    //    model.put("title", "title");
-       // model.put("msg", "helloWorldService");
+        //    model.put("title", "title");
+        // model.put("msg", "helloWorldService");
 //        Applicant user=new Applicant();
 //        user.setId("123");
 //        user.setSurname("test");
@@ -29,4 +31,11 @@ public class HomeController {
 //        service.saveApplicant(user);
         return "Home/index";
     }
+//
+//    @RequestMapping(value = "/drop", method = RequestMethod.GET)
+//    public String drop() {
+//        service.drop();
+//        return "Home/index";
+//    }
+
 }

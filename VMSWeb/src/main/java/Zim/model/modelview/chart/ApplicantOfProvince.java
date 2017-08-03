@@ -5,7 +5,7 @@ package Zim.model.modelview.chart;
  */
 public class ApplicantOfProvince {
 
-    private int province;
+    private int provinceId;
     private String provinceName;
     private  int count;
     private int distinct;
@@ -39,13 +39,6 @@ public class ApplicantOfProvince {
         this.duplicate = duplicate;
     }
 
-    public int getProvince() {
-        return province;
-    }
-
-    public void setProvince(int province) {
-        this.province = province;
-    }
 
     public String getProvinceName() {
         return provinceName;
@@ -53,5 +46,13 @@ public class ApplicantOfProvince {
 
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
+    }
+
+    public int getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
     }
 }

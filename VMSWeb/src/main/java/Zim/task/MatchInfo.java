@@ -10,7 +10,7 @@ public class MatchInfo {
     private String _id;
     private String guid;
     private String surname;
-    private Boolean gender;
+    private int gender;
     private int dateOfBirth;
 
     public String get_id() {
@@ -37,11 +37,11 @@ public class MatchInfo {
         this.surname = surname;
     }
 
-    public Boolean getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

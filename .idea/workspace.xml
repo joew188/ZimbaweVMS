@@ -7,94 +7,66 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdf210f3-55f3-42bc-8bcf-7b8ee3ce7503" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_config_4_2_3_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_core_4_2_3_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_web_4_2_3_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_4_3_9_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_4_3_9_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_4_3_9_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_4_3_9_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_web_4_3_9_RELEASE.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysJsonSerializer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/UTCDateDeserializer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XMLReader2SAX.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/ThreadWorkService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Test.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant_old.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Permission.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Province.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/User.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantListView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDate.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDateAvg.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDevice.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDeviceAvg.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfOperator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfOperatorAvg.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvince.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvinceAvg.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ConstituencyStatistic.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/DistrictStatistic.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ProvinceStatistic.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDevice.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicantRunnable.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consume.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consumer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/ImportHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Produce.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Producer.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_4_2_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_4_2_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_4_2_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_4_2_9_RELEASE.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/VMSWeb_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/VMSWeb_war_exploded.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/Comparators.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UploadHistoryController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/UploadHistory.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/WordItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDeviceRecord.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/gap.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UploadHistoryService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/static/js/TableQueryWrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/static/js/jquery-2.2.3.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/static/js/loader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/view/DataView/index.jsp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysJsonSerializer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/UTCDateDeserializer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XMLReader2SAX.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/MatchService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant_old.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/MatchQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantListView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantQuery.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ApplicantRunnable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicantRunnable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchRunnable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consume.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Produce.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__aopalliance_aopalliance_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__aopalliance_aopalliance_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_logging_commons_logging_1_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_logging_commons_logging_1_2.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__jstl_jstl_1_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__jstl_jstl_1_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_main.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/ZimbaVMS_test.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/VMSWeb.iml" afterPath="$PROJECT_DIR$/VMSWeb/VMSWeb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/CustomDateSerializer.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/CustomDateSerializer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/FileImport.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/FileImport.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysContextListener.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysContextListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantWebAsyncController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantWebAsyncController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DuplicateController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DuplicateController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileMonitor.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileMonitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/MatchService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/MatchService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Record.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Record.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ApplicantLog.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ApplicantLog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Duplicate.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Duplicate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/MatchQueue.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/MatchQueue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvince.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvince.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvinceAvg.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvinceAvg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ConstituencyStatistic.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ConstituencyStatistic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/DistrictStatistic.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/DistrictStatistic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ProvinceStatistic.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ProvinceStatistic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantLogService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantLogService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ApplicantRunnable.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ApplicantRunnable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchRunnable.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchRunnable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/applicationContext.xml" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/applicationContext.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/dispatcher-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/mongodb.properties" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/mongodb.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_8_6.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_4_2_9_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_4_3_9_RELEASE.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/SysQuery.java" afterPath="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/PagingQuery.java" />
     </list>
     <ignored path="ZimbaVMS.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,18 +102,7 @@
     <system id="GRADLE">
       <state>
         <projects_view>
-          <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="ZimbaVMS" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-            </PATH>
-          </tree_state>
+          <tree_state />
         </projects_view>
       </state>
     </system>
@@ -151,66 +112,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="ImportTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="247" column="50" selection-start-line="247" selection-start-column="50" selection-end-line="247" selection-end-column="50" />
+              <folding>
+                <element signature="method#ImportTask#0;class#ImportTask#0" expanded="false" />
+                <element signature="method#saveTaskInfo#0;class#ImportTask#0" expanded="false" />
+                <element signature="method#updateTaskInfo#0;class#ImportTask#0" expanded="false" />
+                <element signature="method#run#0;class#ImportTask#0" expanded="false" />
+                <element signature="class#Producer#0;class#ImportTask#0" expanded="false" />
+                <element signature="e#7537#7553#0" expanded="true" />
+                <element signature="e#8297#8313#0" expanded="true" />
+                <element signature="e#12672#12688#0" expanded="true" />
+                <element signature="e#13574#13590#0" expanded="true" />
+                <element signature="class#ImportResult#0;class#ImportTask#0" expanded="false" />
+                <element signature="class#GenericExtFilter#0;class#ImportTask#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MongoDBDao.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="500">
+              <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MongoDBDaoImpl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="490">
+              <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+              <folding>
+                <element signature="e#1370#1371#0" expanded="true" />
+                <element signature="e#1418#1419#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Matcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+            <state relative-caret-position="175">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImportHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/ImportHelper.java">
+      <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+            <state relative-caret-position="225">
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Consumer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consumer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Consume.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consume.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#1637#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-978">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -218,44 +180,38 @@
       <file leaf-file-name="ApplicantController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="279">
+              <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApplicantService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java">
+      <file leaf-file-name="HomeController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5534">
-              <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="504">
+              <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Producer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Producer.java">
+      <file leaf-file-name="DataViewController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="350">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MatchInfo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java">
+      <file leaf-file-name="FileListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1050">
-              <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+            <state relative-caret-position="200">
+              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -266,6 +222,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Jsp File" />
+        <option value="JavaScript File" />
         <option value="Class" />
       </list>
     </option>
@@ -436,7 +394,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="2987026097752" />
+        <entry key="$PROJECT_DIR$" value="2987350795802" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -601,57 +559,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ExportLog.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/dispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileMonitor.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDevice.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/MatchQueue.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchRunnable.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/MatchService.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XMLReader2SAX.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Test.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XML.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/x2j/CDL.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantDetails.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantWebAsyncController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XMLGregorianCalendarSerializer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/MongoConverterEnhanceFactoryBean.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysJsonSerializer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/applicationContext.xml" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Applicant.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Duplicate.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ApplicantRunnable.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consumer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/CustomDateSerializer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/FileImport.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/UTCDateDeserializer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantLogService.java" />
         <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicant.java" />
         <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicantRunnable.java" />
         <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Producer.java" />
-        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java" />
         <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/ImportHelper.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/gap.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDevice.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvinceAvg.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvince.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantSimple.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDeviceRecord.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysContextListener.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/static/js/TableQueryWrapper.js" />
+        <option value="$PROJECT_DIR$/VMSWeb/web/js/hello.js" />
+        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/dispatcher-servlet.xml" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/WordItem.java" />
+        <option value="$PROJECT_DIR$/out/artifacts/VMSWeb_war_exploded/WEB-INF/view/DataView/index.jsp" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/ApplicantQuery.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/PagingQuery.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DuplicateController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UploadHistoryService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/Comparators.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/UploadHistory.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UploadHistoryController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ProvinceStatistic.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/DistrictStatistic.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ConstituencyStatistic.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/view/DataView/index.jsp" />
+        <option value="$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java" />
+        <option value="$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java" />
       </list>
     </option>
   </component>
@@ -681,8 +639,9 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="x" value="-9" />
-    <option name="width" value="1918" />
-    <option name="height" value="1028" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -710,6 +669,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -797,10 +757,6 @@
               <option name="myItemId" value="Zim" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="thread" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -833,40 +789,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="task" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VMSWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zim" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -934,198 +856,49 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VMSWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zim" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VMSWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zim" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linstener" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VMSWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zim" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VMSWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zim" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZimbaVMS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2264151" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.64862466" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="207" />
+    <property name="project.structure.side.proportion" value="0.3637977" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../tfs/laxton1/RMS" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="209" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="241" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="243" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="244" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1139" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1130" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="213" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="215" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="239" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="241" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="242" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1137" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1128" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="GO_FMT" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\code\git\java\ZimbaVMS\VMSWeb\web\WEB-INF\static\js" />
       <recent name="D:\code\git\java\ZimbaVMS\VMSWeb\src\main\java\Zim\x2j" />
     </key>
   </component>
@@ -1703,7 +1476,7 @@
     </list>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1500310957311" />
+    <option name="lastUpdateTimestamp" value="1500636677514" />
     <option name="externalProjectsViewState">
       <projects_view />
     </option>
@@ -1745,12 +1518,28 @@
       <workItem from="1499931294619" duration="549000" />
       <workItem from="1499933363512" duration="19329000" />
       <workItem from="1499996180269" duration="24316000" />
-      <workItem from="1500252586493" duration="49349000" />
+      <workItem from="1500252586493" duration="72073000" />
+      <workItem from="1500511752207" duration="717000" />
+      <workItem from="1500537649874" duration="14925000" />
+      <workItem from="1500598518812" duration="17001000" />
+      <workItem from="1500635576854" duration="8407000" />
+      <workItem from="1500857442282" duration="16032000" />
+      <workItem from="1500884826904" duration="120923000" />
+      <workItem from="1501640812880" duration="8488000" />
+      <workItem from="1501724147300" duration="19505000" />
     </task>
+    <task id="LOCAL-00001" summary="v1">
+      <created>1500311380339</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1500311380339</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="287669000" />
+    <option name="totallyTimeSpent" value="516391000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1762,12 +1551,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="0" width="1918" height="1028" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4650113" sideWeight="0.22025724" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49784946" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4634703" sideWeight="0.22025724" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49784946" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1775,20 +1564,20 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09516129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4792148" sideWeight="0.7797428" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43115124" sideWeight="0.7797428" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49785638" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3221709" sideWeight="0.45873526" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3194131" sideWeight="0.45873526" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49785638" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49571276" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27410617" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53047407" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06608884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762557" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844242" sideWeight="0.49785638" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49571276" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26956055" sideWeight="0.6294821" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2652733" sideWeight="0.37051794" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6038813" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06430868" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1801,31 +1590,31 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5214362" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46420324" sideWeight="0.22025724" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49784946" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06774194" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06774194" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09516129" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4322799" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42663658" sideWeight="0.7797428" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49785638" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.4785638" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32054177" sideWeight="0.45873526" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49785638" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29462364" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5376712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844242" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844242" sideWeight="0.49785638" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.49571276" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26312968" sideWeight="0.6294821" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2652733" sideWeight="0.37051794" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5293454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.06430868" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -1840,15 +1629,13 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="v1" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>133</line>
-          <properties />
-          <option name="timeStamp" value="139" />
-        </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicant.java</url>
           <line>24</line>
@@ -1857,49 +1644,31 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java</url>
-          <line>172</line>
+          <line>173</line>
           <properties />
           <option name="timeStamp" value="150" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>281</line>
+          <line>343</line>
           <properties />
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>293</line>
+          <line>355</line>
           <properties />
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>337</line>
+          <line>402</line>
           <properties />
           <option name="timeStamp" value="158" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysJsonSerializer.java</url>
-          <line>77</line>
-          <properties />
-          <option name="timeStamp" value="163" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
-          <line>112</line>
-          <properties />
-          <option name="timeStamp" value="165" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
-          <line>109</line>
-          <properties />
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
-          <line>85</line>
+          <line>67</line>
           <properties />
           <option name="timeStamp" value="167" />
         </line-breakpoint>
@@ -1940,40 +1709,16 @@
           <option name="timeStamp" value="185" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>210</line>
-          <properties />
-          <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>143</line>
-          <properties />
-          <option name="timeStamp" value="194" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>199</line>
-          <properties />
-          <option name="timeStamp" value="198" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java</url>
-          <line>403</line>
+          <line>395</line>
           <properties />
           <option name="timeStamp" value="199" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java</url>
-          <line>146</line>
+          <line>147</line>
           <properties />
           <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
-          <line>205</line>
-          <properties />
-          <option name="timeStamp" value="201" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java</url>
@@ -1981,41 +1726,267 @@
           <properties />
           <option name="timeStamp" value="203" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java</url>
+          <line>280</line>
+          <properties />
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java</url>
+          <line>267</line>
+          <properties />
+          <option name="timeStamp" value="212" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java</url>
+          <line>343</line>
+          <properties />
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>165</line>
+          <properties />
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>234</line>
+          <properties />
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java</url>
+          <line>247</line>
+          <properties />
+          <option name="timeStamp" value="223" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java</url>
+          <line>35</line>
+          <properties />
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java</url>
+          <line>98</line>
+          <properties />
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>238</line>
+          <properties />
+          <option name="timeStamp" value="266" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="274" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
+          <line>63</line>
+          <properties />
+          <option name="timeStamp" value="281" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="301" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="303" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="309" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java</url>
+          <line>42</line>
+          <properties />
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java</url>
+          <line>47</line>
+          <properties />
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java</url>
           <line>34</line>
           <properties />
-          <option name="timeStamp" value="205" />
+          <option name="timeStamp" value="318" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="321" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="323" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>143</line>
+          <properties />
+          <option name="timeStamp" value="326" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
+          <line>83</line>
+          <properties />
+          <option name="timeStamp" value="329" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
+          <line>87</line>
+          <properties />
+          <option name="timeStamp" value="330" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
+          <line>91</line>
+          <properties />
+          <option name="timeStamp" value="331" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java</url>
+          <line>93</line>
+          <properties />
+          <option name="timeStamp" value="333" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java</url>
+          <line>52</line>
+          <properties />
+          <option name="timeStamp" value="335" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java</url>
+          <line>26</line>
+          <properties />
+          <option name="timeStamp" value="337" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="338" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java</url>
+          <line>84</line>
+          <properties />
+          <option name="timeStamp" value="339" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java</url>
+          <line>33</line>
+          <properties />
+          <option name="timeStamp" value="340" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="341" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java</url>
           <line>36</line>
           <properties />
-          <option name="timeStamp" value="206" />
+          <option name="timeStamp" value="342" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java</url>
-          <line>116</line>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java</url>
+          <line>62</line>
           <properties />
-          <option name="timeStamp" value="207" />
+          <option name="timeStamp" value="343" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="344" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>107</line>
+          <properties />
+          <option name="timeStamp" value="357" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java</url>
+          <line>125</line>
+          <properties />
+          <option name="timeStamp" value="371" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>249</line>
+          <properties />
+          <option name="timeStamp" value="372" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>261</line>
+          <properties />
+          <option name="timeStamp" value="373" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java</url>
+          <line>294</line>
+          <properties />
+          <option name="timeStamp" value="374" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="208" />
+      <option name="time" value="375" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-        <watch expression="mongoTemplate.find(query, Applicant.class)" />
-        <watch expression="mapper.writeValueAsString(obj)" />
-        <watch expression="JSON.serialize(obj)" />
-        <watch expression="SystemHelper.objectToMap(applicant)" />
-        <watch expression="org.apache.commons.beanutils.BeanMap(obj)" language="JAVA" custom="" />
-        <watch expression="org.apache.commons.beanutils.BeanMap(obj)" />
-        <watch expression="new org.apache.commons.beanutils.BeanMap(obj)" />
-        <watch expression="new org.apache.commons.beanutils.BeanMap(u)" />
-        <watch expression="e" />
+        <watch expression="content.stream().filter(c -&gt; c.getDeviceName().contains(cs))" />
+        <watch expression="pagingQuery.getFilters().get(key)" />
+        <watch expression="Integer.parseInt(pagingQuery.getFilters().get(key))" />
+        <watch expression="pagingQuery.getFilters().get(key)" />
+        <watch expression="MatchInfo.toMatchInfo(applicant, importSuccess)" />
+        <watch expression="matcherQueue" />
+        <watch expression="queue" />
       </configuration>
     </watches-manager>
   </component>
@@ -2024,41 +1995,167 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/XMLReader2SAX.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="203">
+          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/web/WEB-INF/applicationContext.xml">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/UploadHistory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="30" column="87" selection-start-line="30" selection-start-column="74" selection-end-line="30" selection-end-column="87" />
-          <folding />
+        <state relative-caret-position="200">
+          <caret line="20" column="54" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/CustomDateSerializer.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UploadHistoryService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="354">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/FileImport.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-mongodb/1.9.6.RELEASE/a005337382f42aff95680f19786481baf6186eae/spring-data-mongodb-1.9.6.RELEASE-sources.jar!/org/springframework/data/mongodb/core/MongoTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        <state relative-caret-position="284">
+          <caret line="613" column="23" selection-start-line="613" selection-start-column="23" selection-end-line="613" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="75" column="24" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysConfigUtil.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UploadHistoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46">
+          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDeviceAvg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfDateAvg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvince.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-131">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ApplicantOfProvinceAvg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ConstituencyStatistic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/DistrictStatistic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/chart/ProvinceStatistic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2956">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa0.342/DuplicateService.java" />
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/Comparators.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="51" column="27" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="475" column="17" selection-start-line="475" selection-start-column="17" selection-end-line="475" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="2131" column="40" selection-start-line="2131" selection-start-column="28" selection-end-line="2131" selection-end-column="40" />
+          <folding>
+            <element signature="e#82971#82972#0" expanded="false" />
+            <element signature="e#83020#83021#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportGaps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDeviceRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/modelview/importLog/ImportByDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="21" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantLogService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
@@ -2066,508 +2163,279 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysContextListener.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SysJsonSerializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="55" column="53" selection-start-line="0" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state relative-caret-position="375">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#readXML#0;class#SystemHelper#0" expanded="false" />
-            <element signature="method#getUnLeapYearBirthDate#0;class#SystemHelper#0" expanded="false" />
-            <element signature="method#getApplicantColumns#0;class#SystemHelper#0" expanded="false" />
-            <element signature="e#12839#12921#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/UTCDateDeserializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantCallableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantWebAsyncController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3650">
-          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DuplicateController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/BaseService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="-520">
+          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListenerRunnable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListenerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileMonitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/TestService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/MatchService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/ThreadWorkService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/ExportLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2096">
-          <caret line="15" column="46" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Record.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/map/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1174">
-          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3550">
-          <caret line="360" column="47" selection-start-line="360" selection-start-column="47" selection-end-line="360" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getGuid#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setGuid#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getRegistrationNumber#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setRegistrationNumber#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getSortNumber#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setSortNumber#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getBeginCreateDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setBeginCreateDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getEndCreateDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setEndCreateDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getBeginEditDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setBeginEditDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getEndEditDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setEndEditDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getOperatorGuid#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setOperatorGuid#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getOperatorName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setOperatorName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getProvinceId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setProvinceId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getProvinceName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setProvinceName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getDistrictId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setDistrictId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getDistrictName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setDistrictName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getConstituencyId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getConstituencyName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setConstituencyName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getWardId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setWardId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getWardName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setWardName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getPollingStationId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setPollingStationId#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getPollingStationName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setPollingStationName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getSaveDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setSaveDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getEditSaveDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setEditSaveDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getDeviceName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setDeviceName#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#isUnderDuress#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setUnderDuress#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getExportDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setExportDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getImportToServerDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setImportToServerDatetime#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getApplicantCompliance#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setApplicantCompliance#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getApplicantDemographic#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setApplicantDemographic#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setApplicantFingerprint#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#getApplicantPhoto#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;method#setApplicantPhoto#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;class#ApplicantCompliance#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;class#ApplicantDemographic#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;class#ApplicantFingerprint#0;class#Applicant#0" expanded="false" />
-            <element signature="docComment;class#ApplicantPhoto#0;class#Applicant#0" expanded="false" />
-            <element signature="class#ApplicantPhoto#0;class#Applicant#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ApplicantLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Duplicate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2025">
-          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Permission.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Province.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#MongoDBDaoImpl#0;class#MongoDBDaoImpl#0" expanded="false" />
-            <element signature="method#getCollection#0;class#MongoDBDaoImpl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantLogService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6175">
-          <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#3742#3743#0" expanded="false" />
+            <element signature="e#3803#3804#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ImportLogService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        <state relative-caret-position="205">
+          <caret line="62" column="54" selection-start-line="62" selection-start-column="49" selection-end-line="62" selection-end-column="54" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2768#2855#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java">
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/ImportLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6000">
-          <caret line="257" column="46" selection-start-line="257" selection-start-column="45" selection-end-line="257" selection-end-column="46" />
+        <state relative-caret-position="1075">
+          <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1475">
+          <caret line="69" column="49" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#saveTaskInfo#0;class#ImportTask#0" expanded="false" />
-            <element signature="method#updateTaskInfo#0;class#ImportTask#0" expanded="false" />
-            <element signature="e#2236#2244#0" expanded="true" />
-            <element signature="e#10991#11007#0" expanded="true" />
-            <element signature="e#11747#11762#0" expanded="true" />
-            <element signature="class#GenericExtFilter#0;class#ImportTask#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchApplicantRunnable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/MatchInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Producer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/ImportHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consume.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#1637#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-978">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#delete#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/ApplicantService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5534">
-          <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
+        <state relative-caret-position="725">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#drop#0;class#ApplicantService#0" expanded="false" />
+            <element signature="method#pageList#0;class#ApplicantService#0" expanded="false" />
+            <element signature="method#getApplicantDuplicatesIdList#0;class#ApplicantService#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ImportLogController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1450">
+          <caret line="73" column="109" selection-start-line="73" selection-start-column="61" selection-end-line="73" selection-end-column="109" />
+          <folding>
+            <element signature="method#ImportDeviceRecord#0;class#ImportLogController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ChartController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DuplicateController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="33" column="53" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1022#1030#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/service/DuplicateService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1600">
+          <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#find#0;class#DuplicateService#0" expanded="false" />
+            <element signature="method#getNextDuplicate#0;class#DuplicateService#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/model/Applicant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56600">
+          <caret line="2936" column="0" selection-start-line="2936" selection-start-column="0" selection-end-line="2950" selection-end-column="39" />
+          <folding>
+            <element signature="docComment;class#Applicant#0" expanded="false" />
+            <element signature="e#20207#20244#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/ThreadWorkService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#583#591#0" expanded="false" />
+            <element signature="e#675#683#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1790#1806#0" expanded="false" />
+            <element signature="e#2054#2070#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/common/SystemHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4450">
+          <caret line="193" column="15" selection-start-line="193" selection-start-column="15" selection-end-line="193" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#12469#12551#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/web/WEB-INF/static/js/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/web/WEB-INF/view/DataView/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/linstener/FileListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="742" column="16" selection-start-line="742" selection-start-column="16" selection-end-line="742" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/thread/Matcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/ApplicantController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/DataViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/controller/HomeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/task/ImportTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="247" column="50" selection-start-line="247" selection-start-column="50" selection-end-line="247" selection-end-column="50" />
+          <folding>
+            <element signature="method#ImportTask#0;class#ImportTask#0" expanded="false" />
+            <element signature="method#saveTaskInfo#0;class#ImportTask#0" expanded="false" />
+            <element signature="method#updateTaskInfo#0;class#ImportTask#0" expanded="false" />
+            <element signature="method#run#0;class#ImportTask#0" expanded="false" />
+            <element signature="class#Producer#0;class#ImportTask#0" expanded="false" />
+            <element signature="e#7537#7553#0" expanded="true" />
+            <element signature="e#8297#8313#0" expanded="true" />
+            <element signature="e#12672#12688#0" expanded="true" />
+            <element signature="e#13574#13590#0" expanded="true" />
+            <element signature="class#ImportResult#0;class#ImportTask#0" expanded="false" />
+            <element signature="class#GenericExtFilter#0;class#ImportTask#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mongodb/mongo-java-driver/3.4.1/b0e8dd9ca0431b17f1350e96d17b66cf6516a9b9/mongo-java-driver-3.4.1-sources.jar!/com/mongodb/MongoClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="401" column="25" selection-start-line="401" selection-start-column="25" selection-end-line="401" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VMSWeb/src/main/java/Zim/mongo/MongoDBDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+          <folding>
+            <element signature="e#1370#1371#0" expanded="true" />
+            <element signature="e#1418#1419#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2621,7 +2489,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.28127772" />
+                <option value="0.3637977" />
               </list>
             </option>
           </splitter-proportions>
@@ -2633,7 +2501,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.64862466" />
+                <option value="0.3637977" />
               </list>
             </option>
           </splitter-proportions>
@@ -2645,7 +2513,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.64862466" />
+                <option value="0.3637977" />
               </list>
             </option>
           </splitter-proportions>

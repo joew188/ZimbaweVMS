@@ -4,19 +4,12 @@ package Zim.model.modelview.chart;
  * Created by Laxton-Joe on 2017/6/17.
  */
 public class ApplicantOfProvinceAvg {
-    private int province;
+    private int provinceId;
     private String provinceName;
     private  int count;
     private  int total;
     private  float avg;
 
-    public int getProvince() {
-        return province;
-    }
-
-    public void setProvince(int province) {
-        this.province = province;
-    }
 
     public String getProvinceName() {
         return provinceName;
@@ -48,5 +41,13 @@ public class ApplicantOfProvinceAvg {
 
     public void setAvg(float avg) {
         this.avg = avg;
+    }
+
+    public int getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
     }
 }

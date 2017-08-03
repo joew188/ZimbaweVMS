@@ -8,6 +8,7 @@ import Zim.model.ImportLog;
 import Zim.model.modelview.MatchedResult;
 import Zim.mongo.MongoDBDaoImpl;
 import com.mongodb.*;
+import org.bson.types.ObjectId;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -41,28 +42,57 @@ public class ImportTask implements Runnable {
     /**
      * 保存任务信息
      */
-    private void saveTaskInfo() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put(ImportLog.NAME, exportLog.getName());
-        map.put(ImportLog.DEVICENAME, exportLog.getDeviceName());
-        map.put(ImportLog.EXPORTDATETIME, exportLog.getExportDateTime().toGregorianCalendar().getTime());
-        map.put(ImportLog.TOTAL, exportLog.getTotal());
-        map.put(ImportLog.MALE, exportLog.getMale());
-        map.put(ImportLog.FEMALE, exportLog.getFemale());
-        map.put(ImportLog.STATUS, 0);
-        map.put(ImportLog.BEGINTIME, new Date());
-        map.put(ImportLog.FINISHTIME, null);
-        map.put(ImportLog.SUCCESS, null);
-        map.put(ImportLog.FAIL, null);
-        map.put(ImportLog.GAP, null);
-        mongoDBDaoImpl.addObject(map, "ImportLog");
+    private DBObject saveTaskInfo() {
+
+        ImportLog importLog = new ImportLog();
+        importLog.set_id(UUID.randomUUID().toString());
+        importLog.setDeviceName(exportLog.getDeviceName());
+        importLog.setName(exportLog.getName());
+        importLog.setExportDateTime(exportLog.getExportDateTime());
+        importLog.setExportTotal(exportLog.getTotal());
+        importLog.setExportMale(exportLog.getMale());
+        importLog.setExportFemale(exportLog.getFemale());
+        importLog.setStatus(0);
+        importLog.setImportBeginTime(new Date());
+        importLog.setImportFinishTime(null);
+        importLog.setImportTotal(0);
+        importLog.setImportMale(0);
+        importLog.setImportFemale(0);
+        DBObject ilObj = mongoDBDaoImpl.insert(SystemHelper.MONGODBSETTING_DB, "ImportLog", importLog.toDBObject());
+        return ilObj;
     }
 
     /**
      * 更新任务信息，完成时间，导入统计。
+     *
+     * @param importLog
+     * @param recordQueue
      */
-    private void updateTaskInfo() {
-
+    private void updateTaskInfo(DBObject importLog, ConcurrentLinkedQueue<ImportResult> recordQueue) {
+        int total = 0;
+        int male = 0;
+        int female = 0;
+        for (ImportResult iResult : recordQueue) {
+            if (iResult.ImportStatus) {
+                total++;
+                if (iResult.gender == 1) {
+                    male++;
+                }
+                if (iResult.gender == 2) {
+                    female++;
+                }
+            }
+        }
+        DBObject upQuery = new BasicDBObject();
+        upQuery.put("importTotal", total);
+        upQuery.put("importMale", male);
+        upQuery.put("importFemale", female);
+        upQuery.put("importFinishTime", new Date());
+        upQuery.put("status", 1);
+        DBObject idQuery = new BasicDBObject();
+        //  idQuery.put("_id", new ObjectId(importLog.get("_id").toString()));
+        idQuery.put("_id", importLog.get("_id").toString());
+        mongoDBDaoImpl.updateObject(idQuery, "ImportLog", upQuery);
     }
 
     @Override
@@ -76,13 +106,13 @@ public class ImportTask implements Runnable {
                 fileQueue.add(fileName);
             }
             if (!fileQueue.isEmpty()) {
-                saveTaskInfo();
-                BlockingQueue<Applicant> buffer = new LinkedBlockingQueue<Applicant>(20);
+                DBObject importLog = saveTaskInfo();
+                BlockingQueue<Applicant> buffer = new LinkedBlockingQueue<Applicant>(100);
                 ConcurrentLinkedQueue<ImportResult> recordQueue = new ConcurrentLinkedQueue<>();
                 AtomicInteger count = new AtomicInteger(fileQueue.size());
                 AtomicInteger count2 = new AtomicInteger(fileQueue.size());
                 String[] flag = {"working"};
-                BlockingQueue<MatchInfo> matcherQueue = new LinkedBlockingQueue<>(20);
+                ConcurrentLinkedQueue<MatchInfo> matcherQueue = new ConcurrentLinkedQueue<>();
 
                 Producer producer = new Producer(fileQueue, buffer, this.xmlFilePath);
                 Consumer consumer = new Consumer(count, buffer, recordQueue, matcherQueue, flag);
@@ -103,7 +133,7 @@ public class ImportTask implements Runnable {
                         }
                     }
                     //  System.out.println("任务完成");
-                    updateTaskInfo();
+                    updateTaskInfo(importLog, recordQueue);
                 }
             }
         }
@@ -133,11 +163,19 @@ public class ImportTask implements Runnable {
                     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                     applicant = (Applicant) jaxbUnmarshaller.unmarshal(fileStream);
                     //  applicant.getApplicantDemographic().setGenderBool(applicant.getApplicantDemographic().getGender().toLowerCase().equals("male"));
+                    // if (null != applicant.getApplicantDemographic().getDateOfBirth()) {
                     int intBirth = SystemHelper.DateToInt(applicant.getApplicantDemographic().getDateOfBirth());
                     if (intBirth > 0)
                         applicant.setDateOfBirth(intBirth);
+                    // }
+                    //  if (null != applicant.getApplicantDemographic().getEndCreateDatetime()) {
+                    int intRegistration = SystemHelper.DateToInt(applicant.getApplicantDemographic().getEndCreateDatetime());
+                    if (intRegistration > 0)
+                        applicant.setDateOfRegistration(intRegistration);
+
+                    // }
                     applicant.setSurname(applicant.getApplicantDemographic().getSurname());
-                    applicant.setGender(applicant.getApplicantDemographic().getGender() == 1);
+                    applicant.setGender(applicant.getApplicantDemographic().getGender());
                     applicant.set_id(applicant.getGuid());
 
                 } catch (JAXBException e) {//xml 无效. 无法转成对象
@@ -161,6 +199,10 @@ public class ImportTask implements Runnable {
                     map.put("Exception", e.toString());
                     map.put("FailTime", new Date());
                     mongoDBDaoImpl.addObject(map, "ApplicantProduceFailLog");
+                } catch (Exception ex) {
+                    applicant = new Applicant();
+                    applicant.set_id("-1");
+                    applicant.setGuid(fileName);
                 }
                 if (produceSuccess) {
                     try {
@@ -178,13 +220,13 @@ public class ImportTask implements Runnable {
         private BlockingQueue<Applicant> buffer;
         private AtomicInteger count;
         private ConcurrentLinkedQueue<ImportResult> recordQueue;
-        private BlockingQueue<MatchInfo> matcherQueue;
+        private ConcurrentLinkedQueue<MatchInfo> matcherQueue;
         private String[] flag;
 
         public Consumer(AtomicInteger count,
                         BlockingQueue<Applicant> buffer,
                         ConcurrentLinkedQueue<ImportResult> recordQueue,
-                        BlockingQueue<MatchInfo> matcherQueue,
+                        ConcurrentLinkedQueue<MatchInfo> matcherQueue,
                         String[] flag) {
             this.buffer = buffer;
             this.count = count;
@@ -201,10 +243,15 @@ public class ImportTask implements Runnable {
                 Applicant applicant = null;
                 try {
                     applicant = buffer.take();
-                    iResult.fileName = applicant.getGuid();
+
                     if (applicant.get_id() != "-1") {
-                        mongoDBDaoImpl.insert(SystemHelper.MONGODBSETTING_DB, "Applicant", applicant.toDBObject());
-                        importSuccess = true;
+                        if (mongoDBDaoImpl.isExist(SystemHelper.MONGODBSETTING_DB, "Applicant", "_id", applicant.get_id())) {
+                            importSuccess = false;
+                            applicant = new Applicant();
+                        } else {
+                            mongoDBDaoImpl.insert(SystemHelper.MONGODBSETTING_DB, "Applicant", applicant.toDBObject());
+                            importSuccess = true;
+                        }
                     }
 
                 } catch (Exception ex) {
@@ -214,6 +261,10 @@ public class ImportTask implements Runnable {
                     count.getAndDecrement();
                     matcherQueue.add(MatchInfo.toMatchInfo(applicant, importSuccess));
                     iResult.ImportStatus = importSuccess;
+                    if (importSuccess) {
+                        iResult.fileName = applicant.getGuid();
+                        iResult.gender = applicant.getGender();
+                    }
                     recordQueue.add(iResult);
                 }
             }
@@ -229,62 +280,73 @@ public class ImportTask implements Runnable {
 
     class Matcher implements Runnable {
         private AtomicInteger count;
-        private BlockingQueue<MatchInfo> queue;
+        private ConcurrentLinkedQueue<MatchInfo> queue;
 
-        public Matcher(AtomicInteger count, BlockingQueue<MatchInfo> queue) {
+        public Matcher(AtomicInteger count, ConcurrentLinkedQueue<MatchInfo> queue) {
             this.count = count;
             this.queue = queue;
         }
 
         @Override
         public void run() {
-            while (count.get() > 0) {
-                try {
-                    MatchInfo matchInfo = queue.take();
-                    if (matchInfo.isWaitMatch()) {
-                        HashSet<MatchedResult> matchArr = MapReduceFunc(matchInfo);
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("empty.,");
-                        if (matchArr != null && matchArr.size() > 0) {
-                            sb = new StringBuilder();
-                            for (MatchedResult mr : matchArr) {
-                                Map<String, Object> map = new HashMap<String, Object>();
-                                map.put("probeId", matchInfo.getGuid());
-                                map.put("referenceId", mr.getId());
-                                map.put("leven", mr.getLeven());
-                                map.put("status", "Pending");
-                                map.put("createdTime", new Date());
-                                mongoDBDaoImpl.addObject(map, "Duplicate"); //插入到Duplicate
-                                sb.append(mr.getId() + ",");
+            synchronized (queue) {
+                while (count.get() > 0) {
+
+                    while (!queue.isEmpty()) {
+
+
+                        try {
+                            MatchInfo matchInfo = queue.poll();
+                            if (matchInfo.isWaitMatch()) {
+                                HashSet<MatchedResult> matchArr = MapReduceFunc(matchInfo);
+                                StringBuilder sb = new StringBuilder();
+                                sb.append("empty.,");
+                                if (matchArr != null && matchArr.size() > 0) {
+                                    sb = new StringBuilder();
+                                    for (MatchedResult mr : matchArr) {
+                                        Map<String, Object> map = new HashMap<String, Object>();
+                                        map.put("probeId", matchInfo.getGuid());
+                                        map.put("referenceId", mr.getId());
+                                        map.put("leven", mr.getLeven());
+                                        map.put("status", "Pending");
+                                        map.put("createdTime", new Date());
+                                        mongoDBDaoImpl.addObject(map, "Duplicate"); //插入到Duplicate
+                                        sb.append(mr.getId() + ",");
+                                    }
+                                }
+
+                                //更新Applicant 状态
+                                mongoDBDaoImpl.updateStatus(matchInfo.get_id(), "Applicant", "status", 1);
+                                //日志
+                                Map<String, Object> mapLog = new HashMap<String, Object>();
+                                mapLog.put("applicantId", matchInfo.getGuid());
+                                mapLog.put("LogEvent", String.format("Applicant Matched Status:Master.Reference:%s", sb.toString().substring(0, sb.toString().length() - 2)));
+                                mapLog.put("LogTime", new Date());
+
+                                mongoDBDaoImpl.addObject(mapLog, "ApplicantLog");
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            count.getAndDecrement();
+
                         }
-
-                        //更新Applicant 状态
-                        mongoDBDaoImpl.updateStatus(matchInfo.get_id(), "Applicant", "status", 1);
-                        //日志
-                        Map<String, Object> mapLog = new HashMap<String, Object>();
-                        mapLog.put("applicantId", matchInfo.getGuid());
-                        mapLog.put("LogEvent", String.format("Applicant Matched Status:Master.Reference:%s", sb.toString().substring(0, sb.toString().length() - 2)));
-                        mapLog.put("LogTime", new Date());
-
-                        mongoDBDaoImpl.addObject(mapLog, "ApplicantLog");
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    count.getAndDecrement();
                 }
             }
         }
 
-
         private HashSet<MatchedResult> MapReduceFunc(MatchInfo matchInfo) {
+
+            //插入到Duplicate
+
+
             HashSet<MatchedResult> results = new HashSet<MatchedResult>();
             LocalDate localBirth = SystemHelper.getUnLeapYearBirthDate(matchInfo.getDateOfBirth());
             StringBuilder sbMap = new StringBuilder();
             String surName = matchInfo.getSurname();
             String guid = matchInfo.getGuid();
-            boolean gender = matchInfo.getGender();
+            int gender = matchInfo.getGender();
             DB dbMongo = mongoDBDaoImpl.getDb(SystemHelper.MONGODBSETTING_DB);
             sbMap.append("function() {");
             sbMap.append(String.format("var srcSodEX=SoundEx(\"%s\");", surName));
@@ -298,7 +360,7 @@ public class ImportTask implements Runnable {
             reduce.append("function(key, values) { return {values:values};}");
 
 
-            String match_result = "match_result";
+            String match_result = "match_result";//+matchInfo.getGuid();
 
             DBObject dbQuery = new BasicDBObject();
             dbQuery.put("gender", gender);
@@ -313,11 +375,14 @@ public class ImportTask implements Runnable {
             birthQuery.put("$lt", iEend);
             dbQuery.put("dateOfBirth", birthQuery);
 
-            MapReduceCommand mrc = new MapReduceCommand(dbMongo.getCollection("Applicant"), sbMap.toString(), reduce.toString(), match_result, MapReduceCommand.OutputType.REPLACE, dbQuery);
+            MapReduceCommand mrc = new MapReduceCommand(dbMongo.getCollection("Applicant"), sbMap.toString(), reduce.toString(), match_result, MapReduceCommand.OutputType.MERGE, dbQuery);
 
             MapReduceOutput mapReduceOutput = dbMongo.getCollection("Applicant").mapReduce(mrc);
             DBCollection resultColl = mapReduceOutput.getOutputCollection();
-            List<DBObject> listResult = resultColl.find().toArray();
+            DBObject idQuery = new BasicDBObject();
+
+            idQuery.put("_id", matchInfo.getGuid());
+            List<DBObject> listResult = resultColl.find(idQuery).toArray();
             for (DBObject obj : listResult) {
                 if (obj.keySet().contains("value")) {
                     DBObject _o1 = (DBObject) obj.get("value");
@@ -340,12 +405,11 @@ public class ImportTask implements Runnable {
     }
 
     class ImportResult {
-        private String fileName;
-        private boolean ImportStatus;
+        private String fileName;//导入xml文件名
+        private boolean ImportStatus;//导入结果
 
-        private int total;
-        private int male;
-        private int female;
+
+        private int gender;//导入性别
 
         public String getFileName() {
             return fileName;
@@ -364,28 +428,13 @@ public class ImportTask implements Runnable {
             ImportStatus = importStatus;
         }
 
-        public int getTotal() {
-            return total;
+
+        public int getGender() {
+            return gender;
         }
 
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public int getMale() {
-            return male;
-        }
-
-        public void setMale(int male) {
-            this.male = male;
-        }
-
-        public int getFemale() {
-            return female;
-        }
-
-        public void setFemale(int female) {
-            this.female = female;
+        public void setGender(int gender) {
+            this.gender = gender;
         }
     }
 
