@@ -1,0 +1,19 @@
+package Zim.model.modelview.req;
+
+import Zim.model.modelview.req.PagingQuery;
+
+/**
+ * Created by Laxton-Joe on 2017/8/9.
+ */
+public class PagingOrNotQuery extends PagingQuery {
+    private boolean paging;
+
+    public boolean isPaging() {
+        return paging;
+    }
+
+    public void setPaging(boolean paging) {
+        this.paging = paging;
+    }
+
+}

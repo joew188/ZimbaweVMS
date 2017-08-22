@@ -24,6 +24,9 @@
           <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-web:4.2.3.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-core:4.2.3.RELEASE" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.6" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.logback-extensions:logback-ext-spring:0.1.4" />
+          <element id="library" level="project" name="Gradle: javax.mail:mail:1.4" />
         </element>
       </element>
     </root>

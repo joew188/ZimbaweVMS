@@ -1,8 +1,8 @@
 package Zim.service;
 
 import Zim.model.UploadHistory;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.res.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,15 +22,15 @@ public class UploadHistoryService extends BaseService<UploadHistory> {
         mongoTemplate.insert(uh);
     }
 
-    public SysPagination<UploadHistory> pageList(PagingQuery pagingQuery) {
-        SysPagination<UploadHistory> result = new SysPagination<>();
+    public PageResponse<UploadHistory> pageList(PagingQuery pagingQuery) {
+        PageResponse<UploadHistory> result = new PageResponse<>();
         try {
             Query query = new Query();
             sortQuery(pagingQuery, query);
             if (pagingQuery.getFilters() != null) {
                 setCriteria(pagingQuery, query);
             }
-            int total = mongoTemplate.find(query, UploadHistory.class).size();
+            long total = mongoTemplate.count(query, UploadHistory.class);
             if (total > 0) {
                 setPaging(result, pagingQuery, query, total);
                 List<UploadHistory> listData = mongoTemplate.find(query, UploadHistory.class);

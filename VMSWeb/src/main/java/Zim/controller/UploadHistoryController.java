@@ -1,10 +1,9 @@
 package Zim.controller;
 
 import Zim.model.UploadHistory;
-import Zim.model.User;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
 import Zim.model.modelview.SysResult;
+import Zim.model.modelview.res.PageResponse;
 import Zim.service.UploadHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -24,7 +23,7 @@ public class UploadHistoryController {
     @CrossOrigin
     @RequestMapping(value = "/upload/list", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<UploadHistory> ApplicantQuery(@RequestBody PagingQuery request) {
+    public PageResponse<UploadHistory> ApplicantQuery(@RequestBody PagingQuery request) {
         return uploadHistoryService.pageList(request);
     }
 
@@ -39,7 +38,7 @@ public class UploadHistoryController {
              @RequestParam(value = "userName", required = true) String userName) {
         SysResult<Boolean> result = new SysResult<Boolean>();
         Query query = new Query(Criteria.where("name").is(name));
-        if (uploadHistoryService.getCollectionSize(query, UploadHistory.class) > 0) {
+        if (uploadHistoryService.queryExists(query, UploadHistory.class)) {
             result.setResult(false);
             result.setContent(false);
             result.setMessage("Same file name " + name + " exists ");
@@ -60,6 +59,18 @@ public class UploadHistoryController {
             result.setResult(false);
             result.setContent(false);
             result.setMessage(ex.getMessage());
+        }
+        return result;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/upload/exist", method = RequestMethod.POST)
+
+    public boolean exist(@RequestParam(value = "name", required = true) String name) {
+        Boolean result = false;
+        try {
+            result = uploadHistoryService.queryExists(new Query(Criteria.where("name").is(name)), UploadHistory.class);
+        } catch (Exception ex) {
         }
         return result;
     }

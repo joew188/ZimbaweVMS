@@ -1,9 +1,11 @@
 package Zim.controller;
 
 import Zim.model.Applicant;
+import Zim.model.Area;
 import Zim.model.modelview.ApplicantMatchResult;
 import Zim.model.modelview.SysResult;
 import Zim.service.ApplicantService;
+import Zim.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -24,12 +26,15 @@ public class ApplicantWebAsyncController {
     @Autowired
     ApplicantService applicantService;
 
+    @Autowired
+    AreaService areaService;
+
     @RequestMapping(value = "/WebAsyncApplicant", method = RequestMethod.POST)
     @ResponseBody
     public WebAsyncTask<List<String>> addApplicant(@RequestBody Applicant applicant) {
         Callable<List<String>> callable = new Callable<List<String>>() {
             public List<String> call() throws Exception {
-                //   System.out.println("执行成功 thread id is : " + Thread.currentThread().getId());
+
                 List<String> result = applicantService.addApplicant(applicant);
                 // List<String> result = new ArrayList<>();
                 //  result.add("test");
@@ -88,10 +93,10 @@ public class ApplicantWebAsyncController {
                         String id = request.getParameter("id");
                         String birth = request.getParameter("birth");
                         String gender = request.getParameter("gender");
-                        applicant.setSurname(name);
+//                        applicant.setSurname(name);
                         applicant.set_id(id);
                         applicant.setDateOfBirth(Integer.parseInt(birth));
-                     //   applicant.setGender(Integer.parseInt(gender));
+                        //   applicant.setGender(Integer.parseInt(gender));
                         List<String> listMatched = applicantService.addApplicant(applicant);
 
                         content.set_id(id);
@@ -137,10 +142,10 @@ public class ApplicantWebAsyncController {
         String id = request.getParameter("id");
         String birth = request.getParameter("birth");
         String gender = request.getParameter("gender");
-        applicant.setSurname(name);
+//        applicant.setSurname(name);
         applicant.set_id(id);
         applicant.setDateOfBirth(Integer.parseInt(birth));
-      //  applicant.setGender(Integer.parseInt(gender));
+        //  applicant.setGender(Integer.parseInt(gender));
 
 
         DeferredResult<SysResult<ApplicantMatchResult>> deferredResult = new DeferredResult<SysResult<ApplicantMatchResult>>(10000L);
@@ -177,6 +182,103 @@ public class ApplicantWebAsyncController {
         return deferredResult;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/WebAsync/Area", method = RequestMethod.POST)
+    public DeferredResult<SysResult<String>> importArea(HttpServletRequest request) {
+
+        Area area = new Area();
+        String areaId = request.getParameter("areaId");
+        String name = request.getParameter("name");
+        String type = request.getParameter("type");
+        String streetName = request.getParameter("streetName");
+        String standNumber = request.getParameter("standNumber");
+        String streetNumber = request.getParameter("streetNumber");
+        String surburb = request.getParameter("surburb");
+        String stationCode = request.getParameter("stationCode");
+        String localAuthority = request.getParameter("localAuthority");
+        String parentAreaID = request.getParameter("parentAreaID");
+        String lat = request.getParameter("lat");
+        String lng = request.getParameter("lng");
+
+
+        area.setAreaId(Integer.valueOf(areaId));
+        area.setName(String.valueOf(name));
+        area.setType(Integer.valueOf(type));
+        if (streetName.length() > 0)
+            area.setStreetName(streetName);
+        else
+            area.setStreetName(null);
+
+        if (standNumber.length() > 0)
+            area.setStandNumber(standNumber);
+        else
+            area.setStandNumber(null);
+
+        if (streetNumber.length() > 0)
+            area.setStreetNumber(streetNumber);
+        else
+            area.setStreetNumber(null);
+
+        if (surburb.length() > 0)
+            area.setSurburb(surburb);
+        else
+            area.setSurburb(null);
+
+        if (stationCode.length() > 0)
+            area.setStationCode(stationCode);
+        else
+            area.setStationCode(null);
+
+        if (localAuthority.length() > 0)
+            area.setLocalAuthority(localAuthority);
+        else
+            area.setLocalAuthority(null);
+
+
+        area.setParentAreaID(Integer.valueOf(parentAreaID));
+
+        if (lat.length() > 0)
+            area.setLat(lat);
+        else
+            area.setLat(null);
+
+        if (lng.length() > 0)
+            area.setLng(lng);
+        else
+            area.setLng(null);
+
+
+        DeferredResult<SysResult<String>> deferredResult = new DeferredResult<SysResult<String>>(10000L);
+
+
+        InsertAreaAsyncCallService asyncCallService = new InsertAreaAsyncCallService(area);
+        asyncCallService.makeRemoteCallAndUnknownWhenFinish(new InsertAreaCallback() {
+            @Override
+            public void callback(String result) {
+                SysResult<String> matchResult = new SysResult<String>();
+
+                matchResult.setContent(name);
+                matchResult.setResult(true);
+                deferredResult.setResult(matchResult);
+            }
+
+        });
+
+        deferredResult.onTimeout(new Runnable() {
+            @Override
+            public void run() {
+                SysResult<String> timeoutResult = new SysResult<String>();
+                timeoutResult.setMessage("time out");
+                timeoutResult.setResult(false);
+
+                deferredResult.setResult(timeoutResult);
+            }
+        });
+
+        return deferredResult;
+    }
+
+
     public interface LongTermTaskCallback {
         void callback(List<String> result);
     }
@@ -205,4 +307,30 @@ public class ApplicantWebAsyncController {
         }
     }
 
+    public interface InsertAreaCallback {
+        void callback(String result);
+    }
+
+    public class InsertAreaAsyncCallService {
+        private final int CorePoolSize = 4;
+        private final int NeedSeconds = 3;
+        private final Area area;
+
+        private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(CorePoolSize);
+
+        public InsertAreaAsyncCallService(Area area) {
+            this.area = area;
+        }
+
+        public void makeRemoteCallAndUnknownWhenFinish(InsertAreaCallback task) {
+
+            scheduler.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    String msg = areaService.addArea(area);
+                    task.callback(msg);
+                }
+            }, 0, TimeUnit.SECONDS);
+        }
+    }
 }

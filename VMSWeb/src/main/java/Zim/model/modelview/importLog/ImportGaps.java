@@ -1,7 +1,5 @@
 package Zim.model.modelview.importLog;
 
-import Zim.model.ImportLog;
-
 import java.util.List;
 
 /**

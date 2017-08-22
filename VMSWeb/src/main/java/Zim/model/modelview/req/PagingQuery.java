@@ -1,4 +1,4 @@
-package Zim.model.modelview;
+package Zim.model.modelview.req;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,13 +11,13 @@ public class PagingQuery implements Serializable {
 
     }
 
-    private int pageSize=10;
-    private int currentPage=1;
+    private long pageSize=10;
+    private long currentPage=1;
     private String orderByName;
     private String orderBy;
     private HashMap<String, String> filters;
 
-    public int getPageSize() {
+    public long getPageSize() {
         if(pageSize==0)
         {
             pageSize=10;
@@ -25,7 +25,7 @@ public class PagingQuery implements Serializable {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(long pageSize) {
         this.pageSize = pageSize;
     }
 
@@ -55,11 +55,11 @@ public class PagingQuery implements Serializable {
         this.filters = filters;
     }
 
-    public int getCurrentPage() {
+    public long getCurrentPage() {
         return currentPage;
     }
 
-    public void setCurrentPage(int currentPage) {
+    public void setCurrentPage(long currentPage) {
         this.currentPage = currentPage;
     }
 }

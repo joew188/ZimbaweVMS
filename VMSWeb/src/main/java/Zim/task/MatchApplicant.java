@@ -133,27 +133,30 @@ public class MatchApplicant {
             MapReduceOutput mapReduceOutput = dbMongo.getCollection("Applicant").mapReduce(mrc);
             DBCollection resultColl = mapReduceOutput.getOutputCollection();
             List<DBObject> listResult = resultColl.find().toArray();
-            for (DBObject obj : listResult) {//实际上只支持一个返回结果集合
-                if (obj.keySet().contains("value")) {
-                    DBObject _o1 = (DBObject) obj.get("value");
-                    if (_o1.keySet().contains("id") && _o1.keySet().contains("leven")) {
-                        results.add(new MatchedResult(_o1));
+            //实际上只支持一个返回结果集合
 //                          dbIdsList = (BasicDBList) _o1.get("match_id_list");
-                        // result = dbIdsList.toArray(new String[dbIdsList.size()]);
-                    }
-                    if (_o1.keySet().contains("values")) {
-                        BasicDBList _oList = (BasicDBList) _o1.get("values");
-                        for (Object o : _oList) {
-                            BasicDBObject item = (BasicDBObject) o;
-                            if (item.keySet().contains("id") && item.keySet().contains("leven")) {
-                                results.add(new MatchedResult(item));
+// result = dbIdsList.toArray(new String[dbIdsList.size()]);
 //                          dbIdsList = (BasicDBList) _o1.get("match_id_list");
-                                // result = dbIdsList.toArray(new String[dbIdsList.size()]);
-                            }
+// result = dbIdsList.toArray(new String[dbIdsList.size()]);
+            listResult.stream().filter(obj -> obj.keySet().contains("value")).forEach(obj -> {
+                DBObject _o1 = (DBObject) obj.get("value");
+                if (_o1.keySet().contains("id") && _o1.keySet().contains("leven")) {
+                    results.add(new MatchedResult(_o1));
+//                          dbIdsList = (BasicDBList) _o1.get("match_id_list");
+                    // result = dbIdsList.toArray(new String[dbIdsList.size()]);
+                }
+                if (_o1.keySet().contains("values")) {
+                    BasicDBList _oList = (BasicDBList) _o1.get("values");
+                    for (Object o : _oList) {
+                        BasicDBObject item = (BasicDBObject) o;
+                        if (item.keySet().contains("id") && item.keySet().contains("leven")) {
+                            results.add(new MatchedResult(item));
+//                          dbIdsList = (BasicDBList) _o1.get("match_id_list");
+                            // result = dbIdsList.toArray(new String[dbIdsList.size()]);
                         }
                     }
                 }
-            }
+            });
         } catch (Exception e) {
             throw e;
         }

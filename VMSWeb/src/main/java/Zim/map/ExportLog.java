@@ -16,26 +16,37 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "serialNumber",
+        "lastSerialNumber",
+        "firstSerialNumber",
         "name",
         "deviceName",
         "exportDateTime",
         "total",
         "male",
-        "female"
+        "female",
+        "kitTotal",
+        "nameOfOperator",
+        "idNumberOfOperator",
+        "operatorGuid"
 })
 @XmlRootElement(name = "ExportLog")
 public class ExportLog {
-
+    @XmlElement(name = "SerialNumber")
+    private short serialNumber;
+    @XmlElement(name = "LastSerialNumber")
+    private String lastSerialNumber;
+    @XmlElement(name = "FirstSerialNumber")
+    private String firstSerialNumber;
     @XmlElement(name = "Name", required = true)
-    protected String name;
+    private String name;
     @XmlElement(name = "DeviceName", required = true)
-    protected String deviceName;
+    private String deviceName;
     @JsonSerialize(using = CustomDateSerializer.class)
     @XmlElement(name = "ExportDateTime", required = true)
     @XmlSchemaType(name = "dateTime")
@@ -50,52 +61,59 @@ public class ExportLog {
     @XmlSchemaType(name = "unsignedInt")
     private int female;
 
-    /**
-     * 获取name属性的值。
-     *
-     * @return possible object is
-     * {@link String }
-     */
+
+    @XmlElement(name = "KitTotal")
+    @XmlSchemaType(name = "unsignedInt")
+    private int kitTotal;
+
+    @XmlElement(name = "NameOfOperator")
+    private String nameOfOperator;
+
+    @XmlElement(name = "IDNumberOfOperator")
+    private String idNumberOfOperator;
+
+    @XmlElement(name = "OperatorGuid")
+    private String operatorGuid;
+
+    public short getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(short serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getLastSerialNumber() {
+        return lastSerialNumber;
+    }
+
+    public void setLastSerialNumber(String lastSerialNumber) {
+        this.lastSerialNumber = lastSerialNumber;
+    }
+
+    public String getFirstSerialNumber() {
+        return firstSerialNumber;
+    }
+
+    public void setFirstSerialNumber(String firstSerialNumber) {
+        this.firstSerialNumber = firstSerialNumber;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * 设置name属性的值。
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setName(String value) {
-        this.name = value;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * 获取deviceName属性的值。
-     *
-     * @return possible object is
-     * {@link String }
-     */
     public String getDeviceName() {
         return deviceName;
     }
 
-    /**
-     * 设置deviceName属性的值。
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setDeviceName(String value) {
-        this.deviceName = value;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
-
-
-
-
-
-
-
 
     public Date getExportDateTime() {
         return exportDateTime;
@@ -105,12 +123,12 @@ public class ExportLog {
         this.exportDateTime = exportDateTime;
     }
 
-    public int getFemale() {
-        return female;
+    public int getTotal() {
+        return total;
     }
 
-    public void setFemale(int female) {
-        this.female = female;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public int getMale() {
@@ -121,12 +139,45 @@ public class ExportLog {
         this.male = male;
     }
 
-    public int getTotal() {
-        return total;
+    public int getFemale() {
+        return female;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setFemale(int female) {
+        this.female = female;
+    }
+
+    public int getKitTotal() {
+        return kitTotal;
+    }
+
+    public void setKitTotal(int kitTotal) {
+        this.kitTotal = kitTotal;
+    }
+
+    public String getNameOfOperator() {
+        return nameOfOperator;
+    }
+
+    public void setNameOfOperator(String nameOfOperator) {
+        this.nameOfOperator = nameOfOperator;
+    }
+
+    public String getIdNumberOfOperator() {
+        return idNumberOfOperator;
+    }
+
+    public void setIdNumberOfOperator(String idNumberOfOperator) {
+        this.idNumberOfOperator = idNumberOfOperator;
+    }
+
+    public String getOperatorGuid() {
+        return operatorGuid;
+    }
+
+    public void setOperatorGuid(String operatorGuid) {
+        this.operatorGuid = operatorGuid;
     }
 }
+
 

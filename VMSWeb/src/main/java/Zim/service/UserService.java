@@ -1,11 +1,10 @@
 package Zim.service;
 
 import Zim.model.User;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.res.PageResponse;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -44,8 +43,8 @@ public class UserService extends BaseService<User> {
         return mongoTemplate.find(query, User.class);
     }
 
-    public SysPagination<User> pageList(PagingQuery appQuery) {
-        SysPagination<User> result = new SysPagination<>();
+    public PageResponse<User> pageList(PagingQuery appQuery) {
+        PageResponse<User> result = new PageResponse<>();
         try {
             Query query = new Query();
             sortQuery(appQuery, query);
@@ -55,7 +54,7 @@ public class UserService extends BaseService<User> {
 //                });
                 setCriteria(appQuery, query);
             }
-            int total = mongoTemplate.find(query, User.class).size();
+            long total = mongoTemplate.count(query, User.class);
             if (total > 0) {
                 setPaging(result, appQuery, query, total);
                 List<User> listData = mongoTemplate.find(query, User.class);
@@ -68,13 +67,6 @@ public class UserService extends BaseService<User> {
         }
         return result;
     }
-//
-//    public int findSize(String name) {
-//        int result = 0;
-//        Query query = new Query(Criteria.where("name").is(name));
-//        result = mongoTemplate.find(query, User.class).size();
-//        return result;
-//    }
 
     public User findById(String id) {
         User result = null;

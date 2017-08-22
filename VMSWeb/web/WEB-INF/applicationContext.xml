@@ -11,28 +11,24 @@
        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
     <!-- 加载mongodb的属性配置文件 -->
     <context:property-placeholder location="/WEB-INF/mongodb.properties"/>
-    <mongo:mongo-client  id="mongo" replica-set="${mongo.hostport}">
 
+    <mongo:mongo-client id="mongoClient" host="${mongo.host}" port="${mongo.port}"
+                        credentials="${mongo.user}:${mongo.pwd}@${mongo.db}">
         <!-- 一些连接属性的设置 -->
         <mongo:client-options
-
-
-                connections-per-host="${mongo.connectionsPerHost}"
                 threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
                 connect-timeout="${mongo.connectTimeout}"
                 max-wait-time="${mongo.maxWaitTime}"
-
-
                 socket-keep-alive="${mongo.socketKeepAlive}"
                 socket-timeout="${mongo.socketTimeout}"
         />
     </mongo:mongo-client>
-    <mongo:db-factory dbname="${mongo.db}" mongo-ref="mongo"/>
+
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg ref="mongo"/>
+        <constructor-arg ref="mongoClient"/>
         <constructor-arg name="databaseName" value="${mongo.db}"/>
     </bean>
 
     <!-- mongodb bean的仓库目录，会自动扫描扩展了MongoRepository接口的接口进行注入 -->
-    <mongo:repositories base-package="Zim.service" />
+    <mongo:repositories base-package="Zim.service"/>
 </beans>

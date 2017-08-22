@@ -1,7 +1,5 @@
 package Zim.model.modelview;
 
-import java.util.List;
-
 /**
  * Created by Laxton-Joe on 2017/2/20.
  */

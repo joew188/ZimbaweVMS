@@ -9,7 +9,7 @@ public class MatchInfo {
     private boolean waitMatch;
     private String _id;
     private String guid;
-    private String surname;
+    private String fullName;
     private int gender;
     private int dateOfBirth;
 
@@ -29,13 +29,6 @@ public class MatchInfo {
         this.guid = guid;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 
     public int getGender() {
         return gender;
@@ -57,7 +50,7 @@ public class MatchInfo {
         MatchInfo info = new MatchInfo();
         info.set_id(applicant.get_id());
         info.setGuid(applicant.getGuid());
-        info.setSurname(applicant.getSurname());
+        info.setFullName(applicant.getFullName());
         info.setGender(applicant.getGender());
         info.setDateOfBirth(applicant.getDateOfBirth());
         info.setWaitMatch(importSuccess);
@@ -70,5 +63,13 @@ public class MatchInfo {
 
     public void setWaitMatch(boolean waitMatch) {
         this.waitMatch = waitMatch;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

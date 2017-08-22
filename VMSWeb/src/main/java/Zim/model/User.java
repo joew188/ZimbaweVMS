@@ -39,13 +39,6 @@ public class User implements Serializable {
         this.group = group;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public static List<String> getColumns() {
         List<String> result = new ArrayList<>();
@@ -54,5 +47,13 @@ public class User implements Serializable {
         result.add("password");
         result.add("group");
         return result;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

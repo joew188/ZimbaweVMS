@@ -23,7 +23,7 @@ import java.util.*;
 public class SystemHelper {
     public static final String SHORTDATEFORMATSTRING = "dd/MM/yyyy";
     public static final String LONGTDATEFORMATSTRING = "dd/MM/yyyy hh:mm:ss";
-    public static final String LONGTDATEFORMATSTRING2 ="yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String LONGTDATEFORMATSTRING2 = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String LONGTDATEFORMATSTRING3 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 
@@ -77,7 +77,7 @@ public class SystemHelper {
 
     public static String getDateString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(LONGTDATEFORMATSTRING2);
-      //  simpleDateFormat.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
+        //  simpleDateFormat.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
         String dateTimeString = simpleDateFormat.format(date);
         return dateTimeString;
     }
@@ -270,13 +270,15 @@ public class SystemHelper {
 
     public static ExportLog ImportInfo(File file) {
         ExportLog exportLog = null;
+        InputStream fileStream;
         try {
-            InputStream fileStream = new FileInputStream(file);
+            fileStream = new FileInputStream(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(ExportLog.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             exportLog = (ExportLog) jaxbUnmarshaller.unmarshal(fileStream);
+            if (fileStream != null)
+                fileStream.close();
         } catch (Exception e) {
-
 
         }
         return exportLog;

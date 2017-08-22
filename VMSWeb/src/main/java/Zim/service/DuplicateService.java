@@ -5,11 +5,10 @@ import Zim.model.Applicant;
 import Zim.model.ApplicantLog;
 import Zim.model.Duplicate;
 import Zim.model.modelview.DuplicateAction;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
 
+import Zim.model.modelview.res.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -27,17 +26,17 @@ public class DuplicateService extends BaseService<Duplicate> {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public SysPagination<Duplicate> pageList(PagingQuery pagingQuery) {
-        SysPagination<Duplicate> result = new SysPagination<Duplicate>();
+    public PageResponse<Duplicate> pageList(PagingQuery pagingQuery) {
+        PageResponse<Duplicate> result = new PageResponse<Duplicate>();
         try {
             Query query = new Query();
             sortQuery(pagingQuery, query);
             if (pagingQuery.getFilters() != null) {
                 setCriteria(pagingQuery, query);
             }
-            int total = mongoTemplate.find(query, Duplicate.class).size();
+            long total = mongoTemplate.count(query, Duplicate.class);
             if (total > 0) {
-                setPaging(result, pagingQuery, query, total);
+                setPaging(result, pagingQuery, query,Integer.valueOf(String.valueOf(total)) );
                 List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
                 result.setCurrentPage(pagingQuery.getCurrentPage());//当前页
                 result.setItems(listData);//查询内容
@@ -129,10 +128,10 @@ public class DuplicateService extends BaseService<Duplicate> {
     private void setApplicantAutoClose(String action, String triggerDupId, String appId, String newStatus) {
         Query query = new Query();
         Criteria criteria = new Criteria();
-        criteria.orOperator(criteria.where("probeId").is(appId), criteria.where("referenceId").is(appId));
+        criteria.orOperator(Criteria.where("probeId").is(appId), Criteria.where("referenceId").is(appId));
         criteria.and("status").is("Pending");
         query.addCriteria(criteria);
-        if (mongoTemplate.find(query, Duplicate.class).size() > 0) {
+        if (mongoTemplate.count(query, Duplicate.class) > 0) {
             List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
             for (Duplicate dup : listData) {
                 Applicant probe = mongoTemplate.findById(dup.getProbeId(), Applicant.class);
@@ -167,11 +166,9 @@ public class DuplicateService extends BaseService<Duplicate> {
         result = mongoTemplate.findById(duplicateId, Duplicate.class);
         if (result != null) {
             Applicant app = mongoTemplate.findById(result.getProbeId(), Applicant.class);
-
             result.setProbe(app);
 
             Applicant ref = mongoTemplate.findById(result.getReferenceId(), Applicant.class);
-
             result.setReference(ref);
         }
         return result;
@@ -182,10 +179,10 @@ public class DuplicateService extends BaseService<Duplicate> {
         Query query = new Query();
         query.addCriteria(Criteria.where("status").is("Pending"));
         query.limit(1);// 取多少条记录
-        if (mongoTemplate.find(query, Duplicate.class).size() > 0) {
+        if (mongoTemplate.count(query, Duplicate.class) > 0) {
 
             List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
-            result = listData.get(0).get_id();
+            result = listData.get(0).get_id().toString();
         }
         return result;
     }
@@ -204,26 +201,34 @@ public class DuplicateService extends BaseService<Duplicate> {
         for (String key : pagingQuery.getFilters().keySet()) {
             if (pagingQuery.getFilters().get(key).length() > 0) {
                 if (criteria == null) {
-                    if (key.equals("status")) {
-                        criteria = Criteria.where(key).is(pagingQuery.getFilters().get(key));
-                    } else if (key.equals("createdTime")) {
-                        Date startDate = SystemHelper.getMinusDate(pagingQuery.getFilters().get(key));
-                        Date endDate = SystemHelper.getPlusDate(pagingQuery.getFilters().get(key));
-                        criteria = criteria.where(key).gte(startDate).lt(endDate);
-                    } else {
-                        criteria = Criteria.where(key).regex(pagingQuery.getFilters().get(key), "i");
-                    }
-                } else {
-                    if (key.equals("status")) {
-                        criteria = criteria.and(key).is(pagingQuery.getFilters().get(key));
-                    } else if (key.equals("createdTime")) {
-                        if (SystemHelper.IsDateString(pagingQuery.getFilters().get(key))) {
+                    switch (key) {
+                        case "status":
+                            criteria = Criteria.where(key).is(pagingQuery.getFilters().get(key));
+                            break;
+                        case "createdTime":
                             Date startDate = SystemHelper.getMinusDate(pagingQuery.getFilters().get(key));
                             Date endDate = SystemHelper.getPlusDate(pagingQuery.getFilters().get(key));
-                            criteria = criteria.and(key).gte(startDate).lt(endDate);
-                        }
-                    } else {
-                        criteria = criteria.and(key).regex(pagingQuery.getFilters().get(key), "i");
+                            criteria = Criteria.where(key).gte(startDate).lt(endDate);
+                            break;
+                        default:
+                            criteria = Criteria.where(key).regex(pagingQuery.getFilters().get(key), "i");
+                            break;
+                    }
+                } else {
+                    switch (key) {
+                        case "status":
+                            criteria = criteria.and(key).is(pagingQuery.getFilters().get(key));
+                            break;
+                        case "createdTime":
+                            if (SystemHelper.IsDateString(pagingQuery.getFilters().get(key))) {
+                                Date startDate = SystemHelper.getMinusDate(pagingQuery.getFilters().get(key));
+                                Date endDate = SystemHelper.getPlusDate(pagingQuery.getFilters().get(key));
+                                criteria = criteria.and(key).gte(startDate).lt(endDate);
+                            }
+                            break;
+                        default:
+                            criteria = criteria.and(key).regex(pagingQuery.getFilters().get(key), "i");
+                            break;
                     }
                 }
             }

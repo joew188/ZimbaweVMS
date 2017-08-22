@@ -23,13 +23,6 @@ public class UploadHistory {
     private String userId;
     private String userName;
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String getName() {
         return name;
@@ -81,5 +74,13 @@ public class UploadHistory {
 
     public void setFileSize(String fileSize) {
         this.fileSize = fileSize;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

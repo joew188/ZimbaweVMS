@@ -3,6 +3,8 @@ package Zim.controller;
 import Zim.common.SystemHelper;
 import Zim.model.User;
 import Zim.model.modelview.*;
+import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.res.PageResponse;
 import Zim.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -24,7 +26,7 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/list", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<User> ApplicantQuery(@RequestBody PagingQuery request) {
+    public PageResponse<User> ApplicantQuery(@RequestBody PagingQuery request) {
         return userService.pageList(request);
     }
 
@@ -35,7 +37,7 @@ public class UserController {
     public SysResult<Boolean> add(@RequestBody User user) {
         SysResult<Boolean> result = new SysResult<Boolean>();
         Query query = new Query(Criteria.where("name").is(user.getName()));
-        if (userService.getCollectionSize(query, User.class) > 0) {
+        if (userService.queryExists(query, User.class)) {
             result.setResult(false);
             result.setContent(false);
             result.setMessage("Same user name " + user.getName() + " exists ");
@@ -137,5 +139,4 @@ public class UserController {
 
         return result;
     }
-
 }

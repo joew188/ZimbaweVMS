@@ -2,8 +2,8 @@ package Zim.service;
 
 import Zim.common.SystemHelper;
 import Zim.model.ImportLog;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.res.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,8 +23,8 @@ public class ImportLogService extends BaseService {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public SysPagination<ImportLog> pageList(PagingQuery pagingQuery) {
-        SysPagination<ImportLog> result = new SysPagination<>();
+    public PageResponse<ImportLog> pageList(PagingQuery pagingQuery) {
+        PageResponse<ImportLog> result = new PageResponse<>();
         try {
             Query query = new Query();
             sortQuery(pagingQuery, query);
@@ -34,7 +34,7 @@ public class ImportLogService extends BaseService {
 //                });
                 setCriteria(pagingQuery, query);
             }
-            int total = mongoTemplate.find(query, ImportLog.class).size();
+            long total = mongoTemplate.count(query, ImportLog.class);
             if (total > 0) {
                 setPaging(result, pagingQuery, query, total);
                 List<ImportLog> listData = mongoTemplate.find(query, ImportLog.class);

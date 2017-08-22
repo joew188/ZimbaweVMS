@@ -17,7 +17,7 @@ public class Comparators {
                 } else if (o1 instanceof Integer) {
                     return compare((Integer) o1, (Integer) o2);
                 } else if (o1 instanceof Long) {
-                    return compare((Long) o1, (Long) o2);
+                    return compare(o1, o2);
                 } else if (o1 instanceof ApplicantOfDateAvg) {
                     return compare((ApplicantOfDateAvg) o1, (ApplicantOfDateAvg) o2);
                 } else {
@@ -28,8 +28,8 @@ public class Comparators {
 
             public int compare(String o1, String o2) {
 
-                String s1 = (String) o1;
-                String s2 = (String) o2;
+                String s1 = o1;
+                String s2 = o2;
      /*
       * System.out.println("s1=="+s1+"                s2=="+s2);
       * 取出数组相邻的两个姓firstname或者名lastname
@@ -53,8 +53,8 @@ public class Comparators {
             }
 
             public int compare(Integer o1, Integer o2) {
-                int val1 = o1.intValue();
-                int val2 = o2.intValue();
+                int val1 = o1;
+                int val2 = o2;
                 return (val1 < val2 ? -1 : (val1 == val2 ? 0 : 1));
             }
 

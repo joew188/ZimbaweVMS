@@ -30,14 +30,6 @@ public class Duplicate implements Serializable {
         this.createdTime = new Date();
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
     public String getProbeId() {
         return probeId;
     }
@@ -118,5 +110,13 @@ public class Duplicate implements Serializable {
 
     public void setReference(Applicant reference) {
         this.reference = reference;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

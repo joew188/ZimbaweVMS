@@ -1,10 +1,10 @@
 package Zim.controller;
 
 import Zim.model.ImportLog;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
 import Zim.model.modelview.importLog.ImportByDevice;
 import Zim.model.modelview.importLog.ImportByDeviceRecord;
+import Zim.model.modelview.res.PageResponse;
 import Zim.service.ApplicantService;
 import Zim.service.ImportLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +30,15 @@ public class ImportLogController {
     @CrossOrigin
     @RequestMapping(value = "/import/list", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<ImportLog> ImportList(@RequestBody PagingQuery request) {
+    public PageResponse<ImportLog> ImportList(@RequestBody PagingQuery request) {
         return importLogService.pageList(request);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/import/device", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<ImportByDevice> ImportDevice(@RequestBody PagingQuery request) {
-        SysPagination<ImportByDevice> result = new SysPagination<>();
+    public PageResponse<ImportByDevice> ImportDevice(@RequestBody PagingQuery request) {
+        PageResponse<ImportByDevice> result = new PageResponse<>();
         try {
             Criteria criteria = new Criteria();
             for (String key : request.getFilters().keySet()) {
@@ -106,23 +106,23 @@ public class ImportLogController {
                     }
                 }
 
-                int totalPage = 0;//(int) (count / appQuery.getPageSize());
+                long totalPage = 0;//(int) (count / appQuery.getPageSize());
                 if (count % request.getPageSize() == 0) {
-                    totalPage = (int) (count / request.getPageSize());
+                    totalPage = count / request.getPageSize();
                 } else {
-                    totalPage = ((int) (count / request.getPageSize()) + 1);
+                    totalPage = (count / request.getPageSize() + 1);
                 }
                 result.setTotalRecord(count);//总共记录
                 result.setTotalPage(totalPage);//总共页数
                 result.setPageSize(request.getPageSize());//每页记录
                 result.setFilters(request.getFilters());
-                int beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
-                int endIndex = beginIndex + request.getPageSize();
+                long beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
+                long endIndex = beginIndex + request.getPageSize();
                 if (endIndex > content.size()) {
                     endIndex = content.size();
                 }
                 beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
-                List<ImportByDevice> listData = content.subList(beginIndex, endIndex);
+                List<ImportByDevice> listData = content.subList((int)beginIndex, (int)endIndex);
                 if (listData.size() > 0) {
                     result.setCurrentPage(request.getCurrentPage());//当前页
                     result.setItems(listData);//查询内容
@@ -140,8 +140,8 @@ public class ImportLogController {
     @CrossOrigin
     @RequestMapping(value = "/import/record", method = RequestMethod.POST)
     @ResponseBody
-    public SysPagination<ImportByDeviceRecord> ImportDeviceRecord(@RequestBody PagingQuery request) {
-        SysPagination<ImportByDeviceRecord> result = new SysPagination<>();
+    public PageResponse<ImportByDeviceRecord> ImportDeviceRecord(@RequestBody PagingQuery request) {
+        PageResponse<ImportByDeviceRecord> result = new PageResponse<>();
         try {
             Criteria criteria = new Criteria();
             Criteria criteria2 = new Criteria();
@@ -209,25 +209,25 @@ public class ImportLogController {
 
 
 
-            int count = content.size();
+            long count = content.size();
             if (count > 0) {
-                int totalPage = 0;//(int) (count / appQuery.getPageSize());
+                long totalPage = 0;//(int) (count / appQuery.getPageSize());
                 if (count % request.getPageSize() == 0) {
-                    totalPage = (int) (count / request.getPageSize());
+                    totalPage = count / request.getPageSize();
                 } else {
-                    totalPage = ((int) (count / request.getPageSize()) + 1);
+                    totalPage = (count / request.getPageSize() + 1);
                 }
                 result.setTotalRecord(count);//总共记录
                 result.setTotalPage(totalPage);//总共页数
                 result.setPageSize(request.getPageSize());//每页记录
                 result.setFilters(request.getFilters());
-                int beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
-                int endIndex = beginIndex + request.getPageSize();
+                long beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
+                long endIndex = beginIndex + request.getPageSize();
                 if (endIndex > content.size()) {
                     endIndex = content.size();
                 }
                 beginIndex = (request.getCurrentPage() - 1) * request.getPageSize();
-                List<ImportByDeviceRecord> listData = content.subList(beginIndex, endIndex);
+                List<ImportByDeviceRecord> listData = content.subList((int)beginIndex, (int)endIndex);
                 if (listData.size() > 0) {
                     result.setCurrentPage(request.getCurrentPage());//当前页
                     for (ImportByDeviceRecord record : listData) {
@@ -253,4 +253,5 @@ public class ImportLogController {
         return result;
 
     }
+
 }

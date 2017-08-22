@@ -60,10 +60,24 @@ public class ImportLog {
     private Date importBeginTime;
     @JsonSerialize(using = CustomDateSerializer.class)
     private Date importFinishTime;
-    private int importTotal;
-    private int importMale;
-    private int importFemale;
+    private volatile int importTotal;
+    private volatile int importMale;
+    private volatile int importFemale;
     private int status;
+
+    private String lastSerialNumber;
+
+    private String firstSerialNumber;
+
+    private int kitTotal;
+
+    private String nameOfOperator;
+
+    private String idNumberOfOperator;
+
+    private String operatorGuid;
+
+
 
     public static String getID() {
         return ID;
@@ -117,13 +131,6 @@ public class ImportLog {
         return STATUS;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String getName() {
         return name;
@@ -240,5 +247,61 @@ public class ImportLog {
         dbObject.put("status", this.getStatus());
 
         return dbObject;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getLastSerialNumber() {
+        return lastSerialNumber;
+    }
+
+    public void setLastSerialNumber(String lastSerialNumber) {
+        this.lastSerialNumber = lastSerialNumber;
+    }
+
+    public String getFirstSerialNumber() {
+        return firstSerialNumber;
+    }
+
+    public void setFirstSerialNumber(String firstSerialNumber) {
+        this.firstSerialNumber = firstSerialNumber;
+    }
+
+    public int getKitTotal() {
+        return kitTotal;
+    }
+
+    public void setKitTotal(int kitTotal) {
+        this.kitTotal = kitTotal;
+    }
+
+    public String getNameOfOperator() {
+        return nameOfOperator;
+    }
+
+    public void setNameOfOperator(String nameOfOperator) {
+        this.nameOfOperator = nameOfOperator;
+    }
+
+    public String getIdNumberOfOperator() {
+        return idNumberOfOperator;
+    }
+
+    public void setIdNumberOfOperator(String idNumberOfOperator) {
+        this.idNumberOfOperator = idNumberOfOperator;
+    }
+
+    public String getOperatorGuid() {
+        return operatorGuid;
+    }
+
+    public void setOperatorGuid(String operatorGuid) {
+        this.operatorGuid = operatorGuid;
     }
 }

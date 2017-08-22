@@ -1,8 +1,8 @@
 package Zim.service;
 
-import Zim.model.User;
-import Zim.model.modelview.PagingQuery;
-import Zim.model.modelview.SysPagination;
+import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.res.PagingResponse;
+import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -35,26 +35,37 @@ public class BaseService<T> {
             if (orderByName.equals("personName")) {
                 orderByName = "applicantDemographic.forenames";
             }
+            if (orderByName.equals("surname")) {
+                orderByName = "applicantDemographic.surname";
+            }
+            if (orderByName.equals("provinceName")) {
+                orderByName = "applicantDemographic.provinceName";
+            }
+            if (orderByName.equals("districtName")) {
+                orderByName = "applicantDemographic.districtName";
+            }
             query.with(new Sort(new Sort.Order(orderBy, orderByName)));
         }
     }
 
-    public void setPaging(SysPagination<T> result, PagingQuery pagingQuery, Query query, int total) {
-        int skip = (pagingQuery.getCurrentPage() - 1) * pagingQuery.getPageSize();
-        int totalPage = 0;
+    public void setPaging(PagingResponse<T> result, PagingQuery pagingQuery, Query query, long total) {
+        long skip = (pagingQuery.getCurrentPage() - 1) * pagingQuery.getPageSize();
+        long totalPage = 0;
         if (total % pagingQuery.getPageSize() == 0) {
-            totalPage = (int) (total / pagingQuery.getPageSize());
+            totalPage = total / pagingQuery.getPageSize();
         } else {
-            totalPage = ((int) (total / pagingQuery.getPageSize()) + 1);
+            totalPage = (total / pagingQuery.getPageSize() + 1);
         }
-        result.setOrderBy(pagingQuery.getOrderBy());
-        result.setOrderByName(pagingQuery.getOrderByName());
-        result.setTotalRecord(total);//总共记录
-        result.setTotalPage(totalPage);//总共页数
-        result.setPageSize(pagingQuery.getPageSize());//每页记录
-        result.setFilters(pagingQuery.getFilters());
-        query.skip(skip);// 从那条记录开始
-        query.limit(pagingQuery.getPageSize());// 取多少条记录
+        if (result != null) {
+            result.setOrderBy(pagingQuery.getOrderBy());
+            result.setOrderByName(pagingQuery.getOrderByName());
+            result.setTotalRecord(total);//总共记录
+            result.setTotalPage(totalPage);//总共页数
+            result.setPageSize(pagingQuery.getPageSize());//每页记录
+            result.setFilters(pagingQuery.getFilters());
+        }
+        query.skip((int) skip);// 从那条记录开始
+        query.limit((int) pagingQuery.getPageSize());// 取多少条记录
     }
 
     public void setCriteria(PagingQuery pagingQuery, Query query) {
@@ -70,27 +81,36 @@ public class BaseService<T> {
 
     public List<T> getGroupStatic(Criteria criteria, GroupBy groupBy, String collectionName, Class<T> entityClass) {
         List<T> result = new ArrayList<>();
-        Iterator<T> iteratorResult = mongoTemplate.group(criteria, collectionName, groupBy, entityClass).iterator();
-        while (iteratorResult.hasNext()) {
-            result.add(iteratorResult.next());
+        for (T t : mongoTemplate.group(criteria, collectionName, groupBy, entityClass)) {
+            result.add(t);
         }
         return result;
     }
 
     public List<T> getGroupStatic(GroupBy groupBy, String collectionName, Class<T> entityClass) {
         List<T> result = new ArrayList<>();
-        Iterator<T> iteratorResult = mongoTemplate.group(collectionName, groupBy, entityClass).iterator();
-        while (iteratorResult.hasNext()) {
-            result.add(iteratorResult.next());
+        for (T t : mongoTemplate.group(collectionName, groupBy, entityClass)) {
+            result.add(t);
         }
         return result;
     }
 
-
-    public int getCollectionSize(Query query, Class<T> entityClass) {
-        return mongoTemplate.find(query, entityClass).size();
+    public boolean queryExists(Query query, Class<T> entityClass) {
+        return mongoTemplate.exists(query, entityClass);
     }
+
     public List<T> getCollection(Query query, Class<T> entityClass) {
         return mongoTemplate.find(query, entityClass);
+    }
+
+    public List getDistinct(String collectionName, String fieldName, DBObject query) {
+        return mongoTemplate.getCollection(collectionName).distinct(fieldName, query);
+        //        String jsonSql="{distinct:'Applicant', key:'deviceName'}";
+//        CommandResult commandResult=mongoTemplate.executeCommand(jsonSql);
+//
+//        BasicDBList list = (BasicDBList)commandResult.get("values");
+//        for (int i = 0; i < list.size(); i ++) {
+//            System.out.println(list.get(i));
+//        }
     }
 }

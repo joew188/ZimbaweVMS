@@ -20,7 +20,7 @@ public interface MongoDBDao {
      * @param dbName
      * @return
      */
-    public DB getDb(String dbName);
+    DB getDb(String dbName);
 
     /**
      * 方法名：getCollection
@@ -31,7 +31,7 @@ public interface MongoDBDao {
      * @param collectionName 数据库集合名
      * @return
      */
-    public DBCollection getCollection(String dbName, String collectionName);
+    DBCollection getCollection(String dbName, String collectionName);
 
     /**
      * 方法名：insert
@@ -44,7 +44,7 @@ public interface MongoDBDao {
      * @return
      */
 //    public boolean insert(String dbName, String collectionName, String keys, Object values);
-    public DBObject insert(String dbName, String collectionName, DBObject values);
+    DBObject insert(String dbName, String collectionName, DBObject values);
     // public boolean insert2(String dbName, String collectionName, Test values);
 
     /**
@@ -58,7 +58,7 @@ public interface MongoDBDao {
      * @param values
      * @return
      */
-    public boolean delete(String dbName, String collectionName, String keys, Object values);
+    boolean delete(String dbName, String collectionName, String keys, Object values);
 
     /**
      * 方法名：find
@@ -70,7 +70,7 @@ public interface MongoDBDao {
      * @param num
      * @return
      */
-    public ArrayList<DBObject> find(String dbName, String collectionName, int num);
+    ArrayList<DBObject> find(String dbName, String collectionName, int num);
 
     /**
      * 方法名：update
@@ -83,7 +83,7 @@ public interface MongoDBDao {
      * @param newValue
      * @return
      */
-    public boolean update(String dbName, String collectionName, DBObject oldValue, DBObject newValue);
+    boolean update(String dbName, String collectionName, DBObject oldValue, DBObject newValue);
 
     /**
      * 方法名：isExit
@@ -96,11 +96,11 @@ public interface MongoDBDao {
      * @param value
      * @return
      */
-    public boolean isExist(String dbName, String collectionName, String key, Object value);
+    boolean isExist(String dbName, String collectionName, String key, Object value);
 
-    public DBObject findById(String collectionName, String id);
+    DBObject findById(String collectionName, Object id);
 
-    public WriteResult addObject(Map<String, Object> map, String collectionName);
+    WriteResult addObject(Map<String, Object> map, String collectionName);
 
     WriteResult insertObject(Map<String, Object> map, String collectionName);
 

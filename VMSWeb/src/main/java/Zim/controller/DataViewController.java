@@ -1,7 +1,6 @@
 package Zim.controller;
 
 import Zim.common.SystemHelper;
-import Zim.model.Applicant;
 import Zim.service.ApplicantService;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,46 +26,45 @@ public class DataViewController {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/applicant/{id}", method = RequestMethod.GET)
-    public List<List<String>> delete(@PathVariable("id") String id) {
-        List<List<String>> applicant = new ArrayList<>();
-
-        Applicant app = applicantService.find(id);
-        DBObject dbObject = app.toDBObject();
-        Iterator entries = dbObject.toMap().entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-
-            if (key.equals("applicantCompliance")
-                    || key.equals("applicantFingerprint")
-                    || key.equals("applicantPhoto")
-                    || key.equals("applicantDemographic")) {
-
-                addChildWord(key.replace("applicant", ""), (DBObject) entry.getValue(), applicant);
-            } else {
-                String value = "";
-                if (entry.getValue() != null) {
-                    if (entry.getValue().getClass().getName().equals("java.util.Date")) {
-                        value = SystemHelper.getDateString((Date) entry.getValue());
-                    } else {
-                        value = String.valueOf(entry.getValue());
-                    }
-                }
-                List<String> content = new ArrayList<>();
-                content.add("applicant " + key + ":" + value);
-                applicant.add(content);
-            }
-        }
-        return applicant;
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/applicant/{id}", method = RequestMethod.GET)
+//    public List<List<String>> delete(@PathVariable("id") String id) {
+//        List<List<String>> applicant = new ArrayList<>();
+//
+//        Applicant app = applicantService.find(id);
+//        DBObject dbObject = app.toDBObject();
+//        Iterator entries = dbObject.toMap().entrySet().iterator();
+//        while (entries.hasNext()) {
+//            Map.Entry entry = (Map.Entry) entries.next();
+//            String key = (String) entry.getKey();
+//
+//            if (key.equals("applicantCompliance")
+//                    || key.equals("applicantFingerprint")
+//                    || key.equals("applicantPhoto")
+//                    || key.equals("applicantDemographic")) {
+//
+//                addChildWord(key.replace("applicant", ""), (DBObject) entry.getValue(), applicant);
+//            } else {
+//                String value = "";
+//                if (entry.getValue() != null) {
+//                    if (entry.getValue().getClass().getName().equals("java.util.Date")) {
+//                        value = SystemHelper.getDateString((Date) entry.getValue());
+//                    } else {
+//                        value = String.valueOf(entry.getValue());
+//                    }
+//                }
+//                List<String> content = new ArrayList<>();
+//                content.add("applicant " + key + ":" + value);
+//                applicant.add(content);
+//            }
+//        }
+//        return applicant;
+//    }
 
     private void addChildWord(String prefix, DBObject dbObject, List<List<String>> container) {
 
-        Iterator entries = dbObject.toMap().entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
+        for (Object o : dbObject.toMap().entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
             String key = (String) entry.getKey();
 
 
