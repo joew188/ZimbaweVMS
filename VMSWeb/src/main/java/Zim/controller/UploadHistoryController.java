@@ -1,8 +1,8 @@
 package Zim.controller;
 
 import Zim.model.UploadHistory;
-import Zim.model.modelview.req.PagingQuery;
 import Zim.model.modelview.SysResult;
+import Zim.model.modelview.req.PagingPageQuery;
 import Zim.model.modelview.res.PageResponse;
 import Zim.service.UploadHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UploadHistoryController {
     @CrossOrigin
     @RequestMapping(value = "/upload/list", method = RequestMethod.POST)
     @ResponseBody
-    public PageResponse<UploadHistory> ApplicantQuery(@RequestBody PagingQuery request) {
+    public PageResponse<UploadHistory> ApplicantQuery(@RequestBody PagingPageQuery request) {
         return uploadHistoryService.pageList(request);
     }
 
@@ -36,7 +36,7 @@ public class UploadHistoryController {
              @RequestParam(value = "fileSize", required = true) String fileSize,
              @RequestParam(value = "userId", required = true) String userId,
              @RequestParam(value = "userName", required = true) String userName) {
-        SysResult<Boolean> result = new SysResult<Boolean>();
+        SysResult<Boolean> result = new SysResult<>();
         Query query = new Query(Criteria.where("name").is(name));
         if (uploadHistoryService.queryExists(query, UploadHistory.class)) {
             result.setResult(false);

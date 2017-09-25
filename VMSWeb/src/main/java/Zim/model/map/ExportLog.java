@@ -5,7 +5,7 @@
 // 生成时间: 2017.07.11 时间 05:15:44 PM CST
 //
 
-package Zim.map;
+package Zim.model.map;
 
 import Zim.common.CustomDateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

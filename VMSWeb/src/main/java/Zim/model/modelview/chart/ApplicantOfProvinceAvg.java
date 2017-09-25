@@ -1,14 +1,17 @@
 package Zim.model.modelview.chart;
 
+import Zim.common.CustomFloatSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Created by Laxton-Joe on 2017/6/17.
  */
 public class ApplicantOfProvinceAvg {
     private int provinceId;
     private String provinceName;
-    private  int count;
-    private  int total;
-    private  float avg;
+    private int count;
+    private float total;
+    private float avg;
 
 
     public String getProvinceName() {
@@ -27,14 +30,16 @@ public class ApplicantOfProvinceAvg {
         this.count = count;
     }
 
-    public int getTotal() {
+    @JsonSerialize(using = CustomFloatSerializer.class)
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
+    @JsonSerialize(using = CustomFloatSerializer.class)
     public float getAvg() {
         return avg;
     }

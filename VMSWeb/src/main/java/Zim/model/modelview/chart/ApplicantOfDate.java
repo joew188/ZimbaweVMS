@@ -4,7 +4,7 @@ package Zim.model.modelview.chart;
  * Created by Laxton-Joe on 2017/6/16.
  */
 public class ApplicantOfDate {
-    private int dateOfRegistration;
+    private int _id;
     private int count;
 
     public int getCount() {
@@ -15,11 +15,19 @@ public class ApplicantOfDate {
         this.count = count;
     }
 
-    public int getDateOfRegistration() {
-        return dateOfRegistration;
+    public int get_id() {
+        return _id;
     }
 
-    public void setDateOfRegistration(int dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
+    public void set_id(int _id) {
+        this._id = _id;
     }
+//
+//    public int getDateOfRegistration() {
+//        return dateOfRegistration;
+//    }
+//
+//    public void setDateOfRegistration(int dateOfRegistration) {
+//        this.dateOfRegistration = dateOfRegistration;
+//    }
 }

@@ -6,28 +6,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Laxton-Joe on 2017/2/7.
  */
 @Document(collection = "ApplicantLog")
 public class ApplicantLog implements Serializable {
-
-    public  ApplicantLog(String applicantId, String LogEvent)
-    {
-        this.applicantId=applicantId;
-        this.LogEvent=LogEvent;
-        this.LogTime=new Date();
-    }
+//
+//    public  ApplicantLog(String applicantId, String logEvent)
+//    {
+//        this.applicantId=applicantId;
+//        this.logEvent=logEvent;
+//        this.logTime=new Date();
+//    }
 
     private String applicantId;
     private String probeId;
     private String referenceId;
-    private String LogEvent;
+    private String logEvent;
     @JsonSerialize(using = CustomDateSerializer.class)
-    private Date LogTime;
+    private Date logTime;
 
     public ApplicantLog() {
 
@@ -41,36 +39,9 @@ public class ApplicantLog implements Serializable {
         this.applicantId = applicantId;
     }
 
-    public String getLogEvent() {
-        return LogEvent;
-    }
 
-    public void setLogEvent(String logEvent) {
-        LogEvent = logEvent;
-    }
 
-    public Date getLogTime() {
-        return LogTime;
-    }
 
-    public void setLogTime(Date logTime) {
-        LogTime = logTime;
-    }
-
-    /***
-     * 保存到MongoDB 的 Map
-     *
-     * @param
-     * @return
-     */
-    public static Map<String, Object> toLogMap(String appId,String logEvent)
-    {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("applicantId",appId);
-        map.put("LogEvent",logEvent);
-        map.put("LogTime",new Date());
-        return map;
-    }
 
     public String getProbeId() {
         return probeId;
@@ -86,5 +57,21 @@ public class ApplicantLog implements Serializable {
 
     public void setReferenceId(String referenceId) {
         this.referenceId = referenceId;
+    }
+
+    public String getLogEvent() {
+        return logEvent;
+    }
+
+    public void setLogEvent(String logEvent) {
+        this.logEvent = logEvent;
+    }
+
+    public Date getLogTime() {
+        return logTime;
+    }
+
+    public void setLogTime(Date logTime) {
+        this.logTime = logTime;
     }
 }

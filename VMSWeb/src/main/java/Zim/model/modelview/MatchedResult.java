@@ -9,9 +9,10 @@ public class MatchedResult {
     private String id;
     private int leven;
 
+    private String registrationNumber;
     public MatchedResult(DBObject o1) {
         this.setId(String.valueOf(o1.get("id")));
-
+        this.setRegistrationNumber(String.valueOf(o1.get("registrationNumber")));
         this.setLeven((int)(Double.parseDouble(o1.get("leven").toString())));
 
     }
@@ -30,6 +31,14 @@ public class MatchedResult {
 
     public void setLeven(int leven) {
         this.leven = leven;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 }
 

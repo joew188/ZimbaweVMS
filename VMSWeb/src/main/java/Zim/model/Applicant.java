@@ -1,8 +1,7 @@
 package Zim.model;
 
-import Zim.mongo.MongoDBDaoImpl;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
+import Zim.mongo.MongoDao;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,12 +10,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import java.util.Date;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "_id",
-        "fullName",
+        "importTask",
         "gender",
         "dateOfBirth",
         "dateOfRegistration",
@@ -56,428 +56,994 @@ import java.util.Date;
 })
 @Document(collection = "Applicant")
 @XmlRootElement(name = "Applicant")
-public class Applicant {
-    public DBObject toDBObject(MongoDBDaoImpl mongoDBDao) {
-        DBObject dbObject = new BasicDBObject();
+public class Applicant extends QueueObject {
+    public Applicant(boolean isPoisonPill) {
+        this.setPoisonPill(isPoisonPill);
+    }
 
-//        dbObject.put("_id", this.get_id());
-        dbObject.put("fullName", this.getFullName());
-        dbObject.put("gender", this.getGender());
-        dbObject.put("dateOfBirth", this.getDateOfBirth());
-        dbObject.put("dateOfRegistration", this.getDateOfRegistration());
+    public Applicant() {
 
-        dbObject.put("status", this.getStatus());
-        dbObject.put("guid", this.getGuid());
-        dbObject.put("registrationNumber", this.getRegistrationNumber());
-        dbObject.put("sortNumber", this.getSortNumber());
-        dbObject.put("beginCreateDatetime", this.getBeginCreateDatetime());
-        dbObject.put("endCreateDatetime", this.getEndCreateDatetime());
-        dbObject.put("beginEditDatetime", this.getBeginEditDatetime());
-        dbObject.put("endEditDatetime", this.getEndEditDatetime());
-        dbObject.put("operatorGuid", this.getOperatorGuid());
-        dbObject.put("operatorName", this.getOperatorName());
-        dbObject.put("provinceId", this.getProvinceId());
-        dbObject.put("provinceName", this.getProvinceName());
-        dbObject.put("districtId", this.getDistrictId());
-        dbObject.put("districtName", this.getDistrictName());
-        dbObject.put("constituencyId", this.getConstituencyId());
-        dbObject.put("constituencyName", this.getConstituencyName());
-        dbObject.put("localAuthorityId", this.getLocalAuthorityId());
-        dbObject.put("localAuthorityName", this.getLocalAuthorityName());
-        dbObject.put("wardId", this.getWardId());
-        dbObject.put("wardName", this.getWardName());
-        dbObject.put("pollingStationId", this.getPollingStationId());
-        dbObject.put("pollingStationCode", this.getPollingStationCode());
-        dbObject.put("pollingStationName", this.getPollingStationName());
-        dbObject.put("saveDatetime", this.getSaveDatetime());
-        dbObject.put("editSaveDatetime", this.getEditSaveDatetime());
-        dbObject.put("deviceName", this.getDeviceName());
-        dbObject.put("underDuress", this.isUnderDuress());
-        dbObject.put("exportDatetime", this.getExportDatetime());
-        dbObject.put("importToServerDatetime", this.getImportToServerDatetime());
+    }
 
-        DBObject applicantCompliance = new BasicDBObject();
+    //    public org.bson.Document toDocument(MongoDao mongoDao) {
+//        org.bson.Document dbObject = new org.bson.Document();
+//        //  dbObject.append("transactionId", transactionId);
+//        if (this.get_id() != null && this.get_id().length() > 0) {
+//            dbObject.append("_id", this.get_id());
+//        }
+//        // dbObject.append("fullName", this.getFullName());
+//        // dbObject.append("gender", this.getGender());
+//        // dbObject.append("dateOfBirth", this.getDateOfBirth());
+//        // dbObject.append("dateOfRegistration", this.getDateOfRegistration());
+//        // dbObject.append("status", -1);
+//
+//        //dbObject.append("guid", this.getGuid());
+//        // dbObject.append("registrationNumber", this.getRegistrationNumber());
+//        // dbObject.append("sortNumber", this.getSortNumber());
+//        // dbObject.append("beginCreateDatetime", this.getBeginCreateDatetime());
+//        // dbObject.append("endCreateDatetime", this.getEndCreateDatetime());
+//        dbObject.append("importTask", this.getImportTask());
+//        dbObject.append("beginEditDatetime", this.getBeginEditDatetime());
+//        dbObject.append("endEditDatetime", this.getEndEditDatetime());
+//        dbObject.append("operatorGuid", this.getOperatorGuid());
+//        dbObject.append("operatorName", this.getOperatorName());
+//        dbObject.append("provinceId", this.getProvinceId());
+//        dbObject.append("provinceName", this.getProvinceName());
+//        dbObject.append("districtId", this.getDistrictId());
+//        dbObject.append("districtName", this.getDistrictName());
+//        dbObject.append("constituencyId", this.getConstituencyId());
+//        dbObject.append("constituencyName", this.getConstituencyName());
+//        dbObject.append("localAuthorityId", this.getLocalAuthorityId());
+//        dbObject.append("localAuthorityName", this.getLocalAuthorityName());
+//        dbObject.append("wardId", this.getWardId());
+//        dbObject.append("wardName", this.getWardName());
+//        dbObject.append("pollingStationId", this.getPollingStationId());
+//        dbObject.append("pollingStationCode", this.getPollingStationCode());
+//        dbObject.append("pollingStationName", this.getPollingStationName());
+//        dbObject.append("saveDatetime", this.getSaveDatetime());
+//        dbObject.append("editSaveDatetime", this.getEditSaveDatetime());
+//        dbObject.append("deviceName", this.getDeviceName());
+//        dbObject.append("underDuress", this.isUnderDuress());
+//        dbObject.append("exportDatetime", this.getExportDatetime());
+//        dbObject.append("importToServerDatetime", this.getImportToServerDatetime());
+//
+//        org.bson.Document applicantCompliance = new org.bson.Document();
+//
+//        applicantCompliance.append("formElaspedTicks", this.getApplicantCompliance().getFormElaspedTicks());
+//
+//        String applicationFormContentStr = null;
+//        if (this.getApplicantCompliance().getApplicationFormContent() != null && this.getApplicantCompliance().getApplicationFormContent().length() > 0) {
+//            applicationFormContentStr = mongoDao.insertImg(this.getApplicantCompliance().getApplicationFormContent().getBytes(), "CompliancePhoto");
+//        }
+//        applicantCompliance.append("applicationFormContent", applicationFormContentStr);
+//
+//        String idDocumentFormContentStr = null;
+//        if (this.getApplicantCompliance().getIDDocumentFormContent() != null && this.getApplicantCompliance().getIDDocumentFormContent().length() > 0) {
+//            idDocumentFormContentStr = mongoDao.insertImg(this.getApplicantCompliance().getIDDocumentFormContent().getBytes(), "CompliancePhoto");
+//        }
+//        applicantCompliance.append("idDocumentFormContent", idDocumentFormContentStr);
+//
+//        String proofOfResidenceContentStr = null;
+//        if (this.getApplicantCompliance().getProofOfResidenceContent() != null && this.getApplicantCompliance().getProofOfResidenceContent().length() > 0) {
+//            proofOfResidenceContentStr = mongoDao.insertImg(this.getApplicantCompliance().getProofOfResidenceContent().getBytes(), "CompliancePhoto");
+//        }
+//        applicantCompliance.append("proofOfResidenceContent", proofOfResidenceContentStr);
+//
+//        dbObject.append("applicantCompliance", applicantCompliance);
+//
+//        org.bson.Document applicantDemographic = new org.bson.Document();
+//
+//        applicantDemographic.append("formElaspedTicks", this.getApplicantDemographic().getFormElaspedTicks());
+//        applicantDemographic.append("idNumber", this.getApplicantDemographic().getIdNumber());
+//        applicantDemographic.append("surname", this.getApplicantDemographic().getSurname());
+//        applicantDemographic.append("forenames", this.getApplicantDemographic().getForenames());
+//        applicantDemographic.append("dateOfBirth", this.getApplicantDemographic().getDateOfBirth());
+//        applicantDemographic.append("dateOfBirthText", this.getApplicantDemographic().getDateOfBirthText());
+//        applicantDemographic.put("gender", this.getApplicantDemographic().getGender());
+//        applicantDemographic.append("provinceId", this.getApplicantDemographic().getProvinceId());
+//        applicantDemographic.append("provinceName", this.getApplicantDemographic().getProvinceName());
+//        applicantDemographic.append("districtId", this.getApplicantDemographic().getDistrictId());
+//        applicantDemographic.append("districtName", this.getApplicantDemographic().getDistrictName());
+//        applicantDemographic.append("constituencyId", this.getApplicantDemographic().getConstituencyId());
+//        applicantDemographic.append("constituencyName", this.getApplicantDemographic().getConstituencyName());
+//        applicantDemographic.append("localAuthorityId", this.getApplicantDemographic().getLocalAuthorityId());
+//        applicantDemographic.append("localAuthorityName", this.getApplicantDemographic().getLocalAuthorityName());
+//        applicantDemographic.append("wardId", this.getApplicantDemographic().getWardId());
+//        applicantDemographic.append("wardName", this.getApplicantDemographic().getWardName());
+//        applicantDemographic.append("stationId", this.getApplicantDemographic().getStationId());
+//        applicantDemographic.append("stationName", this.getApplicantDemographic().getStationName());
+//        applicantDemographic.append("stationCode", this.getApplicantDemographic().getStationCode());
+//        applicantDemographic.append("surburb", this.getApplicantDemographic().getSurburb());
+//        applicantDemographic.append("town", this.getApplicantDemographic().getTown());
+//        applicantDemographic.append("streetName", this.getApplicantDemographic().getStreetName());
+//        applicantDemographic.append("standNumber", this.getApplicantDemographic().getStandNumber());
+//        applicantDemographic.append("disabilityCode", this.getApplicantDemographic().getDisabilityCode());
+//        applicantDemographic.append("disabilityName", this.getApplicantDemographic().getDisabilityName());
+//        applicantDemographic.append("registrationType", this.getApplicantDemographic().getRegistrationType());
+//        applicantDemographic.append("phoneNumber", this.getApplicantDemographic().getPhoneNumber());
+//        applicantDemographic.append("email", this.getApplicantDemographic().getEmail());
+//        applicantDemographic.append("gisLatitude", this.getApplicantDemographic().getGisLatitude());
+//        applicantDemographic.append("gisLongitude", this.getApplicantDemographic().getGisLongitude());
+//        applicantDemographic.append("changeAddressProvinceId", this.getApplicantDemographic().getChangeAddressProvinceId());
+//        applicantDemographic.append("changeAddressProvinceName", this.getApplicantDemographic().getChangeAddressProvinceName());
+//        applicantDemographic.append("changeAddressDistrictId", this.getApplicantDemographic().getChangeAddressDistrictId());
+//        applicantDemographic.append("changeAddressDistrictName", this.getApplicantDemographic().getChangeAddressDistrictName());
+//        applicantDemographic.append("changeAddressConstituencyId", this.getApplicantDemographic().getChangeAddressConstituencyId());
+//        applicantDemographic.append("changeAddressConstituencyName", this.getApplicantDemographic().getChangeAddressConstituencyName());
+//        applicantDemographic.append("changeAddressLocalAuthorityId", this.getApplicantDemographic().getChangeAddressLocalAuthorityId());
+//        applicantDemographic.append("changeAddressLocalAuthorityName", this.getApplicantDemographic().getChangeAddressLocalAuthorityName());
+//        applicantDemographic.append("changeAddressWardId", this.getApplicantDemographic().getChangeAddressWardId());
+//        applicantDemographic.append("changeAddressWardName", this.getApplicantDemographic().getChangeAddressWardName());
+//        applicantDemographic.append("changeAddressStationId", this.getApplicantDemographic().getChangeAddressStationId());
+//        applicantDemographic.append("changeAddressStationName", this.getApplicantDemographic().getChangeAddressStationName());
+//        applicantDemographic.append("changeAddressStationCode", this.getApplicantDemographic().getChangeAddressStationCode());
+//        applicantDemographic.append("changeAddressSurburb", this.getApplicantDemographic().getChangeAddressSurburb());
+//        applicantDemographic.append("changeAddressTown", this.getApplicantDemographic().getChangeAddressTown());
+//        applicantDemographic.append("changeAddressStreetName", this.getApplicantDemographic().getChangeAddressStreetName());
+//        applicantDemographic.append("changeAddressStandNumber", this.getApplicantDemographic().getChangeAddressStandNumber());
+//        applicantDemographic.append("transferConstituencyProvinceId", this.getApplicantDemographic().getTransferConstituencyProvinceId());
+//        applicantDemographic.append("transferConstituencyProvinceName", this.getApplicantDemographic().getTransferConstituencyProvinceName());
+//        applicantDemographic.append("transferConstituencyDistrictId", this.getApplicantDemographic().getTransferConstituencyDistrictId());
+//        applicantDemographic.append("transferConstituencyDistrictName", this.getApplicantDemographic().getTransferConstituencyDistrictName());
+//        applicantDemographic.append("transferConstituencyConstituencyId", this.getApplicantDemographic().getTransferConstituencyConstituencyId());
+//        applicantDemographic.append("transferConstituencyConstituencyName", this.getApplicantDemographic().getTransferConstituencyConstituencyName());
+//        applicantDemographic.append("transferConstituencyLocalAuthorityId", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityId());
+//        applicantDemographic.append("transferConstituencyLocalAuthorityName", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityName());
+//
+//        applicantDemographic.append("transferConstituencyWardId", this.getApplicantDemographic().getTransferConstituencyWardId());
+//        applicantDemographic.append("transferConstituencyWardName", this.getApplicantDemographic().getTransferConstituencyWardName());
+//        applicantDemographic.append("transferConstituencyStationId", this.getApplicantDemographic().getTransferConstituencyStationId());
+//        applicantDemographic.append("transferConstituencyStationName", this.getApplicantDemographic().getTransferConstituencyStationName());
+//        applicantDemographic.append("transferConstituencyStationCode", this.getApplicantDemographic().getTransferConstituencyStationCode());
+//        applicantDemographic.append("transferConstituencySurburb", this.getApplicantDemographic().getTransferConstituencySurburb());
+//        applicantDemographic.append("transferConstituencyTown", this.getApplicantDemographic().getTransferConstituencyTown());
+//
+//
+//        applicantDemographic.append("transferConstituencyStreetName", this.getApplicantDemographic().getTransferConstituencyStreetName());
+//        applicantDemographic.append("transferConstituencyStandNumber", this.getApplicantDemographic().getTransferConstituencyStandNumber());
+//        dbObject.put("applicantDemographic", applicantDemographic);
+//
+//        org.bson.Document applicantFingerprint = new org.bson.Document();
+//        applicantFingerprint.append("formElaspedTicks", this.getApplicantFingerprint().getFormElaspedTicks());
+//
+//
+//        String leftThumbImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftThumbImageArray() != null && this.getApplicantFingerprint().getLeftThumbImageArray().length() > 0) {
+//            leftThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("leftThumbImageArray", leftThumbImageArrayStr);
+//
+//        String leftIndexImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftIndexImageArray() != null && this.getApplicantFingerprint().getLeftIndexImageArray().length() > 0) {
+//            leftIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("leftIndexImageArray", leftIndexImageArrayStr);
+//
+//        String leftMiddleImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftMiddleImageArray() != null && this.getApplicantFingerprint().getLeftMiddleImageArray().length() > 0) {
+//            leftMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("leftMiddleImageArray", leftMiddleImageArrayStr);
+//
+//        String leftRingImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftRingImageArray() != null && this.getApplicantFingerprint().getLeftRingImageArray().length() > 0) {
+//            leftRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("leftRingImageArray", leftRingImageArrayStr);
+//
+//        String leftLittleImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftLittleImageArray() != null && this.getApplicantFingerprint().getLeftLittleImageArray().length() > 0) {
+//            leftLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("leftLittleImageArray", leftLittleImageArrayStr);
+//
+//        String rightThumbImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightThumbImageArray() != null && this.getApplicantFingerprint().getRightThumbImageArray().length() > 0) {
+//            rightThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("rightThumbImageArray", rightThumbImageArrayStr);
+//
+//        String rightIndexImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightIndexImageArray() != null && this.getApplicantFingerprint().getRightIndexImageArray().length() > 0) {
+//            rightIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("rightIndexImageArray", rightIndexImageArrayStr);
+//
+//        String rightMiddleImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightMiddleImageArray() != null && this.getApplicantFingerprint().getRightMiddleImageArray().length() > 0) {
+//            rightMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("rightMiddleImageArray", rightMiddleImageArrayStr);
+//
+//        String rightRingImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightRingImageArray() != null && this.getApplicantFingerprint().getRightRingImageArray().length() > 0) {
+//            rightRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("rightRingImageArray", rightRingImageArrayStr);
+//
+//        String rightLittleImageArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightLittleImageArray() != null && this.getApplicantFingerprint().getRightLittleImageArray().length() > 0) {
+//            rightLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleImageArray().getBytes(), "FingerprintImage");
+//        }
+//        applicantFingerprint.append("rightLittleImageArray", rightLittleImageArrayStr);
+//
+//        String leftThumbWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftThumbWSQArray() != null && this.getApplicantFingerprint().getLeftThumbWSQArray().length() > 0) {
+//            leftThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("leftThumbWSQArray", leftThumbWSQArrayStr);
+//
+//        String leftIndexWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftIndexWSQArray() != null && this.getApplicantFingerprint().getLeftIndexWSQArray().length() > 0) {
+//            leftIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("leftIndexWSQArray", leftIndexWSQArrayStr);
+//
+//        String leftMiddleWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftMiddleWSQArray() != null && this.getApplicantFingerprint().getLeftMiddleWSQArray().length() > 0) {
+//            leftMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("leftMiddleWSQArray", leftMiddleWSQArrayStr);
+//
+//        String leftRingWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftRingWSQArray() != null && this.getApplicantFingerprint().getLeftRingWSQArray().length() > 0) {
+//            leftRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("leftRingWSQArray", leftRingWSQArrayStr);
+//
+//        String leftLittleWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getLeftLittleWSQArray() != null && this.getApplicantFingerprint().getLeftLittleWSQArray().length() > 0) {
+//            leftLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("leftLittleWSQArray", leftLittleWSQArrayStr);
+//
+//        String rightThumbWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightThumbWSQArray() != null && this.getApplicantFingerprint().getRightThumbWSQArray().length() > 0) {
+//            rightThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("rightThumbWSQArray", rightThumbWSQArrayStr);
+//
+//        String rightIndexWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightIndexWSQArray() != null && this.getApplicantFingerprint().getRightIndexWSQArray().length() > 0) {
+//            rightIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("rightIndexWSQArray", rightIndexWSQArrayStr);
+//
+//        String rightMiddleWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightMiddleWSQArray() != null && this.getApplicantFingerprint().getRightMiddleWSQArray().length() > 0) {
+//            rightMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("rightMiddleWSQArray", rightMiddleWSQArrayStr);
+//
+//        String rightRingWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightRingWSQArray() != null && this.getApplicantFingerprint().getRightRingWSQArray().length() > 0) {
+//            rightRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("rightRingWSQArray", rightRingWSQArrayStr);
+//
+//        String rightLittleWSQArrayStr = null;
+//        if (this.getApplicantFingerprint().getRightLittleWSQArray() != null && this.getApplicantFingerprint().getRightLittleWSQArray().length() > 0) {
+//            rightLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleWSQArray().getBytes(), "FingerprintWSQ");
+//        }
+//        applicantFingerprint.append("rightLittleWSQArray", rightLittleWSQArrayStr);
+//        applicantFingerprint.append("leftThumbScore", this.getApplicantFingerprint().getLeftThumbScore());
+//        applicantFingerprint.append("leftIndexScore", this.getApplicantFingerprint().getLeftIndexScore());
+//        applicantFingerprint.append("leftMiddleScore", this.getApplicantFingerprint().getLeftMiddleScore());
+//        applicantFingerprint.append("leftRingScore", this.getApplicantFingerprint().getLeftRingScore());
+//        applicantFingerprint.append("leftLittleScore", this.getApplicantFingerprint().getLeftLittleScore());
+//        applicantFingerprint.append("rightThumbScore", this.getApplicantFingerprint().getRightThumbScore());
+//        applicantFingerprint.append("rightIndexScore", this.getApplicantFingerprint().getRightIndexScore());
+//        applicantFingerprint.append("rightMiddleScore", this.getApplicantFingerprint().getRightMiddleScore());
+//        applicantFingerprint.append("rightRingScore", this.getApplicantFingerprint().getRightRingScore());
+//        applicantFingerprint.append("rightLittleScore", this.getApplicantFingerprint().getRightLittleScore());
+//        applicantFingerprint.append("leftThumbState", this.getApplicantFingerprint().getLeftThumbState());
+//        applicantFingerprint.append("leftIndexState", this.getApplicantFingerprint().getLeftIndexState());
+//        applicantFingerprint.append("leftMiddleState", this.getApplicantFingerprint().getLeftMiddleState());
+//        applicantFingerprint.append("leftRingState", this.getApplicantFingerprint().getLeftRingState());
+//        applicantFingerprint.append("leftLittleState", this.getApplicantFingerprint().getLeftLittleState());
+//        applicantFingerprint.append("rightThumbState", this.getApplicantFingerprint().getRightThumbState());
+//        applicantFingerprint.append("rightIndexState", this.getApplicantFingerprint().getRightIndexState());
+//        applicantFingerprint.append("rightMiddleState", this.getApplicantFingerprint().getRightMiddleState());
+//        applicantFingerprint.append("rightRingState", this.getApplicantFingerprint().getRightRingState());
+//        applicantFingerprint.append("rightLittleState", this.getApplicantFingerprint().getRightLittleState());
+//        applicantFingerprint.append("sourceAFISID", this.getApplicantFingerprint().getSourceAFISID());
+//
+//
+//        String leftThumbAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getLeftThumbAFISTemplate() != null && this.getApplicantFingerprint().getLeftThumbAFISTemplate().length() > 0) {
+//            leftThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("leftThumbAFISTemplate", leftThumbAFISTemplateStr);
+//
+//        String leftIndexAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getLeftIndexAFISTemplate() != null && this.getApplicantFingerprint().getLeftIndexAFISTemplate().length() > 0) {
+//            leftIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("leftIndexAFISTemplate", leftIndexAFISTemplateStr);
+//
+//        String leftMiddleAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getLeftMiddleAFISTemplate() != null && this.getApplicantFingerprint().getLeftMiddleAFISTemplate().length() > 0) {
+//            leftMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("leftMiddleAFISTemplate", leftMiddleAFISTemplateStr);
+//
+//        String leftRingAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getLeftRingAFISTemplate() != null && this.getApplicantFingerprint().getLeftRingAFISTemplate().length() > 0) {
+//            leftRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("leftRingAFISTemplate", leftRingAFISTemplateStr);
+//
+//        String leftLittleAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getLeftLittleAFISTemplate() != null && this.getApplicantFingerprint().getLeftLittleAFISTemplate().length() > 0) {
+//            leftLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("leftLittleAFISTemplate", leftLittleAFISTemplateStr);
+//
+//        String rightThumbAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getRightThumbAFISTemplate() != null && this.getApplicantFingerprint().getRightThumbAFISTemplate().length() > 0) {
+//            rightThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("rightThumbAFISTemplate", rightThumbAFISTemplateStr);
+//
+//        String rightIndexAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getRightIndexAFISTemplate() != null && this.getApplicantFingerprint().getRightIndexAFISTemplate().length() > 0) {
+//            rightIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("rightIndexAFISTemplate", rightIndexAFISTemplateStr);
+//
+//        String rightMiddleAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getRightMiddleAFISTemplate() != null && this.getApplicantFingerprint().getRightMiddleAFISTemplate().length() > 0) {
+//            rightMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("rightMiddleAFISTemplate", rightMiddleAFISTemplateStr);
+//
+//        String rightRingAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getRightRingAFISTemplate() != null && this.getApplicantFingerprint().getRightRingAFISTemplate().length() > 0) {
+//            rightRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("rightRingAFISTemplate", rightRingAFISTemplateStr);
+//
+//        String rightLittleAFISTemplateStr = null;
+//        if (this.getApplicantFingerprint().getRightLittleAFISTemplate() != null && this.getApplicantFingerprint().getRightLittleAFISTemplate().length() > 0) {
+//            rightLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+//        }
+//        applicantFingerprint.append("rightLittleAFISTemplate", rightLittleAFISTemplateStr);
+//
+//        applicantFingerprint.append("leftLittleMinutiaesCount", this.getApplicantFingerprint().getLeftLittleMinutiaesCount());
+//        applicantFingerprint.append("leftRingMinutiaesCount", this.getApplicantFingerprint().getLeftRingMinutiaesCount());
+//        applicantFingerprint.append("leftMiddleMinutiaesCount", this.getApplicantFingerprint().getLeftMiddleMinutiaesCount());
+//        applicantFingerprint.append("leftIndexMinutiaesCount", this.getApplicantFingerprint().getLeftIndexMinutiaesCount());
+//        applicantFingerprint.append("leftThumbMinutiaesCount", this.getApplicantFingerprint().getLeftThumbMinutiaesCount());
+//        applicantFingerprint.append("rightLittleMinutiaesCount", this.getApplicantFingerprint().getRightLittleMinutiaesCount());
+//        applicantFingerprint.append("rightRingMinutiaesCount", this.getApplicantFingerprint().getRightRingMinutiaesCount());
+//        applicantFingerprint.append("rightMiddleMinutiaesCount", this.getApplicantFingerprint().getRightMiddleMinutiaesCount());
+//        applicantFingerprint.append("rightIndexMinutiaesCount", this.getApplicantFingerprint().getRightIndexMinutiaesCount());
+//        applicantFingerprint.append("rightThumbMinutiaesCount", this.getApplicantFingerprint().getRightThumbMinutiaesCount());
+//        applicantFingerprint.append("missingReasonType", this.getApplicantFingerprint().getMissingReasonType());
+//
+//        dbObject.append("applicantFingerprint", applicantFingerprint);
+//
+//        org.bson.Document applicantPhoto = new org.bson.Document();
+//        applicantPhoto.append("formElaspedTicks", this.getApplicantPhoto().getFormElaspedTicks());
+//
+//
+//        String photoArrayStr = null;
+//        if (this.getApplicantPhoto().getPhotoArray() != null && this.getApplicantPhoto().getPhotoArray().length() > 0) {
+////            ObjectId oid = mongoDBDao.saveApplicantPhotoFile(this.getApplicantPhoto().getPhotoArray().getBytes());
+////            applicantPhoto.put("photoArray", oid.toString());
+//            photoArrayStr = mongoDao.insertImg(this.getApplicantPhoto().getPhotoArray().getBytes(), "PersonPhoto");
+//
+//        }
+//        applicantPhoto.append("photoArray", photoArrayStr);
+//
+//        //  applicantPhoto.put("photoArray", this.getApplicantPhoto().getPhotoArray());
+//        String thumbnailStr = null;
+//        if (this.getApplicantPhoto().getThumbnail() != null && this.getApplicantPhoto().getThumbnail().length() > 0) {
+//            thumbnailStr = mongoDao.insertImg(this.getApplicantPhoto().getThumbnail().getBytes(), "PersonPhoto");
+//
+//        }
+//        applicantPhoto.append("thumbnail", thumbnailStr);
+//
+//        dbObject.put("applicantPhoto", applicantPhoto);
+//        return dbObject;
+//    }
+    public org.bson.Document createImgDocument(ObjectId id, ObjectId transactionId, byte[] fileByte) {
 
-        applicantCompliance.put("formElaspedTicks", this.getApplicantCompliance().getFormElaspedTicks());
-        //  applicantCompliance.put("applicationFormContent", this.getApplicantCompliance().getApplicationFormContent());
-        //  applicantCompliance.put("idDocumentFormContent", this.getApplicantCompliance().getIDDocumentFormContent());
-        //  applicantCompliance.put("proofOfResidenceContent", this.getApplicantCompliance().getProofOfResidenceContent());
+        org.bson.Document document = new org.bson.Document();
+        document.append("_id", id);
+        document.append("transactionId", transactionId);
+        document.append("imgData", fileByte);
+        return document;
+    }
+
+    public ConcurrentHashMap<String, List<org.bson.Document>> toDocument(ObjectId transactionId) {
+        ConcurrentHashMap<String, List<org.bson.Document>> result = new ConcurrentHashMap<>();
+        org.bson.Document applicantObject = new org.bson.Document();
+        List<org.bson.Document> listApplicant = new ArrayList<>();
+//        List<org.bson.Document> listCompliancePhoto = new ArrayList<>();
+        List<org.bson.Document> listFingerprintImage = new ArrayList<>();
+        List<org.bson.Document> listFingerprintTemplate = new ArrayList<>();
+        List<org.bson.Document> listFingerprintWSQ = new ArrayList<>();
+        List<org.bson.Document> listApplicantPhotos = new ArrayList<>();
+        List<org.bson.Document> listApplicantMaster = new ArrayList<>();
+        //  dbObject.append("transactionId", transactionId);
+        //region Applicant
+
+        applicantObject.append("_id", this.get_id());
+        applicantObject.append("transactionId", transactionId);
+        // dbObject.append("fullName", this.getFullName());
+        // dbObject.append("gender", this.getGender());
+        // dbObject.append("dateOfBirth", this.getDateOfBirth());
+        // dbObject.append("dateOfRegistration", this.getDateOfRegistration());
+        // dbObject.append("status", -1);
+
+        //dbObject.append("guid", this.getGuid());
+        // dbObject.append("registrationNumber", this.getRegistrationNumber());
+        // dbObject.append("sortNumber", this.getSortNumber());
+        // dbObject.append("beginCreateDatetime", this.getBeginCreateDatetime());
+        // dbObject.append("endCreateDatetime", this.getEndCreateDatetime());
+        applicantObject.append("importTask", this.getImportTask());
+        applicantObject.append("beginEditDatetime", this.getBeginEditDatetime());
+        applicantObject.append("endEditDatetime", this.getEndEditDatetime());
+        applicantObject.append("operatorGuid", this.getOperatorGuid());
+        applicantObject.append("operatorName", this.getOperatorName());
+        applicantObject.append("provinceId", this.getProvinceId());
+        applicantObject.append("provinceName", this.getProvinceName());
+        applicantObject.append("districtId", this.getDistrictId());
+        applicantObject.append("districtName", this.getDistrictName());
+        applicantObject.append("constituencyId", this.getConstituencyId());
+        applicantObject.append("constituencyName", this.getConstituencyName());
+        applicantObject.append("localAuthorityId", this.getLocalAuthorityId());
+        applicantObject.append("localAuthorityName", this.getLocalAuthorityName());
+        applicantObject.append("wardId", this.getWardId());
+        applicantObject.append("wardName", this.getWardName());
+        applicantObject.append("pollingStationId", this.getPollingStationId());
+        applicantObject.append("pollingStationCode", this.getPollingStationCode());
+        applicantObject.append("pollingStationName", this.getPollingStationName());
+        applicantObject.append("saveDatetime", this.getSaveDatetime());
+        applicantObject.append("editSaveDatetime", this.getEditSaveDatetime());
+        applicantObject.append("deviceName", this.getDeviceName());
+        applicantObject.append("underDuress", this.isUnderDuress());
+        applicantObject.append("exportDatetime", this.getExportDatetime());
+        applicantObject.append("importToServerDatetime", this.getImportToServerDatetime());
+
+        org.bson.Document applicantCompliance = new org.bson.Document();
+
+        applicantCompliance.append("formElaspedTicks", this.getApplicantCompliance().getFormElaspedTicks());
+
         String applicationFormContentStr = null;
         if (this.getApplicantCompliance().getApplicationFormContent() != null && this.getApplicantCompliance().getApplicationFormContent().length() > 0) {
-            applicationFormContentStr = mongoDBDao.insertImg(this.getApplicantCompliance().getApplicationFormContent().getBytes(), "CompliancePhoto");
+            ObjectId objectId = new ObjectId();
+            listApplicantPhotos.add(createImgDocument(objectId, transactionId, this.getApplicantCompliance().getApplicationFormContent().getBytes()));
+            applicationFormContentStr = objectId.toString();
         }
-        applicantCompliance.put("applicationFormContent", applicationFormContentStr);
+        applicantCompliance.append("applicationFormContent", applicationFormContentStr);
 
         String idDocumentFormContentStr = null;
         if (this.getApplicantCompliance().getIDDocumentFormContent() != null && this.getApplicantCompliance().getIDDocumentFormContent().length() > 0) {
-            idDocumentFormContentStr = mongoDBDao.insertImg(this.getApplicantCompliance().getIDDocumentFormContent().getBytes(), "CompliancePhoto");
+            // idDocumentFormContentStr = mongoDao.insertImg(this.getApplicantCompliance().getIDDocumentFormContent().getBytes(), "CompliancePhoto");
+            ObjectId objectId = new ObjectId();
+            listApplicantPhotos.add(createImgDocument(objectId, transactionId, this.getApplicantCompliance().getIDDocumentFormContent().getBytes()));
+            idDocumentFormContentStr = objectId.toString();
         }
-        applicantCompliance.put("idDocumentFormContent", idDocumentFormContentStr);
+        applicantCompliance.append("idDocumentFormContent", idDocumentFormContentStr);
 
         String proofOfResidenceContentStr = null;
         if (this.getApplicantCompliance().getProofOfResidenceContent() != null && this.getApplicantCompliance().getProofOfResidenceContent().length() > 0) {
-            proofOfResidenceContentStr = mongoDBDao.insertImg(this.getApplicantCompliance().getProofOfResidenceContent().getBytes(), "CompliancePhoto");
+            // proofOfResidenceContentStr = mongoDao.insertImg(this.getApplicantCompliance().getProofOfResidenceContent().getBytes(), "CompliancePhoto");
+            ObjectId objectId = new ObjectId();
+            listApplicantPhotos.add(createImgDocument(objectId, transactionId, this.getApplicantCompliance().getProofOfResidenceContent().getBytes()));
+            proofOfResidenceContentStr = objectId.toString();
         }
-        applicantCompliance.put("proofOfResidenceContent", proofOfResidenceContentStr);
+        applicantCompliance.append("proofOfResidenceContent", proofOfResidenceContentStr);
 
-        dbObject.put("applicantCompliance", applicantCompliance);
+        applicantObject.append("applicantCompliance", applicantCompliance);
 
-        DBObject applicantDemographic = new BasicDBObject();
+        org.bson.Document applicantDemographic = new org.bson.Document();
 
-        applicantDemographic.put("formElaspedTicks", this.getApplicantDemographic().getFormElaspedTicks());
-        applicantDemographic.put("idNumber", this.getApplicantDemographic().getIdNumber());
-        applicantDemographic.put("surname", this.getApplicantDemographic().getSurname());
-        applicantDemographic.put("forenames", this.getApplicantDemographic().getForenames());
-        applicantDemographic.put("dateOfBirth", this.getApplicantDemographic().getDateOfBirth());
-        applicantDemographic.put("dateOfBirthText", this.getApplicantDemographic().getDateOfBirthText());
+        applicantDemographic.append("formElaspedTicks", this.getApplicantDemographic().getFormElaspedTicks());
+        applicantDemographic.append("idNumber", this.getApplicantDemographic().getIdNumber());
+        applicantDemographic.append("surname", this.getApplicantDemographic().getSurname());
+        applicantDemographic.append("forenames", this.getApplicantDemographic().getForenames());
+        applicantDemographic.append("dateOfBirth", this.getApplicantDemographic().getDateOfBirth());
+        applicantDemographic.append("dateOfBirthText", this.getApplicantDemographic().getDateOfBirthText());
         applicantDemographic.put("gender", this.getApplicantDemographic().getGender());
-        applicantDemographic.put("provinceId", this.getApplicantDemographic().getProvinceId());
-        applicantDemographic.put("provinceName", this.getApplicantDemographic().getProvinceName());
-        applicantDemographic.put("districtId", this.getApplicantDemographic().getDistrictId());
-        applicantDemographic.put("districtName", this.getApplicantDemographic().getDistrictName());
-        applicantDemographic.put("constituencyId", this.getApplicantDemographic().getConstituencyId());
-        applicantDemographic.put("constituencyName", this.getApplicantDemographic().getConstituencyName());
-        applicantDemographic.put("localAuthorityId", this.getApplicantDemographic().getLocalAuthorityId());
-        applicantDemographic.put("localAuthorityName", this.getApplicantDemographic().getLocalAuthorityName());
-        applicantDemographic.put("wardId", this.getApplicantDemographic().getWardId());
-        applicantDemographic.put("wardName", this.getApplicantDemographic().getWardName());
-        applicantDemographic.put("stationId", this.getApplicantDemographic().getStationId());
-        applicantDemographic.put("stationName", this.getApplicantDemographic().getStationName());
-        applicantDemographic.put("stationCode", this.getApplicantDemographic().getStationCode());
-        applicantDemographic.put("surburb", this.getApplicantDemographic().getSurburb());
-        applicantDemographic.put("town", this.getApplicantDemographic().getTown());
-        applicantDemographic.put("streetName", this.getApplicantDemographic().getStreetName());
-        applicantDemographic.put("standNumber", this.getApplicantDemographic().getStandNumber());
-        applicantDemographic.put("disabilityCode", this.getApplicantDemographic().getDisabilityCode());
-        applicantDemographic.put("disabilityName", this.getApplicantDemographic().getDisabilityName());
-        applicantDemographic.put("registrationType", this.getApplicantDemographic().getRegistrationType());
-        applicantDemographic.put("phoneNumber", this.getApplicantDemographic().getPhoneNumber());
-        applicantDemographic.put("email", this.getApplicantDemographic().getEmail());
-        applicantDemographic.put("gisLatitude", this.getApplicantDemographic().getGisLatitude());
-        applicantDemographic.put("gisLongitude", this.getApplicantDemographic().getGisLongitude());
-        applicantDemographic.put("changeAddressProvinceId", this.getApplicantDemographic().getChangeAddressProvinceId());
-        applicantDemographic.put("changeAddressProvinceName", this.getApplicantDemographic().getChangeAddressProvinceName());
-        applicantDemographic.put("changeAddressDistrictId", this.getApplicantDemographic().getChangeAddressDistrictId());
-        applicantDemographic.put("changeAddressDistrictName", this.getApplicantDemographic().getChangeAddressDistrictName());
-        applicantDemographic.put("changeAddressConstituencyId", this.getApplicantDemographic().getChangeAddressConstituencyId());
-        applicantDemographic.put("changeAddressConstituencyName", this.getApplicantDemographic().getChangeAddressConstituencyName());
-        applicantDemographic.put("changeAddressLocalAuthorityId", this.getApplicantDemographic().getChangeAddressLocalAuthorityId());
-        applicantDemographic.put("changeAddressLocalAuthorityName", this.getApplicantDemographic().getChangeAddressLocalAuthorityName());
-        applicantDemographic.put("changeAddressWardId", this.getApplicantDemographic().getChangeAddressWardId());
-        applicantDemographic.put("changeAddressWardName", this.getApplicantDemographic().getChangeAddressWardName());
-        applicantDemographic.put("changeAddressStationId", this.getApplicantDemographic().getChangeAddressStationId());
-        applicantDemographic.put("changeAddressStationName", this.getApplicantDemographic().getChangeAddressStationName());
-        applicantDemographic.put("changeAddressStationCode", this.getApplicantDemographic().getChangeAddressStationCode());
-        applicantDemographic.put("changeAddressSurburb", this.getApplicantDemographic().getChangeAddressSurburb());
-        applicantDemographic.put("changeAddressTown", this.getApplicantDemographic().getChangeAddressTown());
-        applicantDemographic.put("changeAddressStreetName", this.getApplicantDemographic().getChangeAddressStreetName());
-        applicantDemographic.put("changeAddressStandNumber", this.getApplicantDemographic().getChangeAddressStandNumber());
-        applicantDemographic.put("transferConstituencyProvinceId", this.getApplicantDemographic().getTransferConstituencyProvinceId());
-        applicantDemographic.put("transferConstituencyProvinceName", this.getApplicantDemographic().getTransferConstituencyProvinceName());
-        applicantDemographic.put("transferConstituencyDistrictId", this.getApplicantDemographic().getTransferConstituencyDistrictId());
-        applicantDemographic.put("transferConstituencyDistrictName", this.getApplicantDemographic().getTransferConstituencyDistrictName());
-        applicantDemographic.put("transferConstituencyConstituencyId", this.getApplicantDemographic().getTransferConstituencyConstituencyId());
-        applicantDemographic.put("transferConstituencyConstituencyName", this.getApplicantDemographic().getTransferConstituencyConstituencyName());
-        applicantDemographic.put("transferConstituencyLocalAuthorityId", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityId());
-        applicantDemographic.put("transferConstituencyLocalAuthorityName", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityName());
+        applicantDemographic.append("provinceId", this.getApplicantDemographic().getProvinceId());
+        applicantDemographic.append("provinceName", this.getApplicantDemographic().getProvinceName());
+        applicantDemographic.append("districtId", this.getApplicantDemographic().getDistrictId());
+        applicantDemographic.append("districtName", this.getApplicantDemographic().getDistrictName());
+        applicantDemographic.append("constituencyId", this.getApplicantDemographic().getConstituencyId());
+        applicantDemographic.append("constituencyName", this.getApplicantDemographic().getConstituencyName());
+        applicantDemographic.append("localAuthorityId", this.getApplicantDemographic().getLocalAuthorityId());
+        applicantDemographic.append("localAuthorityName", this.getApplicantDemographic().getLocalAuthorityName());
+        applicantDemographic.append("wardId", this.getApplicantDemographic().getWardId());
+        applicantDemographic.append("wardName", this.getApplicantDemographic().getWardName());
+        applicantDemographic.append("stationId", this.getApplicantDemographic().getStationId());
+        applicantDemographic.append("stationName", this.getApplicantDemographic().getStationName());
+        applicantDemographic.append("stationCode", this.getApplicantDemographic().getStationCode());
+        applicantDemographic.append("surburb", this.getApplicantDemographic().getSurburb());
+        applicantDemographic.append("town", this.getApplicantDemographic().getTown());
+        applicantDemographic.append("streetName", this.getApplicantDemographic().getStreetName());
+        applicantDemographic.append("standNumber", this.getApplicantDemographic().getStandNumber());
+        applicantDemographic.append("disabilityCode", this.getApplicantDemographic().getDisabilityCode());
+        applicantDemographic.append("disabilityName", this.getApplicantDemographic().getDisabilityName());
+        applicantDemographic.append("registrationType", this.getApplicantDemographic().getRegistrationType());
+        applicantDemographic.append("phoneNumber", this.getApplicantDemographic().getPhoneNumber());
+        applicantDemographic.append("email", this.getApplicantDemographic().getEmail());
+        applicantDemographic.append("gisLatitude", this.getApplicantDemographic().getGisLatitude());
+        applicantDemographic.append("gisLongitude", this.getApplicantDemographic().getGisLongitude());
+        applicantDemographic.append("changeAddressProvinceId", this.getApplicantDemographic().getChangeAddressProvinceId());
+        applicantDemographic.append("changeAddressProvinceName", this.getApplicantDemographic().getChangeAddressProvinceName());
+        applicantDemographic.append("changeAddressDistrictId", this.getApplicantDemographic().getChangeAddressDistrictId());
+        applicantDemographic.append("changeAddressDistrictName", this.getApplicantDemographic().getChangeAddressDistrictName());
+        applicantDemographic.append("changeAddressConstituencyId", this.getApplicantDemographic().getChangeAddressConstituencyId());
+        applicantDemographic.append("changeAddressConstituencyName", this.getApplicantDemographic().getChangeAddressConstituencyName());
+        applicantDemographic.append("changeAddressLocalAuthorityId", this.getApplicantDemographic().getChangeAddressLocalAuthorityId());
+        applicantDemographic.append("changeAddressLocalAuthorityName", this.getApplicantDemographic().getChangeAddressLocalAuthorityName());
+        applicantDemographic.append("changeAddressWardId", this.getApplicantDemographic().getChangeAddressWardId());
+        applicantDemographic.append("changeAddressWardName", this.getApplicantDemographic().getChangeAddressWardName());
+        applicantDemographic.append("changeAddressStationId", this.getApplicantDemographic().getChangeAddressStationId());
+        applicantDemographic.append("changeAddressStationName", this.getApplicantDemographic().getChangeAddressStationName());
+        applicantDemographic.append("changeAddressStationCode", this.getApplicantDemographic().getChangeAddressStationCode());
+        applicantDemographic.append("changeAddressSurburb", this.getApplicantDemographic().getChangeAddressSurburb());
+        applicantDemographic.append("changeAddressTown", this.getApplicantDemographic().getChangeAddressTown());
+        applicantDemographic.append("changeAddressStreetName", this.getApplicantDemographic().getChangeAddressStreetName());
+        applicantDemographic.append("changeAddressStandNumber", this.getApplicantDemographic().getChangeAddressStandNumber());
+        applicantDemographic.append("transferConstituencyProvinceId", this.getApplicantDemographic().getTransferConstituencyProvinceId());
+        applicantDemographic.append("transferConstituencyProvinceName", this.getApplicantDemographic().getTransferConstituencyProvinceName());
+        applicantDemographic.append("transferConstituencyDistrictId", this.getApplicantDemographic().getTransferConstituencyDistrictId());
+        applicantDemographic.append("transferConstituencyDistrictName", this.getApplicantDemographic().getTransferConstituencyDistrictName());
+        applicantDemographic.append("transferConstituencyConstituencyId", this.getApplicantDemographic().getTransferConstituencyConstituencyId());
+        applicantDemographic.append("transferConstituencyConstituencyName", this.getApplicantDemographic().getTransferConstituencyConstituencyName());
+        applicantDemographic.append("transferConstituencyLocalAuthorityId", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityId());
+        applicantDemographic.append("transferConstituencyLocalAuthorityName", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityName());
 
-        applicantDemographic.put("transferConstituencyWardId", this.getApplicantDemographic().getTransferConstituencyWardId());
-        applicantDemographic.put("transferConstituencyWardName", this.getApplicantDemographic().getTransferConstituencyWardName());
-        applicantDemographic.put("transferConstituencyStationId", this.getApplicantDemographic().getTransferConstituencyStationId());
-        applicantDemographic.put("transferConstituencyStationName", this.getApplicantDemographic().getTransferConstituencyStationName());
-        applicantDemographic.put("transferConstituencyStationCode", this.getApplicantDemographic().getTransferConstituencyStationCode());
-        applicantDemographic.put("transferConstituencySurburb", this.getApplicantDemographic().getTransferConstituencySurburb());
-        applicantDemographic.put("transferConstituencyTown", this.getApplicantDemographic().getTransferConstituencyTown());
-
-
-        applicantDemographic.put("transferConstituencyStreetName", this.getApplicantDemographic().getTransferConstituencyStreetName());
-        applicantDemographic.put("transferConstituencyStandNumber", this.getApplicantDemographic().getTransferConstituencyStandNumber());
-        dbObject.put("applicantDemographic", applicantDemographic);
-
-        DBObject applicantFingerprint = new BasicDBObject();
-        applicantFingerprint.put("formElaspedTicks", this.getApplicantFingerprint().getFormElaspedTicks());
+        applicantDemographic.append("transferConstituencyWardId", this.getApplicantDemographic().getTransferConstituencyWardId());
+        applicantDemographic.append("transferConstituencyWardName", this.getApplicantDemographic().getTransferConstituencyWardName());
+        applicantDemographic.append("transferConstituencyStationId", this.getApplicantDemographic().getTransferConstituencyStationId());
+        applicantDemographic.append("transferConstituencyStationName", this.getApplicantDemographic().getTransferConstituencyStationName());
+        applicantDemographic.append("transferConstituencyStationCode", this.getApplicantDemographic().getTransferConstituencyStationCode());
+        applicantDemographic.append("transferConstituencySurburb", this.getApplicantDemographic().getTransferConstituencySurburb());
+        applicantDemographic.append("transferConstituencyTown", this.getApplicantDemographic().getTransferConstituencyTown());
 
 
+        applicantDemographic.append("transferConstituencyStreetName", this.getApplicantDemographic().getTransferConstituencyStreetName());
+        applicantDemographic.append("transferConstituencyStandNumber", this.getApplicantDemographic().getTransferConstituencyStandNumber());
+        applicantObject.put("applicantDemographic", applicantDemographic);
+//endregion
+
+
+        org.bson.Document applicantFingerprint = new org.bson.Document();
+        applicantFingerprint.append("formElaspedTicks", this.getApplicantFingerprint().getFormElaspedTicks());
+
+        //region FingerprintImage
         String leftThumbImageArrayStr = null;
         if (this.getApplicantFingerprint().getLeftThumbImageArray() != null && this.getApplicantFingerprint().getLeftThumbImageArray().length() > 0) {
-            leftThumbImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftThumbImageArray().getBytes(), "FingerprintImage");
+            // leftThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftThumbImageArray().getBytes()));
+            leftThumbImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftThumbImageArray", leftThumbImageArrayStr);
+        applicantFingerprint.append("leftThumbImageArray", leftThumbImageArrayStr);
 
         String leftIndexImageArrayStr = null;
         if (this.getApplicantFingerprint().getLeftIndexImageArray() != null && this.getApplicantFingerprint().getLeftIndexImageArray().length() > 0) {
-            leftIndexImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftIndexImageArray().getBytes(), "FingerprintImage");
+            // leftIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftIndexImageArray().getBytes()));
+            leftIndexImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftIndexImageArray", leftIndexImageArrayStr);
+        applicantFingerprint.append("leftIndexImageArray", leftIndexImageArrayStr);
 
         String leftMiddleImageArrayStr = null;
         if (this.getApplicantFingerprint().getLeftMiddleImageArray() != null && this.getApplicantFingerprint().getLeftMiddleImageArray().length() > 0) {
-            leftMiddleImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftMiddleImageArray().getBytes(), "FingerprintImage");
+            // leftMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftMiddleImageArray().getBytes()));
+            leftMiddleImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftMiddleImageArray", leftMiddleImageArrayStr);
+        applicantFingerprint.append("leftMiddleImageArray", leftMiddleImageArrayStr);
 
         String leftRingImageArrayStr = null;
         if (this.getApplicantFingerprint().getLeftRingImageArray() != null && this.getApplicantFingerprint().getLeftRingImageArray().length() > 0) {
-            leftRingImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftRingImageArray().getBytes(), "FingerprintImage");
+            // leftRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftRingImageArray().getBytes()));
+            leftRingImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftRingImageArray", leftRingImageArrayStr);
+        applicantFingerprint.append("leftRingImageArray", leftRingImageArrayStr);
 
         String leftLittleImageArrayStr = null;
         if (this.getApplicantFingerprint().getLeftLittleImageArray() != null && this.getApplicantFingerprint().getLeftLittleImageArray().length() > 0) {
-            leftLittleImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftLittleImageArray().getBytes(), "FingerprintImage");
+            // leftLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftLittleImageArray().getBytes()));
+            leftLittleImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftLittleImageArray", leftLittleImageArrayStr);
+        applicantFingerprint.append("leftLittleImageArray", leftLittleImageArrayStr);
 
         String rightThumbImageArrayStr = null;
         if (this.getApplicantFingerprint().getRightThumbImageArray() != null && this.getApplicantFingerprint().getRightThumbImageArray().length() > 0) {
-            rightThumbImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightThumbImageArray().getBytes(), "FingerprintImage");
+            //  rightThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightThumbImageArray().getBytes()));
+            rightThumbImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightThumbImageArray", rightThumbImageArrayStr);
+        applicantFingerprint.append("rightThumbImageArray", rightThumbImageArrayStr);
 
         String rightIndexImageArrayStr = null;
         if (this.getApplicantFingerprint().getRightIndexImageArray() != null && this.getApplicantFingerprint().getRightIndexImageArray().length() > 0) {
-            rightIndexImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightIndexImageArray().getBytes(), "FingerprintImage");
+            // rightIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightIndexImageArray().getBytes()));
+            rightIndexImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightIndexImageArray", rightIndexImageArrayStr);
+        applicantFingerprint.append("rightIndexImageArray", rightIndexImageArrayStr);
 
         String rightMiddleImageArrayStr = null;
         if (this.getApplicantFingerprint().getRightMiddleImageArray() != null && this.getApplicantFingerprint().getRightMiddleImageArray().length() > 0) {
-            rightMiddleImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightMiddleImageArray().getBytes(), "FingerprintImage");
+            //    rightMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightMiddleImageArray().getBytes()));
+            rightMiddleImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightMiddleImageArray", rightMiddleImageArrayStr);
+        applicantFingerprint.append("rightMiddleImageArray", rightMiddleImageArrayStr);
 
         String rightRingImageArrayStr = null;
         if (this.getApplicantFingerprint().getRightRingImageArray() != null && this.getApplicantFingerprint().getRightRingImageArray().length() > 0) {
-            rightRingImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightRingImageArray().getBytes(), "FingerprintImage");
+            //  rightRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightRingImageArray().getBytes()));
+            rightRingImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightRingImageArray", rightRingImageArrayStr);
+        applicantFingerprint.append("rightRingImageArray", rightRingImageArrayStr);
 
         String rightLittleImageArrayStr = null;
         if (this.getApplicantFingerprint().getRightLittleImageArray() != null && this.getApplicantFingerprint().getRightLittleImageArray().length() > 0) {
-            rightLittleImageArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightLittleImageArray().getBytes(), "FingerprintImage");
+            // rightLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleImageArray().getBytes(), "FingerprintImage");
+            ObjectId objectId = new ObjectId();
+            listFingerprintImage.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightLittleImageArray().getBytes()));
+            rightLittleImageArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightLittleImageArray", rightLittleImageArrayStr);
+        applicantFingerprint.append("rightLittleImageArray", rightLittleImageArrayStr);
+        //endregion FingerprintImage
 
+        //region FingerprintWSQ
         String leftThumbWSQArrayStr = null;
         if (this.getApplicantFingerprint().getLeftThumbWSQArray() != null && this.getApplicantFingerprint().getLeftThumbWSQArray().length() > 0) {
-            leftThumbWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftThumbWSQArray().getBytes(), "FingerprintWSQ");
+            // leftThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftThumbWSQArray().getBytes()));
+            leftThumbWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftThumbWSQArray", leftThumbWSQArrayStr);
+        applicantFingerprint.append("leftThumbWSQArray", leftThumbWSQArrayStr);
 
         String leftIndexWSQArrayStr = null;
         if (this.getApplicantFingerprint().getLeftIndexWSQArray() != null && this.getApplicantFingerprint().getLeftIndexWSQArray().length() > 0) {
-            leftIndexWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftIndexWSQArray().getBytes(), "FingerprintWSQ");
+            //leftIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftIndexWSQArray().getBytes()));
+            leftIndexWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftIndexWSQArray", leftIndexWSQArrayStr);
+        applicantFingerprint.append("leftIndexWSQArray", leftIndexWSQArrayStr);
 
         String leftMiddleWSQArrayStr = null;
         if (this.getApplicantFingerprint().getLeftMiddleWSQArray() != null && this.getApplicantFingerprint().getLeftMiddleWSQArray().length() > 0) {
-            leftMiddleWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftMiddleWSQArray().getBytes(), "FingerprintWSQ");
+            // leftMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftMiddleWSQArray().getBytes()));
+            leftMiddleWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftMiddleWSQArray", leftMiddleWSQArrayStr);
+        applicantFingerprint.append("leftMiddleWSQArray", leftMiddleWSQArrayStr);
 
         String leftRingWSQArrayStr = null;
         if (this.getApplicantFingerprint().getLeftRingWSQArray() != null && this.getApplicantFingerprint().getLeftRingWSQArray().length() > 0) {
-            leftRingWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftRingWSQArray().getBytes(), "FingerprintWSQ");
+            //  leftRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftRingWSQArray().getBytes()));
+            leftRingWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftRingWSQArray", leftRingWSQArrayStr);
+        applicantFingerprint.append("leftRingWSQArray", leftRingWSQArrayStr);
 
         String leftLittleWSQArrayStr = null;
         if (this.getApplicantFingerprint().getLeftLittleWSQArray() != null && this.getApplicantFingerprint().getLeftLittleWSQArray().length() > 0) {
-            leftLittleWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftLittleWSQArray().getBytes(), "FingerprintWSQ");
+            //  leftLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftLittleWSQArray().getBytes()));
+            leftLittleWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("leftLittleWSQArray", leftLittleWSQArrayStr);
+        applicantFingerprint.append("leftLittleWSQArray", leftLittleWSQArrayStr);
 
         String rightThumbWSQArrayStr = null;
         if (this.getApplicantFingerprint().getRightThumbWSQArray() != null && this.getApplicantFingerprint().getRightThumbWSQArray().length() > 0) {
-            rightThumbWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightThumbWSQArray().getBytes(), "FingerprintWSQ");
+            // rightThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightThumbWSQArray().getBytes()));
+            rightThumbWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightThumbWSQArray", rightThumbWSQArrayStr);
+        applicantFingerprint.append("rightThumbWSQArray", rightThumbWSQArrayStr);
 
         String rightIndexWSQArrayStr = null;
         if (this.getApplicantFingerprint().getRightIndexWSQArray() != null && this.getApplicantFingerprint().getRightIndexWSQArray().length() > 0) {
-            rightIndexWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightIndexWSQArray().getBytes(), "FingerprintWSQ");
+            // rightIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightIndexWSQArray().getBytes()));
+            rightIndexWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightIndexWSQArray", rightIndexWSQArrayStr);
+        applicantFingerprint.append("rightIndexWSQArray", rightIndexWSQArrayStr);
 
         String rightMiddleWSQArrayStr = null;
         if (this.getApplicantFingerprint().getRightMiddleWSQArray() != null && this.getApplicantFingerprint().getRightMiddleWSQArray().length() > 0) {
-            rightMiddleWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightMiddleWSQArray().getBytes(), "FingerprintWSQ");
+            // rightMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightMiddleWSQArray().getBytes()));
+            rightMiddleWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightMiddleWSQArray", rightMiddleWSQArrayStr);
+        applicantFingerprint.append("rightMiddleWSQArray", rightMiddleWSQArrayStr);
 
         String rightRingWSQArrayStr = null;
         if (this.getApplicantFingerprint().getRightRingWSQArray() != null && this.getApplicantFingerprint().getRightRingWSQArray().length() > 0) {
-            rightRingWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightRingWSQArray().getBytes(), "FingerprintWSQ");
+            // rightRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightRingWSQArray().getBytes()));
+            rightRingWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightRingWSQArray", rightRingWSQArrayStr);
+        applicantFingerprint.append("rightRingWSQArray", rightRingWSQArrayStr);
 
         String rightLittleWSQArrayStr = null;
         if (this.getApplicantFingerprint().getRightLittleWSQArray() != null && this.getApplicantFingerprint().getRightLittleWSQArray().length() > 0) {
-            rightLittleWSQArrayStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightLittleWSQArray().getBytes(), "FingerprintWSQ");
+            //rightLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleWSQArray().getBytes(), "FingerprintWSQ");
+            ObjectId objectId = new ObjectId();
+            listFingerprintWSQ.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightLittleWSQArray().getBytes()));
+            rightLittleWSQArrayStr = objectId.toString();
         }
-        applicantFingerprint.put("rightLittleWSQArray", rightLittleWSQArrayStr);
+        applicantFingerprint.append("rightLittleWSQArray", rightLittleWSQArrayStr);
 
-        // applicantFingerprint.put("leftThumbImageArray", this.getApplicantFingerprint().getLeftThumbImageArray());
-        // applicantFingerprint.put("leftIndexImageArray", this.getApplicantFingerprint().getLeftIndexImageArray());
-        // applicantFingerprint.put("leftMiddleImageArray", this.getApplicantFingerprint().getLeftMiddleImageArray());
-        // applicantFingerprint.put("leftRingImageArray", this.getApplicantFingerprint().getLeftRingImageArray());
-        // applicantFingerprint.put("leftLittleImageArray", this.getApplicantFingerprint().getLeftLittleImageArray());
-        // applicantFingerprint.put("rightThumbImageArray", this.getApplicantFingerprint().getRightThumbImageArray());
-        // applicantFingerprint.put("rightIndexImageArray", this.getApplicantFingerprint().getRightIndexImageArray());
-        //applicantFingerprint.put("rightMiddleImageArray", this.getApplicantFingerprint().getRightMiddleImageArray());
-        //applicantFingerprint.put("rightRingImageArray", this.getApplicantFingerprint().getRightRingImageArray());
-        //applicantFingerprint.put("rightLittleImageArray", this.getApplicantFingerprint().getRightLittleImageArray());
-        //applicantFingerprint.put("leftThumbWSQArray", this.getApplicantFingerprint().getLeftThumbWSQArray());
-        //applicantFingerprint.put("leftIndexWSQArray", this.getApplicantFingerprint().getLeftIndexWSQArray());
-        // applicantFingerprint.put("leftMiddleWSQArray", this.getApplicantFingerprint().getLeftMiddleWSQArray());
-        // applicantFingerprint.put("leftRingWSQArray", this.getApplicantFingerprint().getLeftRingWSQArray());
-        //applicantFingerprint.put("leftLittleWSQArray", this.getApplicantFingerprint().getLeftLittleWSQArray());
-        //applicantFingerprint.put("rightThumbWSQArray", this.getApplicantFingerprint().getRightThumbWSQArray());
-        //applicantFingerprint.put("rightIndexWSQArray", this.getApplicantFingerprint().getRightIndexWSQArray());
-        //applicantFingerprint.put("rightMiddleWSQArray", this.getApplicantFingerprint().getRightMiddleWSQArray());
-        //applicantFingerprint.put("rightRingWSQArray", this.getApplicantFingerprint().getRightRingWSQArray());
-        //applicantFingerprint.put("rightLittleWSQArray", this.getApplicantFingerprint().getRightLittleWSQArray());
+        //endregion FingerprintWSQ
 
+        applicantFingerprint.append("leftThumbScore", this.getApplicantFingerprint().getLeftThumbScore());
+        applicantFingerprint.append("leftIndexScore", this.getApplicantFingerprint().getLeftIndexScore());
+        applicantFingerprint.append("leftMiddleScore", this.getApplicantFingerprint().getLeftMiddleScore());
+        applicantFingerprint.append("leftRingScore", this.getApplicantFingerprint().getLeftRingScore());
+        applicantFingerprint.append("leftLittleScore", this.getApplicantFingerprint().getLeftLittleScore());
+        applicantFingerprint.append("rightThumbScore", this.getApplicantFingerprint().getRightThumbScore());
+        applicantFingerprint.append("rightIndexScore", this.getApplicantFingerprint().getRightIndexScore());
+        applicantFingerprint.append("rightMiddleScore", this.getApplicantFingerprint().getRightMiddleScore());
+        applicantFingerprint.append("rightRingScore", this.getApplicantFingerprint().getRightRingScore());
+        applicantFingerprint.append("rightLittleScore", this.getApplicantFingerprint().getRightLittleScore());
+        applicantFingerprint.append("leftThumbState", this.getApplicantFingerprint().getLeftThumbState());
+        applicantFingerprint.append("leftIndexState", this.getApplicantFingerprint().getLeftIndexState());
+        applicantFingerprint.append("leftMiddleState", this.getApplicantFingerprint().getLeftMiddleState());
+        applicantFingerprint.append("leftRingState", this.getApplicantFingerprint().getLeftRingState());
+        applicantFingerprint.append("leftLittleState", this.getApplicantFingerprint().getLeftLittleState());
+        applicantFingerprint.append("rightThumbState", this.getApplicantFingerprint().getRightThumbState());
+        applicantFingerprint.append("rightIndexState", this.getApplicantFingerprint().getRightIndexState());
+        applicantFingerprint.append("rightMiddleState", this.getApplicantFingerprint().getRightMiddleState());
+        applicantFingerprint.append("rightRingState", this.getApplicantFingerprint().getRightRingState());
+        applicantFingerprint.append("rightLittleState", this.getApplicantFingerprint().getRightLittleState());
+        applicantFingerprint.append("sourceAFISID", this.getApplicantFingerprint().getSourceAFISID());
 
-        applicantFingerprint.put("leftThumbScore", this.getApplicantFingerprint().getLeftThumbScore());
-        applicantFingerprint.put("leftIndexScore", this.getApplicantFingerprint().getLeftIndexScore());
-        applicantFingerprint.put("leftMiddleScore", this.getApplicantFingerprint().getLeftMiddleScore());
-        applicantFingerprint.put("leftRingScore", this.getApplicantFingerprint().getLeftRingScore());
-        applicantFingerprint.put("leftLittleScore", this.getApplicantFingerprint().getLeftLittleScore());
-        applicantFingerprint.put("rightThumbScore", this.getApplicantFingerprint().getRightThumbScore());
-        applicantFingerprint.put("rightIndexScore", this.getApplicantFingerprint().getRightIndexScore());
-        applicantFingerprint.put("rightMiddleScore", this.getApplicantFingerprint().getRightMiddleScore());
-        applicantFingerprint.put("rightRingScore", this.getApplicantFingerprint().getRightRingScore());
-        applicantFingerprint.put("rightLittleScore", this.getApplicantFingerprint().getRightLittleScore());
-        applicantFingerprint.put("leftThumbState", this.getApplicantFingerprint().getLeftThumbState());
-        applicantFingerprint.put("leftIndexState", this.getApplicantFingerprint().getLeftIndexState());
-        applicantFingerprint.put("leftMiddleState", this.getApplicantFingerprint().getLeftMiddleState());
-        applicantFingerprint.put("leftRingState", this.getApplicantFingerprint().getLeftRingState());
-        applicantFingerprint.put("leftLittleState", this.getApplicantFingerprint().getLeftLittleState());
-        applicantFingerprint.put("rightThumbState", this.getApplicantFingerprint().getRightThumbState());
-        applicantFingerprint.put("rightIndexState", this.getApplicantFingerprint().getRightIndexState());
-        applicantFingerprint.put("rightMiddleState", this.getApplicantFingerprint().getRightMiddleState());
-        applicantFingerprint.put("rightRingState", this.getApplicantFingerprint().getRightRingState());
-        applicantFingerprint.put("rightLittleState", this.getApplicantFingerprint().getRightLittleState());
-        applicantFingerprint.put("sourceAFISID", this.getApplicantFingerprint().getSourceAFISID());
-
-
-        String leftThumbAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getLeftThumbAFISTemplateT() != null && this.getApplicantFingerprint().getLeftThumbAFISTemplateT().length() > 0) {
-            leftThumbAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftThumbAFISTemplateT().getBytes(), "FingerprintTemplate");
+        //region FingerprintTemplate
+        String leftThumbAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftThumbAFISTemplate() != null && this.getApplicantFingerprint().getLeftThumbAFISTemplate().length() > 0) {
+            //  leftThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftThumbAFISTemplate().getBytes()));
+            leftThumbAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("leftThumbAFISTemplateT", leftThumbAFISTemplateTStr);
+        applicantFingerprint.append("leftThumbAFISTemplate", leftThumbAFISTemplateStr);
 
-        String leftIndexAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getLeftIndexAFISTemplateT() != null && this.getApplicantFingerprint().getLeftIndexAFISTemplateT().length() > 0) {
-            leftIndexAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftIndexAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String leftIndexAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftIndexAFISTemplate() != null && this.getApplicantFingerprint().getLeftIndexAFISTemplate().length() > 0) {
+            // leftIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftIndexAFISTemplate().getBytes()));
+            leftIndexAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("leftIndexAFISTemplateT", leftIndexAFISTemplateTStr);
+        applicantFingerprint.append("leftIndexAFISTemplate", leftIndexAFISTemplateStr);
 
-        String leftMiddleAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getLeftMiddleAFISTemplateT() != null && this.getApplicantFingerprint().getLeftMiddleAFISTemplateT().length() > 0) {
-            leftMiddleAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftMiddleAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String leftMiddleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftMiddleAFISTemplate() != null && this.getApplicantFingerprint().getLeftMiddleAFISTemplate().length() > 0) {
+            // leftMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftMiddleAFISTemplate().getBytes()));
+            leftMiddleAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("leftMiddleAFISTemplateT", leftMiddleAFISTemplateTStr);
+        applicantFingerprint.append("leftMiddleAFISTemplate", leftMiddleAFISTemplateStr);
 
-        String leftRingAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getLeftRingAFISTemplateT() != null && this.getApplicantFingerprint().getLeftRingAFISTemplateT().length() > 0) {
-            leftRingAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftRingAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String leftRingAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftRingAFISTemplate() != null && this.getApplicantFingerprint().getLeftRingAFISTemplate().length() > 0) {
+            // leftRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftRingAFISTemplate().getBytes()));
+            leftRingAFISTemplateStr = objectId.toString();
+
         }
-        applicantFingerprint.put("leftRingAFISTemplateT", leftRingAFISTemplateTStr);
+        applicantFingerprint.append("leftRingAFISTemplate", leftRingAFISTemplateStr);
 
-        String leftLittleAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getLeftLittleAFISTemplateT() != null && this.getApplicantFingerprint().getLeftLittleAFISTemplateT().length() > 0) {
-            leftLittleAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getLeftLittleAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String leftLittleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftLittleAFISTemplate() != null && this.getApplicantFingerprint().getLeftLittleAFISTemplate().length() > 0) {
+            //leftLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getLeftLittleAFISTemplate().getBytes()));
+            leftLittleAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("leftLittleAFISTemplateT", leftLittleAFISTemplateTStr);
+        applicantFingerprint.append("leftLittleAFISTemplate", leftLittleAFISTemplateStr);
 
-        String rightThumbAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getRightThumbAFISTemplateT() != null && this.getApplicantFingerprint().getRightThumbAFISTemplateT().length() > 0) {
-            rightThumbAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightThumbAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String rightThumbAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightThumbAFISTemplate() != null && this.getApplicantFingerprint().getRightThumbAFISTemplate().length() > 0) {
+            //   rightThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightThumbAFISTemplate().getBytes()));
+            rightThumbAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("rightThumbAFISTemplateT", rightThumbAFISTemplateTStr);
+        applicantFingerprint.append("rightThumbAFISTemplate", rightThumbAFISTemplateStr);
 
-        String rightIndexAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getRightIndexAFISTemplateT() != null && this.getApplicantFingerprint().getRightIndexAFISTemplateT().length() > 0) {
-            rightIndexAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightIndexAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String rightIndexAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightIndexAFISTemplate() != null && this.getApplicantFingerprint().getRightIndexAFISTemplate().length() > 0) {
+            // rightIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightIndexAFISTemplate().getBytes()));
+            rightIndexAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("rightIndexAFISTemplateT", rightIndexAFISTemplateTStr);
+        applicantFingerprint.append("rightIndexAFISTemplate", rightIndexAFISTemplateStr);
 
-        String rightMiddleAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getRightMiddleAFISTemplateT() != null && this.getApplicantFingerprint().getRightMiddleAFISTemplateT().length() > 0) {
-            rightMiddleAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightMiddleAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String rightMiddleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightMiddleAFISTemplate() != null && this.getApplicantFingerprint().getRightMiddleAFISTemplate().length() > 0) {
+            // rightMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightMiddleAFISTemplate().getBytes()));
+            rightMiddleAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("rightMiddleAFISTemplateT", rightMiddleAFISTemplateTStr);
+        applicantFingerprint.append("rightMiddleAFISTemplate", rightMiddleAFISTemplateStr);
 
-        String rightRingAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getRightRingAFISTemplateT() != null && this.getApplicantFingerprint().getRightRingAFISTemplateT().length() > 0) {
-            rightRingAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightRingAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String rightRingAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightRingAFISTemplate() != null && this.getApplicantFingerprint().getRightRingAFISTemplate().length() > 0) {
+            // rightRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightRingAFISTemplate().getBytes()));
+            rightRingAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("rightRingAFISTemplateT", rightRingAFISTemplateTStr);
+        applicantFingerprint.append("rightRingAFISTemplate", rightRingAFISTemplateStr);
 
-        String rightLittleAFISTemplateTStr = null;
-        if (this.getApplicantFingerprint().getRightLittleAFISTemplateT() != null && this.getApplicantFingerprint().getRightLittleAFISTemplateT().length() > 0) {
-            rightLittleAFISTemplateTStr = mongoDBDao.insertImg(this.getApplicantFingerprint().getRightLittleAFISTemplateT().getBytes(), "FingerprintTemplate");
+        String rightLittleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightLittleAFISTemplate() != null && this.getApplicantFingerprint().getRightLittleAFISTemplate().length() > 0) {
+            // rightLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+            ObjectId objectId = new ObjectId();
+            listFingerprintTemplate.add(createImgDocument(objectId, transactionId, this.getApplicantFingerprint().getRightLittleAFISTemplate().getBytes()));
+            rightLittleAFISTemplateStr = objectId.toString();
         }
-        applicantFingerprint.put("rightLittleAFISTemplateT", rightLittleAFISTemplateTStr);
-        //applicantFingerprint.put("leftThumbAFISTemplateT", this.getApplicantFingerprint().getLeftThumbAFISTemplateT());
-        //  applicantFingerprint.put("leftIndexAFISTemplateT", this.getApplicantFingerprint().getLeftIndexAFISTemplateT());
-        //applicantFingerprint.put("leftMiddleAFISTemplateT", this.getApplicantFingerprint().getLeftMiddleAFISTemplateT());
-        //applicantFingerprint.put("leftRingAFISTemplateT", this.getApplicantFingerprint().getLeftRingAFISTemplateT());
-        // applicantFingerprint.put("leftLittleAFISTemplateT", this.getApplicantFingerprint().getLeftLittleAFISTemplateT());
-        // applicantFingerprint.put("rightThumbAFISTemplateT", this.getApplicantFingerprint().getRightThumbAFISTemplateT());
-        //applicantFingerprint.put("rightIndexAFISTemplateT", this.getApplicantFingerprint().getRightIndexAFISTemplateT());
-        // applicantFingerprint.put("rightMiddleAFISTemplateT", this.getApplicantFingerprint().getRightMiddleAFISTemplateT());
-        // applicantFingerprint.put("rightRingAFISTemplateT", this.getApplicantFingerprint().getRightRingAFISTemplateT());
-        applicantFingerprint.put("leftLittleMinutiaesCount", this.getApplicantFingerprint().getLeftLittleMinutiaesCount());
-        applicantFingerprint.put("leftRingMinutiaesCount", this.getApplicantFingerprint().getLeftRingMinutiaesCount());
-        applicantFingerprint.put("leftMiddleMinutiaesCount", this.getApplicantFingerprint().getLeftMiddleMinutiaesCount());
-        applicantFingerprint.put("leftIndexMinutiaesCount", this.getApplicantFingerprint().getLeftIndexMinutiaesCount());
-        applicantFingerprint.put("leftThumbMinutiaesCount", this.getApplicantFingerprint().getLeftThumbMinutiaesCount());
-        applicantFingerprint.put("rightLittleMinutiaesCount", this.getApplicantFingerprint().getRightLittleMinutiaesCount());
-        applicantFingerprint.put("rightRingMinutiaesCount", this.getApplicantFingerprint().getRightRingMinutiaesCount());
-        applicantFingerprint.put("rightMiddleMinutiaesCount", this.getApplicantFingerprint().getRightMiddleMinutiaesCount());
-        applicantFingerprint.put("rightIndexMinutiaesCount", this.getApplicantFingerprint().getRightIndexMinutiaesCount());
-        applicantFingerprint.put("rightThumbMinutiaesCount", this.getApplicantFingerprint().getRightThumbMinutiaesCount());
-        applicantFingerprint.put("missingReasonType", this.getApplicantFingerprint().getMissingReasonType());
+        applicantFingerprint.append("rightLittleAFISTemplate", rightLittleAFISTemplateStr);
+        //endregion FingerprintTemplate
 
-        dbObject.put("applicantFingerprint", applicantFingerprint);
+        applicantFingerprint.append("leftLittleMinutiaesCount", this.getApplicantFingerprint().getLeftLittleMinutiaesCount());
+        applicantFingerprint.append("leftRingMinutiaesCount", this.getApplicantFingerprint().getLeftRingMinutiaesCount());
+        applicantFingerprint.append("leftMiddleMinutiaesCount", this.getApplicantFingerprint().getLeftMiddleMinutiaesCount());
+        applicantFingerprint.append("leftIndexMinutiaesCount", this.getApplicantFingerprint().getLeftIndexMinutiaesCount());
+        applicantFingerprint.append("leftThumbMinutiaesCount", this.getApplicantFingerprint().getLeftThumbMinutiaesCount());
+        applicantFingerprint.append("rightLittleMinutiaesCount", this.getApplicantFingerprint().getRightLittleMinutiaesCount());
+        applicantFingerprint.append("rightRingMinutiaesCount", this.getApplicantFingerprint().getRightRingMinutiaesCount());
+        applicantFingerprint.append("rightMiddleMinutiaesCount", this.getApplicantFingerprint().getRightMiddleMinutiaesCount());
+        applicantFingerprint.append("rightIndexMinutiaesCount", this.getApplicantFingerprint().getRightIndexMinutiaesCount());
+        applicantFingerprint.append("rightThumbMinutiaesCount", this.getApplicantFingerprint().getRightThumbMinutiaesCount());
+        applicantFingerprint.append("missingReasonType", this.getApplicantFingerprint().getMissingReasonType());
 
-        DBObject applicantPhoto = new BasicDBObject();
-        applicantPhoto.put("formElaspedTicks", this.getApplicantPhoto().getFormElaspedTicks());
+        applicantObject.append("applicantFingerprint", applicantFingerprint);
+
+        org.bson.Document applicantPhoto = new org.bson.Document();
+        applicantPhoto.append("formElaspedTicks", this.getApplicantPhoto().getFormElaspedTicks());
 
 
         String photoArrayStr = null;
         if (this.getApplicantPhoto().getPhotoArray() != null && this.getApplicantPhoto().getPhotoArray().length() > 0) {
 //            ObjectId oid = mongoDBDao.saveApplicantPhotoFile(this.getApplicantPhoto().getPhotoArray().getBytes());
 //            applicantPhoto.put("photoArray", oid.toString());
-            photoArrayStr = mongoDBDao.insertImg(this.getApplicantPhoto().getPhotoArray().getBytes(), "PersonPhoto");
-
+            //   photoArrayStr = mongoDao.insertImg(this.getApplicantPhoto().getPhotoArray().getBytes(), "PersonPhoto");
+            ObjectId objectId = new ObjectId();
+            listApplicantPhotos.add(createImgDocument(objectId, transactionId, this.getApplicantPhoto().getPhotoArray().getBytes()));
+            photoArrayStr = objectId.toString();
         }
-        applicantPhoto.put("photoArray", photoArrayStr);
+        applicantPhoto.append("photoArray", photoArrayStr);
 
         //  applicantPhoto.put("photoArray", this.getApplicantPhoto().getPhotoArray());
         String thumbnailStr = null;
         if (this.getApplicantPhoto().getThumbnail() != null && this.getApplicantPhoto().getThumbnail().length() > 0) {
-            thumbnailStr = mongoDBDao.insertImg(this.getApplicantPhoto().getThumbnail().getBytes(), "PersonPhoto");
-
+            //  thumbnailStr = mongoDao.insertImg(this.getApplicantPhoto().getThumbnail().getBytes(), "PersonPhoto");
+            ObjectId objectId = new ObjectId();
+            listApplicantPhotos.add(createImgDocument(objectId, transactionId, this.getApplicantPhoto().getThumbnail().getBytes()));
+            thumbnailStr = objectId.toString();
         }
-        applicantPhoto.put("thumbnail", thumbnailStr);
+        applicantPhoto.append("thumbnail", thumbnailStr);
 
-        dbObject.put("applicantPhoto", applicantPhoto);
+        applicantObject.put("applicantPhoto", applicantPhoto);
+        // return applicantObject;
+
+
+        if (listFingerprintImage.size() > 0) {
+            result.put("FingerprintImage", listFingerprintImage);
+        }
+        if (listFingerprintTemplate.size() > 0) {
+            result.put("FingerprintTemplate", listFingerprintTemplate);
+        }
+        if (listFingerprintWSQ.size() > 0) {
+            result.put("FingerprintWSQ", listFingerprintWSQ);
+        }
+        if (listApplicantPhotos.size() > 0) {
+            result.put("ApplicantPhotos", listApplicantPhotos);
+        }
+        listApplicantMaster.add(this.toMasterDocument(transactionId));
+        result.put("ApplicantMaster", listApplicantMaster);
+
+        listApplicant.add(applicantObject);
+        result.put("Applicant", listApplicant);
+
+
+        return result;
+    }
+
+//    public ApplicantMaster toMaster() {
+//        ApplicantMaster master = new ApplicantMaster();
+//        master.set_id(this.get_id());
+//        master.setImportTask(this.getImportTask());
+//        master.setForenames(this.getApplicantDemographic().getForenames());
+//        master.setSurname(this.getApplicantDemographic().getSurname());
+//        master.setGender(this.getGender());
+//        master.setDateOfBirth(this.getDateOfBirth());
+//        master.setProvinceId(this.getApplicantDemographic().getProvinceId());
+//        master.setProvinceName(this.getApplicantDemographic().getProvinceName());
+//        master.setDistrictId(this.getApplicantDemographic().getDistrictId());
+//        master.setDistrictName(this.getApplicantDemographic().getDistrictName());
+//        master.setConstituencyId(this.getApplicantDemographic().getConstituencyId());
+//        master.setConstituencyName(this.getApplicantDemographic().getConstituencyName());
+//        master.setRegistrationNumber(this.getRegistrationNumber());
+//        master.setDateOfRegistration(this.getDateOfRegistration());
+//        master.setDeviceName(this.getDeviceName());
+//        master.setSortNumber(this.getSortNumber());
+//        master.setOperatorGuid(this.getOperatorGuid());
+//        master.setOperatorName(this.getOperatorName());
+//        master.setBeginCreateDatetime(this.getBeginCreateDatetime());
+//        master.setEndCreateDatetime(this.getEndCreateDatetime());
+//        master.setStatus(0);
+//        return master;
+//    }
+
+    public org.bson.Document toMasterDocument(ObjectId transactionId) {
+        org.bson.Document dbObject = new org.bson.Document();
+
+        dbObject.append("_id", this.get_id());
+        dbObject.append("transactionId", transactionId);
+        dbObject.append("importTask", this.getImportTask());
+
+        dbObject.append("forenames", this.getApplicantDemographic().getForenames());
+        dbObject.append("surname", this.getApplicantDemographic().getSurname());
+        dbObject.append("gender", this.getGender());
+        dbObject.append("dateOfBirth", this.getDateOfBirth());
+        dbObject.append("provinceId", this.getApplicantDemographic().getProvinceId());
+        dbObject.append("provinceName", this.getApplicantDemographic().getProvinceName());
+        dbObject.append("districtId", this.getApplicantDemographic().getDistrictId());
+        dbObject.append("districtName", this.getApplicantDemographic().getDistrictName());
+        dbObject.append("constituencyId", this.getApplicantDemographic().getConstituencyId());
+        dbObject.append("constituencyName", this.getApplicantDemographic().getConstituencyName());
+        dbObject.append("registrationNumber", this.getRegistrationNumber());
+        dbObject.append("dateOfRegistration", this.getDateOfRegistration());
+        dbObject.append("deviceName", this.getDeviceName());
+        dbObject.append("sortNumber", this.getSortNumber());
+        dbObject.append("operatorGuid", this.getOperatorGuid());
+        dbObject.append("operatorName", this.getOperatorName());
+        dbObject.append("beginCreateDatetime", this.getBeginCreateDatetime());
+        dbObject.append("endCreateDatetime", this.getEndCreateDatetime());
+        dbObject.append("status", -1);
         return dbObject;
     }
 
     @XmlElement(name = "Id", required = false)
     private String _id;
-    @XmlElement(name = "FullName", required = false)
-    private String fullName;
+    @XmlElement(name = "ImportTask", required = false)
+    private String importTask;
 
     @XmlElement(name = "Gender", required = false)
-    @XmlSchemaType(name = "int")
-    private int gender;
+    @XmlSchemaType(name = "byte")
+    private byte gender;
 
     @XmlElement(name = "DateOfBirth", required = false)
     @XmlSchemaType(name = "int")
@@ -487,15 +1053,15 @@ public class Applicant {
     @XmlSchemaType(name = "int")
     private int dateOfRegistration;
     @XmlElement(name = "Status", required = false)
-    @XmlSchemaType(name = "unsignedShort")
-    private short status;
+    @XmlSchemaType(name = "int")
+    private int status;
     @XmlElement(name = "Guid", required = true)
     protected String guid;
     @XmlElement(name = "RegistrationNumber", required = true)
     protected String registrationNumber;
     @XmlElement(name = "SortNumber")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long sortNumber;
+    @XmlSchemaType(name = "unsignedShort")
+    protected short sortNumber;
     @XmlElement(name = "BeginCreateDatetime", required = true)
     @XmlSchemaType(name = "dateTime")
     protected Date beginCreateDatetime;
@@ -512,33 +1078,33 @@ public class Applicant {
     @XmlElement(name = "OperatorName", required = true)
     protected String operatorName;
     @XmlElement(name = "ProvinceId")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long provinceId;
+    @XmlSchemaType(name = "int")
+    protected int provinceId;
     @XmlElement(name = "ProvinceName", required = true)
     protected String provinceName;
     @XmlElement(name = "DistrictId")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long districtId;
+    @XmlSchemaType(name = "int")
+    protected int districtId;
     @XmlElement(name = "DistrictName", required = true)
     protected String districtName;
     @XmlElement(name = "ConstituencyId")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long constituencyId;
+    @XmlSchemaType(name = "int")
+    protected int constituencyId;
     @XmlElement(name = "ConstituencyName", required = true)
     protected String constituencyName;
     @XmlElement(name = "LocalAuthorityId")
-    @XmlSchemaType(name = "unsignedShort")
+    @XmlSchemaType(name = "int")
     private int localAuthorityId;
     @XmlElement(name = "LocalAuthorityName", required = true)
     private String localAuthorityName;
     @XmlElement(name = "WardId")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long wardId;
+    @XmlSchemaType(name = "int")
+    protected int wardId;
     @XmlElement(name = "WardName", required = true)
     protected String wardName;
     @XmlElement(name = "PollingStationId")
-    @XmlSchemaType(name = "unsignedInt")
-    protected long pollingStationId;
+    @XmlSchemaType(name = "int")
+    protected int pollingStationId;
     @XmlElement(name = "PollingStationCode", required = true, nillable = true)
     protected String pollingStationCode;
     @XmlElement(name = "PollingStationName", required = true, nillable = true)
@@ -616,14 +1182,14 @@ public class Applicant {
     /**
      * 获取sortNumber属性的值。
      */
-    public long getSortNumber() {
+    public short getSortNumber() {
         return sortNumber;
     }
 
     /**
      * 设置sortNumber属性的值。
      */
-    public void setSortNumber(long value) {
+    public void setSortNumber(short value) {
         this.sortNumber = value;
     }
 
@@ -750,14 +1316,14 @@ public class Applicant {
     /**
      * 获取provinceId属性的值。
      */
-    public long getProvinceId() {
+    public int getProvinceId() {
         return provinceId;
     }
 
     /**
      * 设置provinceId属性的值。
      */
-    public void setProvinceId(long value) {
+    public void setProvinceId(int value) {
         this.provinceId = value;
     }
 
@@ -784,14 +1350,14 @@ public class Applicant {
     /**
      * 获取districtId属性的值。
      */
-    public long getDistrictId() {
+    public int getDistrictId() {
         return districtId;
     }
 
     /**
      * 设置districtId属性的值。
      */
-    public void setDistrictId(long value) {
+    public void setDistrictId(int value) {
         this.districtId = value;
     }
 
@@ -818,14 +1384,14 @@ public class Applicant {
     /**
      * 获取constituencyId属性的值。
      */
-    public long getConstituencyId() {
+    public int getConstituencyId() {
         return constituencyId;
     }
 
     /**
      * 设置constituencyId属性的值。
      */
-    public void setConstituencyId(long value) {
+    public void setConstituencyId(int value) {
         this.constituencyId = value;
     }
 
@@ -852,14 +1418,14 @@ public class Applicant {
     /**
      * 获取wardId属性的值。
      */
-    public long getWardId() {
+    public int getWardId() {
         return wardId;
     }
 
     /**
      * 设置wardId属性的值。
      */
-    public void setWardId(long value) {
+    public void setWardId(int value) {
         this.wardId = value;
     }
 
@@ -886,14 +1452,14 @@ public class Applicant {
     /**
      * 获取pollingStationId属性的值。
      */
-    public long getPollingStationId() {
+    public int getPollingStationId() {
         return pollingStationId;
     }
 
     /**
      * 设置pollingStationId属性的值。
      */
-    public void setPollingStationId(long value) {
+    public void setPollingStationId(int value) {
         this.pollingStationId = value;
     }
 
@@ -1131,20 +1697,20 @@ public class Applicant {
         this.applicantPhoto = value;
     }
 
-    public short getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(short status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
 
-    public int getGender() {
+    public byte getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(byte gender) {
         this.gender = gender;
     }
 
@@ -1172,12 +1738,12 @@ public class Applicant {
         this.dateOfRegistration = dateOfRegistration;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getImportTask() {
+        return importTask;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setImportTask(String importTask) {
+        this.importTask = importTask;
     }
 
     public int getLocalAuthorityId() {
@@ -1194,6 +1760,30 @@ public class Applicant {
 
     public void setLocalAuthorityName(String localAuthorityName) {
         this.localAuthorityName = localAuthorityName;
+    }
+
+    public void merge(ApplicantMaster master) {
+        if (master != null) {
+            this.setDeviceName(master.getDeviceName());
+            this.setSortNumber(master.getSortNumber());
+            this.setDateOfBirth(master.getDateOfBirth());
+            this.applicantDemographic.setForenames(master.getForenames());
+            this.applicantDemographic.setSurname(master.getSurname());
+            this.applicantDemographic.setProvinceId(master.getProvinceId());
+            this.applicantDemographic.setProvinceName(master.getProvinceName());
+            this.applicantDemographic.setDistrictId(master.getDistrictId());
+            this.applicantDemographic.setDistrictName(master.getDistrictName());
+            this.applicantDemographic.setConstituencyId(master.getConstituencyId());
+            this.applicantDemographic.setConstituencyName(master.getConstituencyName());
+            this.setGender(master.getGender());
+            this.setOperatorGuid(master.getOperatorGuid());
+            this.setOperatorName(master.getOperatorName());
+            this.setBeginCreateDatetime(master.getBeginCreateDatetime());
+            this.setEndCreateDatetime(master.getEndCreateDatetime());
+            this.setStatus(master.getStatus());
+            this.setDateOfRegistration(master.getDateOfRegistration());
+            this.setRegistrationNumber(master.getRegistrationNumber());
+        }
     }
 
 
@@ -1453,32 +2043,32 @@ public class Applicant {
         @XmlElement(name = "Gender")
         protected byte gender;
         @XmlElement(name = "ProvinceId")
-        @XmlSchemaType(name = "unsignedInt")
-        protected long provinceId;
+        @XmlSchemaType(name = "int")
+        protected int provinceId;
         @XmlElement(name = "ProvinceName", required = true)
         protected String provinceName;
         @XmlElement(name = "DistrictId")
         @XmlSchemaType(name = "unsignedInt")
-        protected long districtId;
+        protected int districtId;
         @XmlElement(name = "DistrictName", required = true)
         protected String districtName;
         @XmlElement(name = "ConstituencyId")
-        @XmlSchemaType(name = "unsignedInt")
-        protected long constituencyId;
+        @XmlSchemaType(name = "int")
+        protected int constituencyId;
         @XmlElement(name = "ConstituencyName", required = true)
         protected String constituencyName;
-        @XmlSchemaType(name = "unsignedShort")
+        @XmlSchemaType(name = "int")
         private int localAuthorityId;
         @XmlElement(name = "LocalAuthorityName", required = true)
         private String localAuthorityName;
         @XmlElement(name = "WardId")
-        @XmlSchemaType(name = "unsignedInt")
-        protected long wardId;
+        @XmlSchemaType(name = "int")
+        protected int wardId;
         @XmlElement(name = "WardName", required = true)
         protected String wardName;
         @XmlElement(name = "StationId")
-        @XmlSchemaType(name = "unsignedInt")
-        protected long stationId;
+        @XmlSchemaType(name = "int")
+        protected int stationId;
         @XmlElement(name = "StationName", required = true)
         protected String stationName;
         @XmlElement(name = "StationCode", required = true)
@@ -1721,14 +2311,14 @@ public class Applicant {
         /**
          * 获取provinceId属性的值。
          */
-        public long getProvinceId() {
+        public int getProvinceId() {
             return provinceId;
         }
 
         /**
          * 设置provinceId属性的值。
          */
-        public void setProvinceId(long value) {
+        public void setProvinceId(int value) {
             this.provinceId = value;
         }
 
@@ -1755,14 +2345,14 @@ public class Applicant {
         /**
          * 获取districtId属性的值。
          */
-        public long getDistrictId() {
+        public int getDistrictId() {
             return districtId;
         }
 
         /**
          * 设置districtId属性的值。
          */
-        public void setDistrictId(long value) {
+        public void setDistrictId(int value) {
             this.districtId = value;
         }
 
@@ -1789,14 +2379,14 @@ public class Applicant {
         /**
          * 获取constituencyId属性的值。
          */
-        public long getConstituencyId() {
+        public int getConstituencyId() {
             return constituencyId;
         }
 
         /**
          * 设置constituencyId属性的值。
          */
-        public void setConstituencyId(long value) {
+        public void setConstituencyId(int value) {
             this.constituencyId = value;
         }
 
@@ -1823,14 +2413,14 @@ public class Applicant {
         /**
          * 获取wardId属性的值。
          */
-        public long getWardId() {
+        public int getWardId() {
             return wardId;
         }
 
         /**
          * 设置wardId属性的值。
          */
-        public void setWardId(long value) {
+        public void setWardId(int value) {
             this.wardId = value;
         }
 
@@ -1857,14 +2447,14 @@ public class Applicant {
         /**
          * 获取stationId属性的值。
          */
-        public long getStationId() {
+        public int getStationId() {
             return stationId;
         }
 
         /**
          * 设置stationId属性的值。
          */
-        public void setStationId(long value) {
+        public void setStationId(int value) {
             this.stationId = value;
         }
 
@@ -2756,16 +3346,16 @@ public class Applicant {
             "rightRingState",
             "rightLittleState",
             "sourceAFISID",
-            "leftThumbAFISTemplateT",
-            "leftIndexAFISTemplateT",
-            "leftMiddleAFISTemplateT",
-            "leftRingAFISTemplateT",
-            "leftLittleAFISTemplateT",
-            "rightThumbAFISTemplateT",
-            "rightIndexAFISTemplateT",
-            "rightMiddleAFISTemplateT",
-            "rightRingAFISTemplateT",
-            "rightLittleAFISTemplateT",
+            "leftThumbAFISTemplate",
+            "leftIndexAFISTemplate",
+            "leftMiddleAFISTemplate",
+            "leftRingAFISTemplate",
+            "leftLittleAFISTemplate",
+            "rightThumbAFISTemplate",
+            "rightIndexAFISTemplate",
+            "rightMiddleAFISTemplate",
+            "rightRingAFISTemplate",
+            "rightLittleAFISTemplate",
             "leftLittleMinutiaesCount",
             "leftRingMinutiaesCount",
             "leftMiddleMinutiaesCount",
@@ -2885,26 +3475,26 @@ public class Applicant {
         @XmlElement(name = "SourceAFISID", required = true, type = Long.class, nillable = true)
         @XmlSchemaType(name = "unsignedInt")
         protected Long sourceAFISID;
-        @XmlElement(name = "LeftThumbAFISTemplateT", required = true, nillable = true)
-        protected String leftThumbAFISTemplateT;
-        @XmlElement(name = "LeftIndexAFISTemplateT", required = true, nillable = true)
-        protected String leftIndexAFISTemplateT;
-        @XmlElement(name = "LeftMiddleAFISTemplateT", required = true, nillable = true)
-        protected String leftMiddleAFISTemplateT;
-        @XmlElement(name = "LeftRingAFISTemplateT", required = true, nillable = true)
-        protected String leftRingAFISTemplateT;
-        @XmlElement(name = "LeftLittleAFISTemplateT", required = true, nillable = true)
-        protected String leftLittleAFISTemplateT;
-        @XmlElement(name = "RightThumbAFISTemplateT", required = true, nillable = true)
-        protected String rightThumbAFISTemplateT;
-        @XmlElement(name = "RightIndexAFISTemplateT", required = true, nillable = true)
-        protected String rightIndexAFISTemplateT;
-        @XmlElement(name = "RightMiddleAFISTemplateT", required = true, nillable = true)
-        protected String rightMiddleAFISTemplateT;
-        @XmlElement(name = "RightRingAFISTemplateT", required = true, nillable = true)
-        protected String rightRingAFISTemplateT;
-        @XmlElement(name = "RightLittleAFISTemplateT", required = true, nillable = true)
-        protected String rightLittleAFISTemplateT;
+        @XmlElement(name = "LeftThumbAFISTemplate", required = true, nillable = true)
+        protected String leftThumbAFISTemplate;
+        @XmlElement(name = "LeftIndexAFISTemplate", required = true, nillable = true)
+        protected String leftIndexAFISTemplate;
+        @XmlElement(name = "LeftMiddleAFISTemplate", required = true, nillable = true)
+        protected String leftMiddleAFISTemplate;
+        @XmlElement(name = "LeftRingAFISTemplate", required = true, nillable = true)
+        protected String leftRingAFISTemplate;
+        @XmlElement(name = "LeftLittleAFISTemplate", required = true, nillable = true)
+        protected String leftLittleAFISTemplate;
+        @XmlElement(name = "RightThumbAFISTemplate", required = true, nillable = true)
+        protected String rightThumbAFISTemplate;
+        @XmlElement(name = "RightIndexAFISTemplate", required = true, nillable = true)
+        protected String rightIndexAFISTemplate;
+        @XmlElement(name = "RightMiddleAFISTemplate", required = true, nillable = true)
+        protected String rightMiddleAFISTemplate;
+        @XmlElement(name = "RightRingAFISTemplate", required = true, nillable = true)
+        protected String rightRingAFISTemplate;
+        @XmlElement(name = "RightLittleAFISTemplate", required = true, nillable = true)
+        protected String rightLittleAFISTemplate;
         @XmlElement(name = "LeftLittleMinutiaesCount", required = true, type = Long.class, nillable = true)
         @XmlSchemaType(name = "unsignedInt")
         protected Long leftLittleMinutiaesCount;
@@ -3774,203 +4364,203 @@ public class Applicant {
         }
 
         /**
-         * 获取leftThumbAFISTemplateT属性的值。
+         * 获取leftThumbAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getLeftThumbAFISTemplateT() {
-            return leftThumbAFISTemplateT;
+        public String getLeftThumbAFISTemplate() {
+            return leftThumbAFISTemplate;
         }
 
         /**
-         * 设置leftThumbAFISTemplateT属性的值。
+         * 设置leftThumbAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setLeftThumbAFISTemplateT(String value) {
-            this.leftThumbAFISTemplateT = value;
+        public void setLeftThumbAFISTemplate(String value) {
+            this.leftThumbAFISTemplate = value;
         }
 
         /**
-         * 获取leftIndexAFISTemplateT属性的值。
+         * 获取leftIndexAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getLeftIndexAFISTemplateT() {
-            return leftIndexAFISTemplateT;
+        public String getLeftIndexAFISTemplate() {
+            return leftIndexAFISTemplate;
         }
 
         /**
-         * 设置leftIndexAFISTemplateT属性的值。
+         * 设置leftIndexAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setLeftIndexAFISTemplateT(String value) {
-            this.leftIndexAFISTemplateT = value;
+        public void setLeftIndexAFISTemplate(String value) {
+            this.leftIndexAFISTemplate = value;
         }
 
         /**
-         * 获取leftMiddleAFISTemplateT属性的值。
+         * 获取leftMiddleAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getLeftMiddleAFISTemplateT() {
-            return leftMiddleAFISTemplateT;
+        public String getLeftMiddleAFISTemplate() {
+            return leftMiddleAFISTemplate;
         }
 
         /**
-         * 设置leftMiddleAFISTemplateT属性的值。
+         * 设置leftMiddleAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setLeftMiddleAFISTemplateT(String value) {
-            this.leftMiddleAFISTemplateT = value;
+        public void setLeftMiddleAFISTemplate(String value) {
+            this.leftMiddleAFISTemplate = value;
         }
 
         /**
-         * 获取leftRingAFISTemplateT属性的值。
+         * 获取leftRingAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getLeftRingAFISTemplateT() {
-            return leftRingAFISTemplateT;
+        public String getLeftRingAFISTemplate() {
+            return leftRingAFISTemplate;
         }
 
         /**
-         * 设置leftRingAFISTemplateT属性的值。
+         * 设置leftRingAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setLeftRingAFISTemplateT(String value) {
-            this.leftRingAFISTemplateT = value;
+        public void setLeftRingAFISTemplate(String value) {
+            this.leftRingAFISTemplate = value;
         }
 
         /**
-         * 获取leftLittleAFISTemplateT属性的值。
+         * 获取leftLittleAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getLeftLittleAFISTemplateT() {
-            return leftLittleAFISTemplateT;
+        public String getLeftLittleAFISTemplate() {
+            return leftLittleAFISTemplate;
         }
 
         /**
-         * 设置leftLittleAFISTemplateT属性的值。
+         * 设置leftLittleAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setLeftLittleAFISTemplateT(String value) {
-            this.leftLittleAFISTemplateT = value;
+        public void setLeftLittleAFISTemplate(String value) {
+            this.leftLittleAFISTemplate = value;
         }
 
         /**
-         * 获取rightThumbAFISTemplateT属性的值。
+         * 获取rightThumbAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getRightThumbAFISTemplateT() {
-            return rightThumbAFISTemplateT;
+        public String getRightThumbAFISTemplate() {
+            return rightThumbAFISTemplate;
         }
 
         /**
-         * 设置rightThumbAFISTemplateT属性的值。
+         * 设置rightThumbAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setRightThumbAFISTemplateT(String value) {
-            this.rightThumbAFISTemplateT = value;
+        public void setRightThumbAFISTemplate(String value) {
+            this.rightThumbAFISTemplate = value;
         }
 
         /**
-         * 获取rightIndexAFISTemplateT属性的值。
+         * 获取rightIndexAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getRightIndexAFISTemplateT() {
-            return rightIndexAFISTemplateT;
+        public String getRightIndexAFISTemplate() {
+            return rightIndexAFISTemplate;
         }
 
         /**
-         * 设置rightIndexAFISTemplateT属性的值。
+         * 设置rightIndexAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setRightIndexAFISTemplateT(String value) {
-            this.rightIndexAFISTemplateT = value;
+        public void setRightIndexAFISTemplate(String value) {
+            this.rightIndexAFISTemplate = value;
         }
 
         /**
-         * 获取rightMiddleAFISTemplateT属性的值。
+         * 获取rightMiddleAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getRightMiddleAFISTemplateT() {
-            return rightMiddleAFISTemplateT;
+        public String getRightMiddleAFISTemplate() {
+            return rightMiddleAFISTemplate;
         }
 
         /**
-         * 设置rightMiddleAFISTemplateT属性的值。
+         * 设置rightMiddleAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setRightMiddleAFISTemplateT(String value) {
-            this.rightMiddleAFISTemplateT = value;
+        public void setRightMiddleAFISTemplate(String value) {
+            this.rightMiddleAFISTemplate = value;
         }
 
         /**
-         * 获取rightRingAFISTemplateT属性的值。
+         * 获取rightRingAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getRightRingAFISTemplateT() {
-            return rightRingAFISTemplateT;
+        public String getRightRingAFISTemplate() {
+            return rightRingAFISTemplate;
         }
 
         /**
-         * 设置rightRingAFISTemplateT属性的值。
+         * 设置rightRingAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setRightRingAFISTemplateT(String value) {
-            this.rightRingAFISTemplateT = value;
+        public void setRightRingAFISTemplate(String value) {
+            this.rightRingAFISTemplate = value;
         }
 
         /**
-         * 获取rightLittleAFISTemplateT属性的值。
+         * 获取rightLittleAFISTemplate属性的值。
          *
          * @return possible object is
          * {@link String }
          */
-        public String getRightLittleAFISTemplateT() {
-            return rightLittleAFISTemplateT;
+        public String getRightLittleAFISTemplate() {
+            return rightLittleAFISTemplate;
         }
 
         /**
-         * 设置rightLittleAFISTemplateT属性的值。
+         * 设置rightLittleAFISTemplate属性的值。
          *
          * @param value allowed object is
          *              {@link String }
          */
-        public void setRightLittleAFISTemplateT(String value) {
-            this.rightLittleAFISTemplateT = value;
+        public void setRightLittleAFISTemplate(String value) {
+            this.rightLittleAFISTemplate = value;
         }
 
         /**
@@ -4265,6 +4855,638 @@ public class Applicant {
         public void setFormElaspedTicks(long value) {
             this.formElaspedTicks = value;
         }
+
+
     }
 
+    public org.bson.Document toTestApplicantMaster(String fistName, ObjectId transactionId,
+                                                   String lastName, String birth,
+                                                   String gender, String rid,
+                                                   String tstId, short sorNum) {
+        org.bson.Document result = new org.bson.Document();
+
+
+        result.append("_id", "testdata-" + rid);
+        result.append("gender", gender.equals("Male") ? (byte) 1 : (byte) 2);
+        result.append("dateOfBirth", Integer.valueOf(birth.replaceAll("-", "").replace(" 00:00:00", "")));
+        result.append("status", (byte) -1);
+
+        result.append("registrationNumber", tstId);
+
+        String dvcName = String.format("%04d", ((int) Math.floor(Integer.valueOf(rid) / 4000)) + 1);
+
+        String deviceName = "MW" + dvcName;
+
+        result.append("sortNumber", sorNum);
+
+        result.append("beginCreateDatetime", new Date());
+        result.append("endCreateDatetime", new Date());
+        result.append("transactionId", transactionId);
+        result.append("forenames", fistName);
+
+        result.append("surname", lastName);
+        int pid = getRandomProvinceId();
+        String pName = getTestProvinceName(pid);
+
+        result.append("provinceId", pid);
+        result.append("provinceName", pName);
+
+        int did = getRandomDistrictId(pid);
+        String dName = getRandomDistrictName(did);
+
+        result.append("districtId", did);
+        result.append("districtName", dName);
+
+        int cid = getRandomConstituencyId(did);
+        String cName = getRandomConstituencyName(cid);
+
+        result.append("constituencyId", cid);
+        result.append("constituencyName", cName);
+        result.append("deviceName", deviceName);
+        result.append("operatorGuid", this.getOperatorGuid());
+        result.append("operatorName", this.getOperatorName());
+
+        result.append("dateOfRegistration", this.getDateOfRegistration());
+
+        return result;
+    }
+
+    private String getTestProvinceName(int pid) {
+        String[] strArray = {"BULAWAYO METROPOLITAN", "HARARE METROPOLITAN", "MANICALAND", "MASHONALAND CENTRAL", "MASHONALAND EAST",
+                "MASHONALAND WEST", "MASVINGO", "MATEBELELAND NORTH", "MIDLANDS", "MATABELELAND SOUTH"};
+        return strArray[pid - 1];
+    }
+
+    private int getRandomProvinceId() {
+        Random ra = new Random();
+        return ra.nextInt(10) + 1;
+    }
+
+    private int getRandomDistrictId(int pid) {
+        int did = 0;
+        switch (pid) {
+            case 1:
+                did = 11;
+                break;
+            case 2:
+                int[] didArr2 = {12, 13};
+                did = didArr2[getRandomIndex(2)];
+                break;
+            case 3:
+                int[] didArr3 = {14, 15};
+                did = didArr3[getRandomIndex(2)];
+                break;
+            case 4:
+                int[] didArr4 = {16, 17};
+                did = didArr4[getRandomIndex(2)];
+                break;
+            case 5:
+                int[] didArr5 = {18, 19, 20};
+                did = didArr5[getRandomIndex(3)];
+                break;
+            case 6:
+                did = 21;
+                break;
+            case 7:
+                int[] didArr7 = {22, 23, 24, 25, 26, 27};
+                did = didArr7[getRandomIndex(6)];
+                break;
+            case 8:
+                int[] didArr8 = {28, 29, 30};
+                did = didArr8[getRandomIndex(3)];
+                break;
+            case 9:
+                int[] didArr9 = {31, 32};
+                did = didArr9[getRandomIndex(2)];
+                break;
+            case 10:
+                did = 33;
+                break;
+        }
+        return did;
+    }
+
+    private String getRandomDistrictName(int did) {
+
+        Map<Integer, String> districtMap = new HashMap<>();
+        districtMap.put(11, "BULAWAYO");
+        districtMap.put(12, "CHITUNGWIZA");
+        districtMap.put(13, "HARARE");
+        districtMap.put(14, "BUHERA");
+        districtMap.put(15, "CHIMANIMANI ");
+        districtMap.put(16, "GURUVE");
+        districtMap.put(17, "MAZOWE");
+        districtMap.put(18, "GOROMONZI");
+        districtMap.put(19, "MARONDERA");
+        districtMap.put(20, "MUREWA");
+        districtMap.put(21, "CHEGUTU");
+        districtMap.put(22, "BIKITA");
+        districtMap.put(23, "CHIREDZI");
+        districtMap.put(24, "GUTU");
+        districtMap.put(25, "MASVINGO    ");
+        districtMap.put(26, "MWENEZI");
+        districtMap.put(27, "ZAKA");
+        districtMap.put(28, "BINGA");
+        districtMap.put(29, "BUBI");
+        districtMap.put(30, "TSHOLOTSHO");
+        districtMap.put(31, "GWERU");
+        districtMap.put(32, "KWEKWE");
+        districtMap.put(33, "INSIZA");
+        return districtMap.get(did);
+    }
+
+    private int getRandomConstituencyId(int did) {
+        int cid = 0;
+        switch (did) {
+            case 11:
+                cid = 34;
+                break;
+            case 12:
+                cid = 35;
+                break;
+            case 13:
+
+                cid = 36;
+                break;
+            case 14:
+
+                cid = 37;
+                break;
+            case 15:
+
+                cid = 38;
+                break;
+            case 16:
+                cid = 39;
+                break;
+            case 17:
+                int[] didArr17 = {40, 41};
+                cid = didArr17[getRandomIndex(2)];
+                break;
+            case 18:
+
+                cid = 42;
+                break;
+            case 19:
+
+                cid = 43;
+                break;
+            case 20:
+                cid = 44;
+                break;
+            case 21:
+                int[] didArr21 = {45, 46, 47};
+                cid = didArr21[getRandomIndex(3)];
+                break;
+            case 22:
+                cid = 48;
+                break;
+            case 23:
+                cid = 49;
+                break;
+            case 24:
+                int[] didArr24 = {50, 51};
+                cid = didArr24[getRandomIndex(2)];
+                break;
+            case 25:
+                cid = 52;
+                break;
+            case 26:
+                cid = 53;
+                break;
+            case 27:
+                cid = 54;
+                break;
+            case 28:
+                cid = 55;
+                break;
+            case 29:
+                cid = 56;
+                break;
+            case 30:
+                cid = 57;
+                break;
+            case 31:
+                int[] didArr31 = {58, 59, 60};
+                cid = didArr31[getRandomIndex(2)];
+                break;
+            case 32:
+                cid = 61;
+                break;
+            case 33:
+                int[] didArr33 = {62, 63};
+                cid = didArr33[getRandomIndex(2)];
+                break;
+
+        }
+        return cid;
+    }
+
+    private String getRandomConstituencyName(int did) {
+
+        Map<Integer, String> ConstituencyMap = new HashMap<>();
+
+        ConstituencyMap.put(34, "NKULUMANE");
+        ConstituencyMap.put(35, "ZENGEZA EAST");
+        ConstituencyMap.put(36, "GLEN VIEW NORTH");
+        ConstituencyMap.put(37, "BUHERA WEST");
+        ConstituencyMap.put(38, "CHIMANIMANI WEST");
+        ConstituencyMap.put(39, "GURUVE SOUTH");
+        ConstituencyMap.put(40, "MAZOWE NORTH");
+        ConstituencyMap.put(41, "MAZOWE SOUTH");
+        ConstituencyMap.put(42, "GOROMONZI SOUTH");
+        ConstituencyMap.put(43, "MARONDERA CENTRAL");
+        ConstituencyMap.put(44, "MUREWA SOUTH");
+        ConstituencyMap.put(45, "CHEGUTU WEST    ");
+        ConstituencyMap.put(46, "MHONDORO-MUBAIRA");
+        ConstituencyMap.put(47, "NORTON");
+        ConstituencyMap.put(48, "BIKITA WEST");
+        ConstituencyMap.put(49, "CHIREDZI WEST");
+        ConstituencyMap.put(50, "GUTU CENTRAL");
+        ConstituencyMap.put(51, "GUTU WEST");
+        ConstituencyMap.put(52, "MASVINGO WEST");
+        ConstituencyMap.put(53, "MWENEZI EAST");
+        ConstituencyMap.put(54, "ZAKA NORTH");
+        ConstituencyMap.put(55, "BINGA NORTH ");
+        ConstituencyMap.put(56, "BUBI");
+        ConstituencyMap.put(57, "TSHOLOTSHO SOUTH");
+        ConstituencyMap.put(58, "CHIWUNDURA");
+        ConstituencyMap.put(59, "MKOBA");
+        ConstituencyMap.put(60, "VUNGU");
+        ConstituencyMap.put(61, "MBIZO");
+        ConstituencyMap.put(62, "INSIZA NORTH");
+        ConstituencyMap.put(63, "INSIZA SOUTH");
+        return ConstituencyMap.get(did);
+    }
+
+    private int getRandomIndex(int seed) {
+        Random ra = new Random();
+        return ra.nextInt(seed);
+    }
+
+    public org.bson.Document toTestApplicantDBObject(String rid, ObjectId transactionId, MongoDao mongoDao) {
+        org.bson.Document dbObject = new org.bson.Document();
+        dbObject.append("transactionId", transactionId);
+        dbObject.append("_id", "testdata-" + rid);
+        dbObject.append("beginEditDatetime", this.getBeginEditDatetime());
+        dbObject.append("endEditDatetime", this.getEndEditDatetime());
+        dbObject.append("provinceId", this.getProvinceId());
+        dbObject.append("provinceName", this.getProvinceName());
+        dbObject.append("districtId", this.getDistrictId());
+        dbObject.append("districtName", this.getDistrictName());
+        dbObject.append("constituencyId", this.getConstituencyId());
+        dbObject.append("constituencyName", this.getConstituencyName());
+        dbObject.append("localAuthorityId", this.getLocalAuthorityId());
+        dbObject.append("localAuthorityName", this.getLocalAuthorityName());
+        dbObject.append("wardId", this.getWardId());
+        dbObject.append("wardName", this.getWardName());
+        dbObject.append("pollingStationId", this.getPollingStationId());
+        dbObject.append("pollingStationCode", this.getPollingStationCode());
+        dbObject.append("pollingStationName", this.getPollingStationName());
+        dbObject.append("saveDatetime", this.getSaveDatetime());
+        dbObject.append("editSaveDatetime", this.getEditSaveDatetime());
+
+        dbObject.append("underDuress", this.isUnderDuress());
+        dbObject.append("exportDatetime", this.getExportDatetime());
+        dbObject.append("importToServerDatetime", this.getImportToServerDatetime());
+
+        org.bson.Document applicantCompliance = new org.bson.Document();
+
+        applicantCompliance.append("formElaspedTicks", this.getApplicantCompliance().getFormElaspedTicks());
+        String applicationFormContentStr = null;
+        if (this.getApplicantCompliance().getApplicationFormContent() != null && this.getApplicantCompliance().getApplicationFormContent().length() > 0) {
+            applicationFormContentStr = mongoDao.insertImg(this.getApplicantCompliance().getApplicationFormContent().getBytes(), "CompliancePhoto");
+        }
+        applicantCompliance.append("applicationFormContent", applicationFormContentStr);
+
+        String idDocumentFormContentStr = null;
+        if (this.getApplicantCompliance().getIDDocumentFormContent() != null && this.getApplicantCompliance().getIDDocumentFormContent().length() > 0) {
+            idDocumentFormContentStr = mongoDao.insertImg(this.getApplicantCompliance().getIDDocumentFormContent().getBytes(), "CompliancePhoto");
+        }
+        applicantCompliance.append("idDocumentFormContent", idDocumentFormContentStr);
+
+        String proofOfResidenceContentStr = null;
+        if (this.getApplicantCompliance().getProofOfResidenceContent() != null && this.getApplicantCompliance().getProofOfResidenceContent().length() > 0) {
+            proofOfResidenceContentStr = mongoDao.insertImg(this.getApplicantCompliance().getProofOfResidenceContent().getBytes(), "CompliancePhoto");
+        }
+        applicantCompliance.append("proofOfResidenceContent", proofOfResidenceContentStr);
+
+        dbObject.append("applicantCompliance", applicantCompliance);
+
+        org.bson.Document applicantDemographic = new org.bson.Document();
+
+        applicantDemographic.append("formElaspedTicks", this.getApplicantDemographic().getFormElaspedTicks());
+        applicantDemographic.append("idNumber", this.getApplicantDemographic().getIdNumber());
+        applicantDemographic.append("dateOfBirth", this.getApplicantDemographic().getDateOfBirth());
+        applicantDemographic.append("dateOfBirthText", this.getApplicantDemographic().getDateOfBirthText());
+        applicantDemographic.put("gender", this.getApplicantDemographic().getGender());
+
+        applicantDemographic.append("localAuthorityId", this.getApplicantDemographic().getLocalAuthorityId());
+        applicantDemographic.append("localAuthorityName", this.getApplicantDemographic().getLocalAuthorityName());
+        applicantDemographic.append("wardId", this.getApplicantDemographic().getWardId());
+        applicantDemographic.append("wardName", this.getApplicantDemographic().getWardName());
+        applicantDemographic.append("stationId", this.getApplicantDemographic().getStationId());
+        applicantDemographic.append("stationName", this.getApplicantDemographic().getStationName());
+        applicantDemographic.append("stationCode", this.getApplicantDemographic().getStationCode());
+        applicantDemographic.append("surburb", this.getApplicantDemographic().getSurburb());
+        applicantDemographic.append("town", this.getApplicantDemographic().getTown());
+        applicantDemographic.append("streetName", this.getApplicantDemographic().getStreetName());
+        applicantDemographic.append("standNumber", this.getApplicantDemographic().getStandNumber());
+        applicantDemographic.append("disabilityCode", this.getApplicantDemographic().getDisabilityCode());
+        applicantDemographic.append("disabilityName", this.getApplicantDemographic().getDisabilityName());
+        applicantDemographic.append("registrationType", this.getApplicantDemographic().getRegistrationType());
+        applicantDemographic.append("phoneNumber", this.getApplicantDemographic().getPhoneNumber());
+        applicantDemographic.append("email", this.getApplicantDemographic().getEmail());
+        applicantDemographic.append("gisLatitude", this.getApplicantDemographic().getGisLatitude());
+        applicantDemographic.append("gisLongitude", this.getApplicantDemographic().getGisLongitude());
+        applicantDemographic.append("changeAddressProvinceId", this.getApplicantDemographic().getChangeAddressProvinceId());
+        applicantDemographic.append("changeAddressProvinceName", this.getApplicantDemographic().getChangeAddressProvinceName());
+        applicantDemographic.append("changeAddressDistrictId", this.getApplicantDemographic().getChangeAddressDistrictId());
+        applicantDemographic.append("changeAddressDistrictName", this.getApplicantDemographic().getChangeAddressDistrictName());
+        applicantDemographic.append("changeAddressConstituencyId", this.getApplicantDemographic().getChangeAddressConstituencyId());
+        applicantDemographic.append("changeAddressConstituencyName", this.getApplicantDemographic().getChangeAddressConstituencyName());
+        applicantDemographic.append("changeAddressLocalAuthorityId", this.getApplicantDemographic().getChangeAddressLocalAuthorityId());
+        applicantDemographic.append("changeAddressLocalAuthorityName", this.getApplicantDemographic().getChangeAddressLocalAuthorityName());
+        applicantDemographic.append("changeAddressWardId", this.getApplicantDemographic().getChangeAddressWardId());
+        applicantDemographic.append("changeAddressWardName", this.getApplicantDemographic().getChangeAddressWardName());
+        applicantDemographic.append("changeAddressStationId", this.getApplicantDemographic().getChangeAddressStationId());
+        applicantDemographic.append("changeAddressStationName", this.getApplicantDemographic().getChangeAddressStationName());
+        applicantDemographic.append("changeAddressStationCode", this.getApplicantDemographic().getChangeAddressStationCode());
+        applicantDemographic.append("changeAddressSurburb", this.getApplicantDemographic().getChangeAddressSurburb());
+        applicantDemographic.append("changeAddressTown", this.getApplicantDemographic().getChangeAddressTown());
+        applicantDemographic.append("changeAddressStreetName", this.getApplicantDemographic().getChangeAddressStreetName());
+        applicantDemographic.append("changeAddressStandNumber", this.getApplicantDemographic().getChangeAddressStandNumber());
+        applicantDemographic.append("transferConstituencyProvinceId", this.getApplicantDemographic().getTransferConstituencyProvinceId());
+        applicantDemographic.append("transferConstituencyProvinceName", this.getApplicantDemographic().getTransferConstituencyProvinceName());
+        applicantDemographic.append("transferConstituencyDistrictId", this.getApplicantDemographic().getTransferConstituencyDistrictId());
+        applicantDemographic.append("transferConstituencyDistrictName", this.getApplicantDemographic().getTransferConstituencyDistrictName());
+        applicantDemographic.append("transferConstituencyConstituencyId", this.getApplicantDemographic().getTransferConstituencyConstituencyId());
+        applicantDemographic.append("transferConstituencyConstituencyName", this.getApplicantDemographic().getTransferConstituencyConstituencyName());
+        applicantDemographic.append("transferConstituencyLocalAuthorityId", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityId());
+        applicantDemographic.append("transferConstituencyLocalAuthorityName", this.getApplicantDemographic().getTransferConstituencyLocalAuthorityName());
+
+        applicantDemographic.append("transferConstituencyWardId", this.getApplicantDemographic().getTransferConstituencyWardId());
+        applicantDemographic.append("transferConstituencyWardName", this.getApplicantDemographic().getTransferConstituencyWardName());
+        applicantDemographic.append("transferConstituencyStationId", this.getApplicantDemographic().getTransferConstituencyStationId());
+        applicantDemographic.append("transferConstituencyStationName", this.getApplicantDemographic().getTransferConstituencyStationName());
+        applicantDemographic.append("transferConstituencyStationCode", this.getApplicantDemographic().getTransferConstituencyStationCode());
+        applicantDemographic.append("transferConstituencySurburb", this.getApplicantDemographic().getTransferConstituencySurburb());
+        applicantDemographic.append("transferConstituencyTown", this.getApplicantDemographic().getTransferConstituencyTown());
+
+
+        applicantDemographic.append("transferConstituencyStreetName", this.getApplicantDemographic().getTransferConstituencyStreetName());
+        applicantDemographic.append("transferConstituencyStandNumber", this.getApplicantDemographic().getTransferConstituencyStandNumber());
+        dbObject.put("applicantDemographic", applicantDemographic);
+
+        org.bson.Document applicantFingerprint = new org.bson.Document();
+        applicantFingerprint.append("formElaspedTicks", this.getApplicantFingerprint().getFormElaspedTicks());
+
+
+        String leftThumbImageArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftThumbImageArray() != null && this.getApplicantFingerprint().getLeftThumbImageArray().length() > 0) {
+            leftThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("leftThumbImageArray", leftThumbImageArrayStr);
+
+        String leftIndexImageArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftIndexImageArray() != null && this.getApplicantFingerprint().getLeftIndexImageArray().length() > 0) {
+            leftIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("leftIndexImageArray", leftIndexImageArrayStr);
+
+        String leftMiddleImageArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftMiddleImageArray() != null && this.getApplicantFingerprint().getLeftMiddleImageArray().length() > 0) {
+            leftMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("leftMiddleImageArray", leftMiddleImageArrayStr);
+
+        String leftRingImageArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftRingImageArray() != null && this.getApplicantFingerprint().getLeftRingImageArray().length() > 0) {
+            leftRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("leftRingImageArray", leftRingImageArrayStr);
+
+        String leftLittleImageArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftLittleImageArray() != null && this.getApplicantFingerprint().getLeftLittleImageArray().length() > 0) {
+            leftLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("leftLittleImageArray", leftLittleImageArrayStr);
+
+        String rightThumbImageArrayStr = null;
+        if (this.getApplicantFingerprint().getRightThumbImageArray() != null && this.getApplicantFingerprint().getRightThumbImageArray().length() > 0) {
+            rightThumbImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("rightThumbImageArray", rightThumbImageArrayStr);
+
+        String rightIndexImageArrayStr = null;
+        if (this.getApplicantFingerprint().getRightIndexImageArray() != null && this.getApplicantFingerprint().getRightIndexImageArray().length() > 0) {
+            rightIndexImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("rightIndexImageArray", rightIndexImageArrayStr);
+
+        String rightMiddleImageArrayStr = null;
+        if (this.getApplicantFingerprint().getRightMiddleImageArray() != null && this.getApplicantFingerprint().getRightMiddleImageArray().length() > 0) {
+            rightMiddleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("rightMiddleImageArray", rightMiddleImageArrayStr);
+
+        String rightRingImageArrayStr = null;
+        if (this.getApplicantFingerprint().getRightRingImageArray() != null && this.getApplicantFingerprint().getRightRingImageArray().length() > 0) {
+            rightRingImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("rightRingImageArray", rightRingImageArrayStr);
+
+        String rightLittleImageArrayStr = null;
+        if (this.getApplicantFingerprint().getRightLittleImageArray() != null && this.getApplicantFingerprint().getRightLittleImageArray().length() > 0) {
+            rightLittleImageArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleImageArray().getBytes(), "FingerprintImage");
+        }
+        applicantFingerprint.append("rightLittleImageArray", rightLittleImageArrayStr);
+
+        String leftThumbWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftThumbWSQArray() != null && this.getApplicantFingerprint().getLeftThumbWSQArray().length() > 0) {
+            leftThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("leftThumbWSQArray", leftThumbWSQArrayStr);
+
+        String leftIndexWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftIndexWSQArray() != null && this.getApplicantFingerprint().getLeftIndexWSQArray().length() > 0) {
+            leftIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("leftIndexWSQArray", leftIndexWSQArrayStr);
+
+        String leftMiddleWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftMiddleWSQArray() != null && this.getApplicantFingerprint().getLeftMiddleWSQArray().length() > 0) {
+            leftMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("leftMiddleWSQArray", leftMiddleWSQArrayStr);
+
+        String leftRingWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftRingWSQArray() != null && this.getApplicantFingerprint().getLeftRingWSQArray().length() > 0) {
+            leftRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("leftRingWSQArray", leftRingWSQArrayStr);
+
+        String leftLittleWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getLeftLittleWSQArray() != null && this.getApplicantFingerprint().getLeftLittleWSQArray().length() > 0) {
+            leftLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("leftLittleWSQArray", leftLittleWSQArrayStr);
+
+        String rightThumbWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getRightThumbWSQArray() != null && this.getApplicantFingerprint().getRightThumbWSQArray().length() > 0) {
+            rightThumbWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("rightThumbWSQArray", rightThumbWSQArrayStr);
+
+        String rightIndexWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getRightIndexWSQArray() != null && this.getApplicantFingerprint().getRightIndexWSQArray().length() > 0) {
+            rightIndexWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("rightIndexWSQArray", rightIndexWSQArrayStr);
+
+        String rightMiddleWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getRightMiddleWSQArray() != null && this.getApplicantFingerprint().getRightMiddleWSQArray().length() > 0) {
+            rightMiddleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("rightMiddleWSQArray", rightMiddleWSQArrayStr);
+
+        String rightRingWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getRightRingWSQArray() != null && this.getApplicantFingerprint().getRightRingWSQArray().length() > 0) {
+            rightRingWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("rightRingWSQArray", rightRingWSQArrayStr);
+
+        String rightLittleWSQArrayStr = null;
+        if (this.getApplicantFingerprint().getRightLittleWSQArray() != null && this.getApplicantFingerprint().getRightLittleWSQArray().length() > 0) {
+            rightLittleWSQArrayStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleWSQArray().getBytes(), "FingerprintWSQ");
+        }
+        applicantFingerprint.append("rightLittleWSQArray", rightLittleWSQArrayStr);
+        applicantFingerprint.append("leftThumbScore", this.getApplicantFingerprint().getLeftThumbScore());
+        applicantFingerprint.append("leftIndexScore", this.getApplicantFingerprint().getLeftIndexScore());
+        applicantFingerprint.append("leftMiddleScore", this.getApplicantFingerprint().getLeftMiddleScore());
+        applicantFingerprint.append("leftRingScore", this.getApplicantFingerprint().getLeftRingScore());
+        applicantFingerprint.append("leftLittleScore", this.getApplicantFingerprint().getLeftLittleScore());
+        applicantFingerprint.append("rightThumbScore", this.getApplicantFingerprint().getRightThumbScore());
+        applicantFingerprint.append("rightIndexScore", this.getApplicantFingerprint().getRightIndexScore());
+        applicantFingerprint.append("rightMiddleScore", this.getApplicantFingerprint().getRightMiddleScore());
+        applicantFingerprint.append("rightRingScore", this.getApplicantFingerprint().getRightRingScore());
+        applicantFingerprint.append("rightLittleScore", this.getApplicantFingerprint().getRightLittleScore());
+        applicantFingerprint.append("leftThumbState", this.getApplicantFingerprint().getLeftThumbState());
+        applicantFingerprint.append("leftIndexState", this.getApplicantFingerprint().getLeftIndexState());
+        applicantFingerprint.append("leftMiddleState", this.getApplicantFingerprint().getLeftMiddleState());
+        applicantFingerprint.append("leftRingState", this.getApplicantFingerprint().getLeftRingState());
+        applicantFingerprint.append("leftLittleState", this.getApplicantFingerprint().getLeftLittleState());
+        applicantFingerprint.append("rightThumbState", this.getApplicantFingerprint().getRightThumbState());
+        applicantFingerprint.append("rightIndexState", this.getApplicantFingerprint().getRightIndexState());
+        applicantFingerprint.append("rightMiddleState", this.getApplicantFingerprint().getRightMiddleState());
+        applicantFingerprint.append("rightRingState", this.getApplicantFingerprint().getRightRingState());
+        applicantFingerprint.append("rightLittleState", this.getApplicantFingerprint().getRightLittleState());
+        applicantFingerprint.append("sourceAFISID", this.getApplicantFingerprint().getSourceAFISID());
+
+
+        String leftThumbAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftThumbAFISTemplate() != null && this.getApplicantFingerprint().getLeftThumbAFISTemplate().length() > 0) {
+            leftThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("leftThumbAFISTemplate", leftThumbAFISTemplateStr);
+
+        String leftIndexAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftIndexAFISTemplate() != null && this.getApplicantFingerprint().getLeftIndexAFISTemplate().length() > 0) {
+            leftIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("leftIndexAFISTemplate", leftIndexAFISTemplateStr);
+
+        String leftMiddleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftMiddleAFISTemplate() != null && this.getApplicantFingerprint().getLeftMiddleAFISTemplate().length() > 0) {
+            leftMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("leftMiddleAFISTemplate", leftMiddleAFISTemplateStr);
+
+        String leftRingAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftRingAFISTemplate() != null && this.getApplicantFingerprint().getLeftRingAFISTemplate().length() > 0) {
+            leftRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftRingAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("leftRingAFISTemplate", leftRingAFISTemplateStr);
+
+        String leftLittleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getLeftLittleAFISTemplate() != null && this.getApplicantFingerprint().getLeftLittleAFISTemplate().length() > 0) {
+            leftLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getLeftLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("leftLittleAFISTemplate", leftLittleAFISTemplateStr);
+
+        String rightThumbAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightThumbAFISTemplate() != null && this.getApplicantFingerprint().getRightThumbAFISTemplate().length() > 0) {
+            rightThumbAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightThumbAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("rightThumbAFISTemplate", rightThumbAFISTemplateStr);
+
+        String rightIndexAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightIndexAFISTemplate() != null && this.getApplicantFingerprint().getRightIndexAFISTemplate().length() > 0) {
+            rightIndexAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightIndexAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("rightIndexAFISTemplate", rightIndexAFISTemplateStr);
+
+        String rightMiddleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightMiddleAFISTemplate() != null && this.getApplicantFingerprint().getRightMiddleAFISTemplate().length() > 0) {
+            rightMiddleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightMiddleAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("rightMiddleAFISTemplate", rightMiddleAFISTemplateStr);
+
+        String rightRingAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightRingAFISTemplate() != null && this.getApplicantFingerprint().getRightRingAFISTemplate().length() > 0) {
+            rightRingAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightRingAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("rightRingAFISTemplate", rightRingAFISTemplateStr);
+
+        String rightLittleAFISTemplateStr = null;
+        if (this.getApplicantFingerprint().getRightLittleAFISTemplate() != null && this.getApplicantFingerprint().getRightLittleAFISTemplate().length() > 0) {
+            rightLittleAFISTemplateStr = mongoDao.insertImg(this.getApplicantFingerprint().getRightLittleAFISTemplate().getBytes(), "FingerprintTemplate");
+        }
+        applicantFingerprint.append("rightLittleAFISTemplate", rightLittleAFISTemplateStr);
+
+        applicantFingerprint.append("leftLittleMinutiaesCount", this.getApplicantFingerprint().getLeftLittleMinutiaesCount());
+        applicantFingerprint.append("leftRingMinutiaesCount", this.getApplicantFingerprint().getLeftRingMinutiaesCount());
+        applicantFingerprint.append("leftMiddleMinutiaesCount", this.getApplicantFingerprint().getLeftMiddleMinutiaesCount());
+        applicantFingerprint.append("leftIndexMinutiaesCount", this.getApplicantFingerprint().getLeftIndexMinutiaesCount());
+        applicantFingerprint.append("leftThumbMinutiaesCount", this.getApplicantFingerprint().getLeftThumbMinutiaesCount());
+        applicantFingerprint.append("rightLittleMinutiaesCount", this.getApplicantFingerprint().getRightLittleMinutiaesCount());
+        applicantFingerprint.append("rightRingMinutiaesCount", this.getApplicantFingerprint().getRightRingMinutiaesCount());
+        applicantFingerprint.append("rightMiddleMinutiaesCount", this.getApplicantFingerprint().getRightMiddleMinutiaesCount());
+        applicantFingerprint.append("rightIndexMinutiaesCount", this.getApplicantFingerprint().getRightIndexMinutiaesCount());
+        applicantFingerprint.append("rightThumbMinutiaesCount", this.getApplicantFingerprint().getRightThumbMinutiaesCount());
+        applicantFingerprint.append("missingReasonType", this.getApplicantFingerprint().getMissingReasonType());
+
+        dbObject.append("applicantFingerprint", applicantFingerprint);
+
+        org.bson.Document applicantPhoto = new org.bson.Document();
+        applicantPhoto.append("formElaspedTicks", this.getApplicantPhoto().getFormElaspedTicks());
+
+
+        String photoArrayStr = null;
+        if (this.getApplicantPhoto().getPhotoArray() != null && this.getApplicantPhoto().getPhotoArray().length() > 0) {
+            photoArrayStr = mongoDao.insertImg(this.getApplicantPhoto().getPhotoArray().getBytes(), "PersonPhoto");
+
+        }
+        applicantPhoto.append("photoArray", photoArrayStr);
+
+        String thumbnailStr = null;
+        if (this.getApplicantPhoto().getThumbnail() != null && this.getApplicantPhoto().getThumbnail().length() > 0) {
+            thumbnailStr = mongoDao.insertImg(this.getApplicantPhoto().getThumbnail().getBytes(), "PersonPhoto");
+
+        }
+        applicantPhoto.append("thumbnail", thumbnailStr);
+
+        dbObject.put("applicantPhoto", applicantPhoto);
+        return dbObject;
+    }
+
+    public MatchInfo toMatchInfo() {
+        MatchInfo info = new MatchInfo();
+        info.set_id(this.get_id());
+        info.setFullName(this.getApplicantDemographic().getForenames() + " " + this.getApplicantDemographic().getSurname());
+        info.setGender(this.getGender());
+        info.setDateOfBirth(this.getDateOfBirth());
+        info.setRegistrationNumber(this.getRegistrationNumber());
+        return info;
+    }
 }

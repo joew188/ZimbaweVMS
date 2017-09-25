@@ -4,7 +4,7 @@ package Zim.model.modelview.importLog;
  * Created by Laxton-Joe on 2017/7/18.
  */
 public class ImportByDeviceRecord {
-    private String deviceName;
+    private String _id;
     private int total;
     private int male;
     private int female;
@@ -17,13 +17,7 @@ public class ImportByDeviceRecord {
     private int maleDisparity;
     private int femaleDisparity;
 
-    public String getDeviceName() {
-        return deviceName;
-    }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
 
     public int getTotal() {
         return total;
@@ -95,5 +89,13 @@ public class ImportByDeviceRecord {
 
     public void setFemaleDisparity(int femaleDisparity) {
         this.femaleDisparity = femaleDisparity;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

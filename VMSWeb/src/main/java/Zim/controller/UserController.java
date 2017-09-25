@@ -3,7 +3,7 @@ package Zim.controller;
 import Zim.common.SystemHelper;
 import Zim.model.User;
 import Zim.model.modelview.*;
-import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.req.PagingPageQuery;
 import Zim.model.modelview.res.PageResponse;
 import Zim.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/list", method = RequestMethod.POST)
     @ResponseBody
-    public PageResponse<User> ApplicantQuery(@RequestBody PagingQuery request) {
+    public PageResponse<User> ApplicantQuery(@RequestBody PagingPageQuery request) {
         return userService.pageList(request);
     }
 
@@ -35,7 +35,7 @@ public class UserController {
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     @ResponseBody
     public SysResult<Boolean> add(@RequestBody User user) {
-        SysResult<Boolean> result = new SysResult<Boolean>();
+        SysResult<Boolean> result = new SysResult<>();
         Query query = new Query(Criteria.where("name").is(user.getName()));
         if (userService.queryExists(query, User.class)) {
             result.setResult(false);

@@ -1,9 +1,11 @@
 package Zim.service;
 
 import Zim.model.User;
-import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.req.PagingPageQuery;
 import Zim.model.modelview.res.PageResponse;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,7 +18,8 @@ import java.util.List;
  * Created by Laxton-Joe on 2017/7/7.
  */
 @Service
-public class UserService extends BaseService<User> {
+public class UserService extends BaseService {
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     MongoTemplate mongoTemplate;
 
@@ -32,10 +35,6 @@ public class UserService extends BaseService<User> {
         mongoTemplate.remove(user);
     }
 
-    public User getById(String id) {
-        return mongoTemplate.findById(id, User.class);
-    }
-
     public List<User> get(String name, String pwd) {
         Query query = new Query();
         Criteria criteria = Criteria.where("name").is(name).and("password").is(pwd);
@@ -43,27 +42,23 @@ public class UserService extends BaseService<User> {
         return mongoTemplate.find(query, User.class);
     }
 
-    public PageResponse<User> pageList(PagingQuery appQuery) {
+    public PageResponse<User> pageList(PagingPageQuery pagingPageQuery) {
         PageResponse<User> result = new PageResponse<>();
         try {
             Query query = new Query();
-            sortQuery(appQuery, query);
-            if (appQuery.getFilters() != null) {
-//                appQuery.getFilters().keySet().stream().filter(key -> !User.getColumns().contains(key)).forEach(key -> {
-//                    appQuery.getFilters().remove(key);
-//                });
-                setCriteria(appQuery, query);
-            }
+            sortQuery(pagingPageQuery, query);
+            setCriteria(pagingPageQuery, query);
             long total = mongoTemplate.count(query, User.class);
             if (total > 0) {
-                setPaging(result, appQuery, query, total);
+                setPageQuery(pagingPageQuery, query);
                 List<User> listData = mongoTemplate.find(query, User.class);
-                result.setCurrentPage(appQuery.getCurrentPage());//当前页
-                result.setItems(listData);//查询内容
+                result.setItems(listData);
             }
+            setPagePaging(result, pagingPageQuery, total);
             result.setResult(true);
         } catch (Exception e) {
             result.setResult(false);
+            logger.error(e.toString());
         }
         return result;
     }
@@ -74,6 +69,7 @@ public class UserService extends BaseService<User> {
             result = mongoTemplate.findById(new ObjectId(id), User.class);
         } catch (Exception ex) {
             result = null;
+            logger.error(ex.toString());
         }
         return result;
     }

@@ -3,11 +3,18 @@ package Zim.service;
 import Zim.common.SystemHelper;
 import Zim.model.Applicant;
 import Zim.model.ApplicantLog;
+import Zim.model.ApplicantMaster;
 import Zim.model.Duplicate;
 import Zim.model.modelview.DuplicateAction;
-import Zim.model.modelview.req.PagingQuery;
+import Zim.model.modelview.req.BasicPagingQuery;
+import Zim.model.modelview.req.PagingOneQuery;
+import Zim.model.modelview.req.PagingPageQuery;
 
+
+import Zim.model.modelview.res.EntityResponse;
 import Zim.model.modelview.res.PageResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,30 +29,69 @@ import java.util.List;
  */
 
 @Service
-public class DuplicateService extends BaseService<Duplicate> {
+public class DuplicateService extends BaseService {
+    private static Logger logger = LoggerFactory.getLogger(DuplicateService.class);
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public PageResponse<Duplicate> pageList(PagingQuery pagingQuery) {
-        PageResponse<Duplicate> result = new PageResponse<Duplicate>();
+    public PageResponse<Duplicate> pageList(PagingPageQuery pagingQuery) {
+        PageResponse<Duplicate> response = new PageResponse<>();
         try {
             Query query = new Query();
             sortQuery(pagingQuery, query);
-            if (pagingQuery.getFilters() != null) {
-                setCriteria(pagingQuery, query);
-            }
+            setCriteria(pagingQuery, query);
             long total = mongoTemplate.count(query, Duplicate.class);
             if (total > 0) {
-                setPaging(result, pagingQuery, query,Integer.valueOf(String.valueOf(total)) );
+                setPageQuery(pagingQuery, query);
                 List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
-                result.setCurrentPage(pagingQuery.getCurrentPage());//当前页
-                result.setItems(listData);//查询内容
+                response.setItems(listData);//查询内容
             }
-            result.setResult(true);
+            setPagePaging(response, pagingQuery, total);
+            response.setResult(true);
         } catch (Exception e) {
-            result.setResult(false);
+            response.setResult(false);
+            logger.error(e.toString());
         }
-        return result;
+        return response;
+    }
+
+    public Duplicate pageFineOne(EntityResponse<Duplicate> response, PagingOneQuery pagingOneQuery) {
+        Duplicate duplicate = null;
+        try {
+            Query query = new Query();
+            sortQuery(pagingOneQuery, query);
+            setCriteria(pagingOneQuery, query);
+            long total = mongoTemplate.count(query, Duplicate.class);
+            if (total > 0) {
+                setPageQuery(pagingOneQuery, query);
+                List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
+                if (listData.size() > pagingOneQuery.getRecordIndex()) {
+                    duplicate = listData.get(pagingOneQuery.getRecordIndex());
+                    if (pagingOneQuery.getRecordId() != null && pagingOneQuery.getRecordId().length() > 0) {
+                        if (!duplicate.get_id().equals(pagingOneQuery.getRecordId())) {
+                            duplicate = null;
+                        }
+                    }
+                }
+            }
+            if (duplicate != null) {
+                Applicant probeApplicant = mongoTemplate.findById(duplicate.getProbeId(), Applicant.class);
+                ApplicantMaster probeMaster = mongoTemplate.findById(duplicate.getProbeId(), ApplicantMaster.class);
+                probeApplicant.merge(probeMaster);
+                duplicate.setProbe(probeApplicant);
+
+                Applicant refApplicant = mongoTemplate.findById(duplicate.getReferenceId(), Applicant.class);
+                ApplicantMaster refMaster = mongoTemplate.findById(duplicate.getReferenceId(), ApplicantMaster.class);
+                refApplicant.merge(refMaster);
+                duplicate.setReference(refApplicant);
+            }
+            setFindOnePaging(response, pagingOneQuery, total);
+            response.setResult(true);
+        } catch (Exception e) {
+            duplicate = null;
+            logger.error(e.toString());
+        }
+        return duplicate;
     }
 
     public String action(DuplicateAction action) {
@@ -54,13 +100,13 @@ public class DuplicateService extends BaseService<Duplicate> {
 
             String dupId = action.getDuplicateId();
             Duplicate duplicate = mongoTemplate.findById(dupId, Duplicate.class);
-            Applicant probe = null;
-            Applicant reference = null;
+            ApplicantMaster probe = null;
+            ApplicantMaster reference = null;
             if (duplicate.getStatus().equals("Close")) {
                 msg = "duplicate has been close";
             } else {
-                probe = mongoTemplate.findById(duplicate.getProbeId(), Applicant.class);
-                reference = mongoTemplate.findById(duplicate.getReferenceId(), Applicant.class);
+                probe = mongoTemplate.findById(duplicate.getProbeId(), ApplicantMaster.class);
+                reference = mongoTemplate.findById(duplicate.getReferenceId(), ApplicantMaster.class);
                 switch (action.getAction()) {
                     case "positive"://duplicate-close
                         duplicate.setStatus("Close");
@@ -69,12 +115,11 @@ public class DuplicateService extends BaseService<Duplicate> {
                         ApplicantLog appLog = new ApplicantLog();
                         appLog.setReferenceId(duplicate.getReferenceId());
                         appLog.setProbeId(duplicate.getProbeId());
-                        StringBuilder sb = new StringBuilder();
-                        sb.append(String.format("Trigger Duplicate:%s,Action:Positive;", duplicate.get_id()));
-                        sb.append(String.format("Duplicate: %s Close;", duplicate.get_id()));
-                        sb.append(String.format("Applicant: %s -> %s;", probe.get_id(), SystemHelper.getApplicantStatusString(probe.getStatus())));
-                        sb.append(String.format("Applicant: %s -> %s.", reference.get_id(), SystemHelper.getApplicantStatusString(reference.getStatus())));
-                        appLog.setLogEvent(sb.toString());
+                        String sb = String.format("Trigger Duplicate:%s,Action:Positive;", duplicate.get_id()) +
+                                String.format("Duplicate: %s Close;", duplicate.get_id()) +
+                                String.format("Applicant: %s -> %s;", probe.get_id(), SystemHelper.getApplicantStatusString(probe.getStatus())) +
+                                String.format("Applicant: %s -> %s.", reference.get_id(), SystemHelper.getApplicantStatusString(reference.getStatus()));
+                        appLog.setLogEvent(sb);
 //                        appLog.setLogEvent(String.format("action:Positive, Duplicate: %s Close.%s->%s,%s->%s", duplicate.get_id(),
 //                                probe.getId(), probe.getStatus(), reference.getId(), reference.getStatus()
 //                        ));
@@ -82,7 +127,7 @@ public class DuplicateService extends BaseService<Duplicate> {
                         mongoTemplate.insert(appLog, "ApplicantLog");
                         break;
                     case "matched":
-                        probe.setStatus(Short.parseShort("2"));
+                        probe.setStatus(2);
 
                         mongoTemplate.save(probe);
                         //查找 IndividualsId==probe.IndividualsId的数据，更改IndividualsId=reference。IndividualsId的数据
@@ -90,14 +135,14 @@ public class DuplicateService extends BaseService<Duplicate> {
                         setApplicantAutoClose("Matched", dupId, probe.get_id(), "Suspect");
                         break;
                     case "update": // probe to master,reference to archive
-                        reference.setStatus(Short.parseShort("3"));
+                        reference.setStatus(3);
 
                         mongoTemplate.save(reference);
                         //setApplicantIndividualsId(reference.getIndividualsId(), probe.getIndividualsId());
                         setApplicantAutoClose("Update", dupId, reference.get_id(), "Archive");
                         break;
                     case "archive":// probe to archive,reference to master
-                        probe.setStatus(Short.parseShort("3"));
+                        probe.setStatus(3);
                         mongoTemplate.save(probe);
                         setApplicantAutoClose("Archive", dupId, probe.get_id(), "Archive");
                         //  setApplicantIndividualsId(probe.getIndividualsId(), reference.getIndividualsId());
@@ -121,6 +166,7 @@ public class DuplicateService extends BaseService<Duplicate> {
             }
         } catch (Exception e) {
             msg = e.getMessage();
+            logger.error(e.toString());
         }
         return msg;
     }
@@ -134,9 +180,9 @@ public class DuplicateService extends BaseService<Duplicate> {
         if (mongoTemplate.count(query, Duplicate.class) > 0) {
             List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
             for (Duplicate dup : listData) {
-                Applicant probe = mongoTemplate.findById(dup.getProbeId(), Applicant.class);
-                Applicant reference = mongoTemplate.findById(dup.getReferenceId(), Applicant.class);
-                if ((probe.getStatus() == 1 && reference.getStatus() == 1) == false) {
+                ApplicantMaster probe = mongoTemplate.findById(dup.getProbeId(), ApplicantMaster.class);
+                ApplicantMaster reference = mongoTemplate.findById(dup.getReferenceId(), ApplicantMaster.class);
+                if (!(probe.getStatus() == 1 && reference.getStatus() == 1)) {
                     dup.setStatus("Close");
                     mongoTemplate.save(dup);
                     ApplicantLog appLog = new ApplicantLog();
@@ -161,18 +207,22 @@ public class DuplicateService extends BaseService<Duplicate> {
         }
     }
 
-    public Duplicate find(String duplicateId) {
-        Duplicate result = null;
-        result = mongoTemplate.findById(duplicateId, Duplicate.class);
-        if (result != null) {
-            Applicant app = mongoTemplate.findById(result.getProbeId(), Applicant.class);
-            result.setProbe(app);
-
-            Applicant ref = mongoTemplate.findById(result.getReferenceId(), Applicant.class);
-            result.setReference(ref);
-        }
-        return result;
-    }
+//    public Duplicate find(String duplicateId) {
+//        Duplicate result = null;
+//        result = mongoTemplate.findById(duplicateId, Duplicate.class);
+//        if (result != null) {
+//            Applicant probeApplicant = mongoTemplate.findById(result.getProbeId(), Applicant.class);
+//            ApplicantMaster probeMaster = mongoTemplate.findById(result.getProbeId(), ApplicantMaster.class);
+//            probeApplicant.merge(probeMaster);
+//            result.setProbe(probeApplicant);
+//
+//            Applicant refApplicant = mongoTemplate.findById(result.getReferenceId(), Applicant.class);
+//            ApplicantMaster refMaster = mongoTemplate.findById(result.getReferenceId(), ApplicantMaster.class);
+//            refApplicant.merge(refMaster);
+//            result.setReference(refApplicant);
+//        }
+//        return result;
+//    }
 
     public String getNextDuplicate() {
         String result = "";
@@ -182,7 +232,7 @@ public class DuplicateService extends BaseService<Duplicate> {
         if (mongoTemplate.count(query, Duplicate.class) > 0) {
 
             List<Duplicate> listData = mongoTemplate.find(query, Duplicate.class);
-            result = listData.get(0).get_id().toString();
+            result = listData.get(0).get_id();
         }
         return result;
     }
@@ -196,7 +246,7 @@ public class DuplicateService extends BaseService<Duplicate> {
     }
 
     @Override
-    public void setCriteria(PagingQuery pagingQuery, Query query) {
+    public void setCriteria(BasicPagingQuery pagingQuery, Query query) {
         Criteria criteria = null;
         for (String key : pagingQuery.getFilters().keySet()) {
             if (pagingQuery.getFilters().get(key).length() > 0) {

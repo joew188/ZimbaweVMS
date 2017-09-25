@@ -2,51 +2,15 @@ package Zim.model;
 
 import Zim.common.CustomDateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Laxton-Joe on 2017/7/12.
  */
 @Document(collection = "ImportLog")
 public class ImportLog {
-
-    private final static String ID = "_id";
-    private final static String NAME = "name";
-    private final static String DEVICENAME = "deviceName";
-    private final static String EXPORTDATETIME = "exportDateTime";
-    private final static String EXPORTTOTAL = "exportTotal";
-    private final static String EXPORTMALE = "exportMale";
-    private final static String EXPORTFEMALE = "exportFemale";
-    private final static String IMPORTBEGINTIME = "importBeginTime";
-    private final static String IMPORTFINISHTIME = "importFinishTime";
-    private final static String IMPORTTOTAL = "importTotal";
-    private final static String IMPORTMALE = "importMale";
-    private final static String IMPORTFEMALE = "importFemale";
-    private final static String STATUS = "status";
-
-    public static List<String> getColumns() {
-        List<String> result = new ArrayList<>();
-        result.add("_id");
-        result.add("name");
-        result.add("deviceName");
-        result.add("exportDateTime");
-        result.add("total");
-        result.add("male");
-        result.add("female");
-        result.add("beginTime");
-        result.add("finishTime");
-        result.add("success");
-        result.add("fail");
-        result.add("gap");
-        result.add("status");
-        return result;
-    }
 
     private String _id;
     private String name;
@@ -60,10 +24,15 @@ public class ImportLog {
     private Date importBeginTime;
     @JsonSerialize(using = CustomDateSerializer.class)
     private Date importFinishTime;
-    private volatile int importTotal;
-    private volatile int importMale;
-    private volatile int importFemale;
-    private int status;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date matchBeginTime;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date matchFinishTime;
+    private int importTotal;
+    private int importMale;
+    private int importFemale;
+    private int matchedTotal;
+    private String status;
 
     private String lastSerialNumber;
 
@@ -76,60 +45,6 @@ public class ImportLog {
     private String idNumberOfOperator;
 
     private String operatorGuid;
-
-
-
-    public static String getID() {
-        return ID;
-    }
-
-    public static String getNAME() {
-        return NAME;
-    }
-
-    public static String getDEVICENAME() {
-        return DEVICENAME;
-    }
-
-    public static String getEXPORTDATETIME() {
-        return EXPORTDATETIME;
-    }
-
-    public static String getEXPORTTOTAL() {
-        return EXPORTTOTAL;
-    }
-
-    public static String getEXPORTMALE() {
-        return EXPORTMALE;
-    }
-
-    public static String getEXPORTFEMALE() {
-        return EXPORTFEMALE;
-    }
-
-    public static String getIMPORTBEGINTIME() {
-        return IMPORTBEGINTIME;
-    }
-
-    public static String getIMPORTFINISHTIME() {
-        return IMPORTFINISHTIME;
-    }
-
-    public static String getIMPORTTOTAL() {
-        return IMPORTTOTAL;
-    }
-
-    public static String getIMPORTMALE() {
-        return IMPORTMALE;
-    }
-
-    public static String getIMPORTFEMALE() {
-        return IMPORTFEMALE;
-    }
-
-    public static String getSTATUS() {
-        return STATUS;
-    }
 
 
     public String getName() {
@@ -220,34 +135,27 @@ public class ImportLog {
         this.importFemale = importFemale;
     }
 
-    public int getStatus() {
-        return status;
-    }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public DBObject toDBObject() {
-        DBObject dbObject = new BasicDBObject();
-
-        dbObject.put("_id", this.get_id());
-        dbObject.put("name", this.getName());
-        dbObject.put("deviceName", this.getDeviceName());
-        dbObject.put("exportDateTime", this.getExportDateTime());
-        dbObject.put("exportTotal", this.getExportTotal());
-
-        dbObject.put("exportMale", this.getExportMale());
-        dbObject.put("exportFemale", this.getExportFemale());
-        dbObject.put("importBeginTime", this.getImportBeginTime());
-        dbObject.put("importFinishTime", this.getImportFinishTime());
-        dbObject.put("importTotal", this.getImportTotal());
-        dbObject.put("importMale", this.getImportMale());
-        dbObject.put("importFemale", this.getImportFemale());
-        dbObject.put("status", this.getStatus());
-
-        return dbObject;
-    }
+//    public DBObject toDBObject() {
+//        DBObject dbObject = new BasicDBObject();
+//
+//        dbObject.put("_id", this.get_id());
+//        dbObject.put("name", this.getName());
+//        dbObject.put("deviceName", this.getDeviceName());
+//        dbObject.put("exportDateTime", this.getExportDateTime());
+//        dbObject.put("exportTotal", this.getExportTotal());
+//
+//        dbObject.put("exportMale", this.getExportMale());
+//        dbObject.put("exportFemale", this.getExportFemale());
+//        dbObject.put("importBeginTime", this.getImportBeginTime());
+//        dbObject.put("importFinishTime", this.getImportFinishTime());
+//        dbObject.put("importTotal", this.getImportTotal());
+//        dbObject.put("importMale", this.getImportMale());
+//        dbObject.put("importFemale", this.getImportFemale());
+//        dbObject.put("status", this.getStatus());
+//
+//        return dbObject;
+//    }
 
     public String get_id() {
         return _id;
@@ -303,5 +211,59 @@ public class ImportLog {
 
     public void setOperatorGuid(String operatorGuid) {
         this.operatorGuid = operatorGuid;
+    }
+
+    public org.bson.Document toDocument() {
+        org.bson.Document document = new org.bson.Document();
+
+
+        document.append("name", this.getName());
+        document.append("deviceName", this.getDeviceName());
+        document.append("exportDateTime", this.getExportDateTime());
+        document.append("exportTotal", this.getExportTotal());
+
+        document.append("exportMale", this.getExportMale());
+        document.append("exportFemale", this.getExportFemale());
+        document.append("importBeginTime", this.getImportBeginTime());
+        document.append("importFinishTime", this.getImportFinishTime());
+        document.append("matchFinishTime", this.getMatchFinishTime());
+        document.append("importTotal", this.getImportTotal());
+        document.append("importMale", this.getImportMale());
+        document.append("importFemale", this.getImportFemale());
+        document.append("status", this.getStatus());
+
+        return document;
+    }
+
+    public Date getMatchBeginTime() {
+        return matchBeginTime;
+    }
+
+    public void setMatchBeginTime(Date matchBeginTime) {
+        this.matchBeginTime = matchBeginTime;
+    }
+
+    public Date getMatchFinishTime() {
+        return matchFinishTime;
+    }
+
+    public void setMatchFinishTime(Date matchFinishTime) {
+        this.matchFinishTime = matchFinishTime;
+    }
+
+    public int getMatchedTotal() {
+        return matchedTotal;
+    }
+
+    public void setMatchedTotal(int matchedTotal) {
+        this.matchedTotal = matchedTotal;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -6,6 +6,6 @@ package Zim.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "PersonPhoto")
-public class PersonPhoto  extends BinaryEntity{
+@Document(collection = "ApplicantPhotos")
+public class ApplicantPhotos  extends BinaryEntity{
 }

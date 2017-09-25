@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property file="D:/code/git/java/ZimbaVMS/VMSWeb/web/WEB-INF/logmail.properties"/>
     <appender name="rollingAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -16,15 +15,13 @@
     <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
         <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
             <marker>NOTIFY_ADMIN</marker>
-            <!-- you specify add as many markers as you want -->
-            <marker>TRANSACTION_FAILURE</marker>
         </evaluator>
         <smtpHost>smtp.gmail.com</smtpHost>
         <smtpPort>465</smtpPort>
         <SSL>true</SSL>
         <username>zimlog4mail@gmail.com</username>
         <password>laxton777@</password>
-        <to>zimlog4mail@163.com</to>
+        <to>a2224342832@outlook.com</to>
         <to>joew@laxtongroup.com</to>
         <from>zimlog4mail@gmail.com</from>
         <Subject>Zimbabwe Error: %logger{20} - %m</Subject>
@@ -36,9 +33,8 @@
     </appender>
     <root level="ERROR">
         <appender-ref ref="EMAIL"/>
+    </root>
+    <root level="ERROR" >
         <appender-ref ref="rollingAppender"/>
     </root>
-    <!--<root level="ERROR">-->
-    <!--<appender-ref ref="rollingAppender" />-->
-    <!--</root>-->
 </configuration>

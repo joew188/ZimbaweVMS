@@ -1,11 +1,16 @@
 package Zim.common;
 
-import Zim.map.ExportLog;
+import Zim.linstener.MatchRunnable;
+import Zim.model.map.ExportLog;
+import Zim.mongo.MongoDao;
+import com.mongodb.client.FindIterable;
+import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,71 +21,16 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Laxton-Joe on 2017/2/16.
  */
 public class SystemHelper {
-    public static final String SHORTDATEFORMATSTRING = "dd/MM/yyyy";
-    public static final String LONGTDATEFORMATSTRING = "dd/MM/yyyy hh:mm:ss";
-    public static final String LONGTDATEFORMATSTRING2 = "yyyy-MM-dd'T'HH:mm:ssZ";
-    public static final String LONGTDATEFORMATSTRING3 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-
-    public static String getBirthDateString(XMLGregorianCalendar xgcal) {
-        Date date = xgcal.toGregorianCalendar().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SHORTDATEFORMATSTRING);
-
-        String dateTimeString = simpleDateFormat.format(date);
-        return dateTimeString;
-
-
-    }
-
-    public static Calendar getBirthDate(XMLGregorianCalendar calendar) {
-
-        Calendar cal = Calendar.getInstance();
-
-        return cal;
-    }
-
-    public static int getAge(String dateOfBirthStr) {
-        int age = 0;
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(SHORTDATEFORMATSTRING);
-            Date date = sdf.parse(dateOfBirthStr);
-
-            Calendar dateOfBirth = Calendar.getInstance();
-            dateOfBirth.setTime(date);
-            Calendar now = Calendar.getInstance();
-            if (dateOfBirth != null) {
-                if (dateOfBirth.before(now)) {
-                    age = now.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
-                    if (now.get(Calendar.DAY_OF_YEAR) < dateOfBirth.get(Calendar.DAY_OF_YEAR)) {
-                        age -= 1;
-                    }
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return age;
-    }
-
-    public static Object getNowString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(LONGTDATEFORMATSTRING);
-        Date date = new Date();
-        String dateTimeString = simpleDateFormat.format(date);
-        return dateTimeString;
-    }
-
-    public static String getDateString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(LONGTDATEFORMATSTRING2);
-        //  simpleDateFormat.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
-        String dateTimeString = simpleDateFormat.format(date);
-        return dateTimeString;
-    }
+    private static Logger logger = LoggerFactory.getLogger(SystemHelper.class);
 
     public static String getApplicantStatusString(int status) {
         String result = "";
@@ -101,12 +51,13 @@ public class SystemHelper {
         return result;
     }
 
+    public static BlockingQueue<String> matchQueue = new LinkedBlockingQueue<>();
+
 
     public static int DateToInt(Date date) {
         int result = 0;
         String dateStr = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//        sdf.setTimeZone(TimeZone.getTimeZone(SysConfigUtil.getSetting("system-timezone")));
         dateStr = sdf.format(date);
         if (dateStr.length() > 0)
             result = Integer.parseInt(dateStr);
@@ -117,13 +68,6 @@ public class SystemHelper {
         Instant instant = date.toInstant();
         ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
         return zdt.toLocalDate();
-    }
-
-    public static Date LocalToDate(LocalDate local) {
-        ZoneId zone = ZoneId.systemDefault();
-        Instant instant = local.atStartOfDay().atZone(zone).toInstant();
-        return Date.from(instant);
-
     }
 
     public static String LocalToString(LocalDate local) {
@@ -141,12 +85,9 @@ public class SystemHelper {
      * @return
      */
     public static Date getMinusDate(String localDateString) {
-
         LocalDate localDate = LocalDate.parse(localDateString);
-        //  LocalDate returnLocalDate= localDate.minusDays(1);
         ZoneId zone = ZoneId.of("UTC");
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
-
         return Date.from(instant);
     }
 
@@ -173,6 +114,8 @@ public class SystemHelper {
     public static String MONGODBSETTING_DB;
 
     static {
+
+
         Properties db_Properties = new Properties();
         FileInputStream in = null;
         try {
@@ -186,14 +129,18 @@ public class SystemHelper {
             MONGODBSETTING_USER = db_Properties.getProperty("mongo.user");
             MONGODBSETTING_PWD = db_Properties.getProperty("mongo.pwd");
             MONGODBSETTING_DB = db_Properties.getProperty("mongo.db");
-            //  MongoDBDaoImpl mongoDBDaoImpl = MongoDBDaoImpl.getMongoDBDaoImpl();
-//            List<DBObject> aProvince = mongoDBDaoImpl.find("vms", "Province", -1);
-//            for (DBObject doj : aProvince) {
-//                Province aaa= ((Province) doj);
-//
-//            }
+            MongoDao mangoDao = new MongoDao();
+            FindIterable<Document> matchQueueDocuments = mangoDao.findAll("MatchTaskQueue");
+            for (Document document : matchQueueDocuments) {
+                if (document.get("taskName").toString().length() > 0) {
+                    if (!matchQueue.contains(document.get("taskName").toString())) {
+                        matchQueue.put(document.get("taskName").toString());
+                    }
+                }
+            }
+            mangoDao.close();
         } catch (Exception ex) {
-            //log
+            logger.error(ex.toString());
         } finally {
             if (in != null)
                 try {
@@ -208,42 +155,10 @@ public class SystemHelper {
     public static boolean IsDateString(String s) {
         boolean result = true;
         try {
-            LocalDate localDate = LocalDate.parse(s);
+            LocalDate.parse(s);
         } catch (Exception e) {
             result = false;
         }
-        return result;
-    }
-
-    public static List<Integer> getBetweenDate(int birthDayValue) {
-        List<Integer> result = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Date dateBirth = null;
-        LocalDate localBirth = null;
-        try {
-            dateBirth = sdf.parse(String.valueOf(birthDayValue));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (dateBirth != null) {
-            localBirth = SystemHelper.DateToLocal(dateBirth);
-            if (localBirth.isLeapYear()) {
-                int monthOfBirth = localBirth.getMonthValue();
-                if (monthOfBirth == 2) {
-                    int dayOfBirth = localBirth.getDayOfMonth();
-                    if (monthOfBirth == 29) {
-                        localBirth.minusDays(1);
-                    }
-                }
-            }
-        }
-
-        LocalDate startDate = localBirth.minusYears(10);
-        LocalDate endDate = localBirth.plusYears(10);
-        int iStart = Integer.parseInt(SystemHelper.LocalToString(startDate));
-        int iEend = Integer.parseInt(SystemHelper.LocalToString(endDate));
-        result.add(iStart);
-        result.add(iEend);
         return result;
     }
 
@@ -257,13 +172,13 @@ public class SystemHelper {
     public static String byte2hex(byte[] b) // 二行制转字符串
     {
         String hs = "";
-        String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1)
-                hs = hs + "0" + stmp;
+        String tmp = "";
+        for (byte aB : b) {
+            tmp = (Integer.toHexString(aB & 0XFF));
+            if (tmp.length() == 1)
+                hs = hs + "0" + tmp;
             else
-                hs = hs + stmp;
+                hs = hs + tmp;
         }
         return hs.toUpperCase();
     }
@@ -276,54 +191,13 @@ public class SystemHelper {
             JAXBContext jaxbContext = JAXBContext.newInstance(ExportLog.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             exportLog = (ExportLog) jaxbUnmarshaller.unmarshal(fileStream);
-            if (fileStream != null)
-                fileStream.close();
+            fileStream.close();
         } catch (Exception e) {
-
+            logger.error(e.toString());
         }
         return exportLog;
     }
-//
-//    public static Map<String, Object> xmlString2Map(String xmlStr) {
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        Document doc;
-//        try {
-//            doc = DocumentHelper.parseText(xmlStr);
-//            Element el = doc.getRootElement();
-//            map = recGetXmlElementValue(el, map);
-//        } catch (DocumentException e) {
-//            e.printStackTrace();
-//        }
-//        return map;
-//    }
-//
-//    private static Map<String, Object> recGetXmlElementValue(Element ele, Map<String, Object> map) {
-//        List<Element> eleList = ele.elements();
-//        if (eleList.size() == 0) {
-//            map.put(ele.getName(), ele.getTextTrim());
-//            return map;
-//        } else {
-//            for (Iterator<Element> iter = eleList.iterator(); iter.hasNext(); ) {
-//                Element innerEle = iter.next();
-//                recGetXmlElementValue(innerEle, map);
-//            }
-//            return map;
-//        }
-//    }
 
-    public static String readXML(String path) throws IOException {
-
-        FileInputStream fileInputStream = new FileInputStream(path);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                fileInputStream));
-        String xml = "";
-        String line;
-        while ((line = reader.readLine()) != null) {
-            xml = xml + line;
-        }
-        reader.close();
-        return xml;
-    }
 
     public static LocalDate getUnLeapYearBirthDate(int dateOfBirth) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -332,34 +206,21 @@ public class SystemHelper {
         try {
             dateBirth = sdf.parse(String.valueOf(dateOfBirth));
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
-        localBirth = SystemHelper.DateToLocal(dateBirth);
+        localBirth = DateToLocal(dateBirth);
         if (localBirth.isLeapYear()) {
             int monthOfBirth = localBirth.getMonthValue();
             if (monthOfBirth == 2) {
                 int dayOfBirth = localBirth.getDayOfMonth();
-                if (monthOfBirth == 29) {
+                if (dayOfBirth == 29) {
                     localBirth.minusDays(1);
                 }
             }
         }
 
         return localBirth;
-    }
-
-    public static List<String> getApplicantColumns() {
-        List<String> result = new ArrayList<>();
-        result.add("personName");
-        result.add("_id");
-        result.add("surname");
-        result.add("gender");
-        result.add("provinceName");
-        result.add("districtName");
-        result.add("dateOfBirth");
-        result.add("status");
-        return result;
     }
 
     public static Date getDateFromInt(int dateOfBirth) {
@@ -373,32 +234,14 @@ public class SystemHelper {
         return date;
     }
 
-//    public static Map<String, Object> objectToMap(Object obj) throws Exception {
-//        if (obj == null)
-//            return null;
-//
-//        Map<String, Object> map = new HashMap<String, Object>();
-//
-//        BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
-//        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-//        for (PropertyDescriptor property : propertyDescriptors) {
-//            String key = property.getName();
-//            if (key.compareToIgnoreCase("class") == 0) {
-//                continue;
-//            }
-//            Method getter = property.getReadMethod();
-//            Object value = getter != null ? getter.invoke(obj) : null;
-//            map.put(key, value);
-//        }
-//
-//        return map;
-//    }
-//
-//    public static Map<?, ?> objectToMap(Object obj) {
-//        if(obj == null)
-//            return null;
-//
-//        return new org.apache.commons.beanutils.BeanMap(obj);
-//    }
+    public static Sort.Direction getSortDirection(String sortStr) {
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (sortStr.length() > 0) {
+            if (sortStr.toLowerCase().equals("desc")) {
+                direction = Sort.Direction.DESC;
+            }
+        }
+        return direction;
+    }
 }
 

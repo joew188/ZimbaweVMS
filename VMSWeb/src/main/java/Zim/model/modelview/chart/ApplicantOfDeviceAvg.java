@@ -1,21 +1,18 @@
 package Zim.model.modelview.chart;
 
+import Zim.common.CustomFloatSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Created by Laxton-Joe on 2017/6/17.
  */
 public class ApplicantOfDeviceAvg {
-    private String deviceName;
+    private String _id;
     private int count;
-    private  int total;
+    private  float total;
     private  float avg;
 
-    public String getDeviceName() {
-        return deviceName;
-    }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
 
     public int getCount() {
         return count;
@@ -24,20 +21,28 @@ public class ApplicantOfDeviceAvg {
     public void setCount(int count) {
         this.count = count;
     }
-
-    public int getTotal() {
+    @JsonSerialize(using = CustomFloatSerializer.class)
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
-
+    @JsonSerialize(using = CustomFloatSerializer.class)
     public float getAvg() {
         return avg;
     }
 
     public void setAvg(float avg) {
         this.avg = avg;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

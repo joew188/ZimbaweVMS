@@ -1,6 +1,7 @@
 package Zim.controller;
 
-import Zim.linstener.TestDataImport;
+//import Zim.linstener.TestDataImport;
+
 import Zim.service.ApplicantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,10 +26,8 @@ public class HomeController {
     public String index() {
         // logger.error("I am programming.");
 
-        Marker notifyAdmin = MarkerFactory.getMarker("NOTIFY_ADMIN");
-        logger.error(notifyAdmin,
-                "This is a serious an error requiring the admin's attention");//,
-             //   new Exception("Just testing"));
+
+        //   new Exception("Just testing"));
         //    model.put("title", "title");
         // model.put("msg", "helloWorldService");
 //        Applicant user=new Applicant();
@@ -46,12 +44,18 @@ public class HomeController {
         return "Home/index";
     }
 
-    @RequestMapping(value = "/service/start/{begin}", method = RequestMethod.GET)
-    public String start(@PathVariable("begin") int begin) {
-
-        new Thread(new TestDataImport(begin)).start();
-
+    //
+//    @RequestMapping(value = "/service/start/{begin}/sample/{id}", method = RequestMethod.GET)
+//    public String start(@PathVariable("begin") int begin,@PathVariable("id") String id) {
+//
+//        new Thread(new TestDataImport(begin,id)).start();
+//
+//        return "Home/index";
+//    }
+    @RequestMapping(value = "/logtest", method = RequestMethod.GET)
+    public String start() {
+        logger.error(MarkerFactory.getMarker("NOTIFY_ADMIN"), "log email test");//,
+        logger.error("log for file test");//,
         return "Home/index";
     }
-
 }

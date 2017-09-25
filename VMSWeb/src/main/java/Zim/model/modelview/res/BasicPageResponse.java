@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by Laxton-Joe on 2017/8/11.
  */
-public class PagingResponse<T> {
+public class BasicPageResponse<T> {
     private long totalPage = 0;//总页
     private long totalRecord = 0;//总数
     private long pageSize = 10;//页SIZE
@@ -14,7 +14,7 @@ public class PagingResponse<T> {
     private String orderBy;//排序顺序
     private HashMap<String, String> filters;//查询条件集合
 
-    private boolean result;//查询状态
+    private boolean result = false;//查询状态
 
     public long getTotalPage() {
         return totalPage;

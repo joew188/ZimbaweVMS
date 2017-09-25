@@ -1,5 +1,8 @@
 package Zim.model.modelview.chart;
 
+import Zim.common.CustomFloatSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Created by Laxton-Joe on 2017/6/17.
  */
@@ -7,8 +10,9 @@ public class ApplicantOfOperatorAvg {
     private String operatorGuid;
     private String operatorName;
     private int count;
-    private  int total;
-    private  float avg;
+    private float total;
+
+    private float avg;
 
     public String getOperatorGuid() {
         return operatorGuid;
@@ -33,15 +37,16 @@ public class ApplicantOfOperatorAvg {
     public void setCount(int count) {
         this.count = count;
     }
-
-    public int getTotal() {
+    @JsonSerialize(using = CustomFloatSerializer.class)
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
+    @JsonSerialize(using = CustomFloatSerializer.class)
     public float getAvg() {
         return avg;
     }

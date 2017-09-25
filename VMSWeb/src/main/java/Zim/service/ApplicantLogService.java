@@ -18,15 +18,11 @@ public class ApplicantLogService {
     MongoTemplate mongoTemplate;
 
     public List<ApplicantLog> getLogList(String applicantId) {
-        List<ApplicantLog> result = null;
         Query query = new Query();
         Criteria criteria=new Criteria();
 
         criteria.orOperator(Criteria.where("applicantId").is(applicantId), Criteria.where("probeId").is(applicantId),Criteria.where("referenceId").is(applicantId));
         query.addCriteria(criteria);
-
         return mongoTemplate.find(query, ApplicantLog.class);
     }
-
-
 }

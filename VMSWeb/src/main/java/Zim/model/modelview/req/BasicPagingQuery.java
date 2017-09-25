@@ -6,8 +6,8 @@ import java.util.HashMap;
 /**
  * Created by Laxton-Joe on 2017/2/20.
  */
-public class PagingQuery implements Serializable {
-    public PagingQuery() {
+public class BasicPagingQuery implements Serializable {
+    public BasicPagingQuery() {
 
     }
 

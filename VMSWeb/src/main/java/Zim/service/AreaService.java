@@ -1,8 +1,7 @@
 package Zim.service;
 
-import Zim.common.SystemHelper;
+
 import Zim.model.Area;
-import Zim.mongo.MongoDBDaoImpl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,14 @@ import java.util.List;
  */
 @Service
 public class AreaService {
-    static MongoDBDaoImpl mongoDBDaoImpl = MongoDBDaoImpl.getMongoDBDaoImpl();
+
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public String addArea(Area area) {
-        mongoDBDaoImpl.insert(SystemHelper.MONGODBSETTING_DB, "Area", area.toDBObject());
-        return area.get_id().toString();
-    }
+//    public String addArea(Area area) {
+//        MongoDao.getInstance().insert("Area", area.toDBObject());
+//        return area.get_id().toString();
+//    }
 
     public List<Area> getAreas(int pid, int type) {
         DBObject fieldObject = new BasicDBObject();
